@@ -1,4 +1,5 @@
 const mysql = require('mysql')
+const env = require('./../')
 
 const connection = mysql.createConnection({
     host:'localhost',
