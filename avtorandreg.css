@@ -1,0 +1,310 @@
+/* Страница авторизации/регистрации */
+
+body.auth-body {
+  transition: background-color 0.3s ease;
+}
+
+body.auth-body.login-active {
+  background: #e8a5b8;
+}
+
+body.auth-body.register-active {
+  background: #c8d97f;
+}
+
+.auth-page {
+  min-height: calc(100vh - 200px);
+  padding: 2rem 5%;
+  position: relative;
+}
+
+/* Кнопка назад */
+.back-button {
+  position: absolute;
+  top: 2rem;
+  left: 5%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s;
+}
+
+.back-button:hover {
+  color: white;
+  transform: translateX(-5px);
+}
+
+.auth-section {
+  padding: 2rem 0;
+  width: 100%;
+  text-align: center;
+}
+
+.auth-section h1 {
+  color: white;
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+}
+
+.auth-container {
+  max-width: 400px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+}
+
+/* Вкладки */
+.auth-tabs {
+  display: flex;
+  gap: 0;
+  background: #d98ba3;
+  border-radius: 50px;
+  padding: 0.4rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.auth-tab {
+  background: transparent;
+  border: none;
+  padding: 0.6rem 2.5rem;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 50px;
+  flex: 1;
+}
+
+.auth-tab:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.auth-tab-active {
+  background: rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+.auth-tab-active:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Формы */
+.auth-form {
+  display: none;
+}
+
+.auth-form-active {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+/* Чекбокс преподавателя */
+.teacher-checkbox {
+  padding: 1rem 1.2rem;
+  border-radius: 50px;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.teacher-checkbox-green {
+  background: #c8d97f;
+}
+
+.teacher-checkbox-pink {
+  background: #d98ba3;
+}
+
+.teacher-checkbox label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  cursor: pointer;
+  font-weight: 600;
+  color: white;
+  font-size: 0.95rem;
+}
+
+.teacher-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  order: 2;
+  margin-left: auto;
+}
+
+.teacher-checkbox label span {
+  order: 1;
+}
+
+/* Поля ввода */
+.auth-input {
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.95rem;
+  color: #666;
+  outline: none;
+  transition: all 0.3s;
+  width: 100%;
+}
+
+.auth-input::placeholder {
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+.auth-input:focus {
+  border-color: #d98ba3;
+  background: white;
+}
+
+/* Поле пароля с иконкой */
+.password-field {
+  position: relative;
+  width: 100%;
+}
+
+.password-field .auth-input {
+  padding-right: 3.5rem;
+  width: 100%;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  color: #999;
+  transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle-password:hover {
+  color: #666;
+}
+
+/* Подвал формы входа */
+.auth-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  color: #666;
+}
+
+.remember-me input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #d98ba3;
+}
+
+.forgot-password {
+  color: #666;
+  text-decoration: none;
+  transition: color 0.3s;
+  font-size: 0.85rem;
+}
+
+.forgot-password:hover {
+  color: #333;
+}
+
+/* Чекбокс согласия */
+.consent-checkbox {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  cursor: pointer;
+  color: #666;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.consent-checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  margin-top: 0.2rem;
+  cursor: pointer;
+  accent-color: #d98ba3;
+}
+
+/* Кнопка отправки */
+.auth-submit-button {
+  background: #d98ba3;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 0.9rem 2rem;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 1rem;
+}
+
+.auth-submit-button:hover {
+  background: #c75580;
+  transform: translateY(-2px);
+}
+
+/* Примечание регистрации */
+.register-note {
+  font-size: 0.7rem;
+  color: #999;
+  text-align: center;
+  line-height: 1.4;
+  margin-top: 1rem;
+}
+
+/* Адаптивность */
+@media (max-width: 600px) {
+  .auth-container {
+    padding: 2rem 1.5rem;
+  }
+
+  .auth-footer {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+
+  .auth-section h1 {
+    font-size: 1.5rem;
+  }
+
+  .back-button {
+    top: 1rem;
+  }
+}

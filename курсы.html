@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Курсы - Lernly</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="главная.css">
+  <link rel="stylesheet" href="курсы.css">
+</head>
+<body>
+  <header>
+    <div class="logo">Lernly</div>
+    <nav>
+      <a href="главная.html" class="nav-link nav-link-pink">Главная</a>
+      <a href="онас.html" class="nav-link nav-link-pink">О нас</a>
+      <a href="курсы.html" class="nav-link nav-link-pink">Курсы</a>
+      <a href="avtorandreg.html" class="icon-link">
+        <img src="iconka.jpg" alt="Войти/Регистрация" class="nav-icon">
+      </a>
+    </nav>
+  </header>
+
+  <main class="courses-page">
+    <div class="courses-container">
+     
+      <aside class="filter-panel">
+        <h2 class="filter-title">ФИЛЬТР</h2>
+
+       
+        <div class="filter-section">
+          <h3>Уровень</h3>
+          <label class="filter-radio">
+            <input type="radio" name="level" value="all" checked>
+            <span>Выбрать все</span>
+          </label>
+          <label class="filter-radio">
+            <input type="radio" name="level" value="beginner">
+            <span>Для новичков</span>
+          </label>
+          <label class="filter-radio">
+            <input type="radio" name="level" value="advanced">
+            <span>Продвинутый</span>
+          </label>
+        </div>
+
+        
+        <div class="filter-section">
+          <h3>Длительность</h3>
+          <div class="duration-inputs">
+            <input type="number" placeholder="От, мес" class="duration-input">
+            <input type="number" placeholder="До, мес" class="duration-input">
+          </div>
+        </div>
+
+        
+        <div class="filter-section">
+          <label class="filter-toggle">
+            <span>С трудоустройством</span>
+            <input type="checkbox" class="toggle-input">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        
+        <div class="filter-section">
+          <h3>Направление</h3>
+          <input type="text" placeholder="Поиск" class="filter-search">
+          
+          <label class="filter-radio">
+            <input type="radio" name="direction" value="python">
+            <span>Python-разработчик</span>
+          </label>
+          <label class="filter-radio">
+            <input type="radio" name="direction" value="3d">
+            <span>3D-дизайн</span>
+          </label>
+          <label class="filter-radio">
+            <input type="radio" name="direction" value="uiux">
+            <span>UI/UX дизайн</span>
+          </label>
+          <label class="filter-radio">
+            <input type="radio" name="direction" value="java">
+            <span>Java-разработчик</span>
+          </label>
+        </div>
+
+        
+        <button class="reset-button">Сбросить фильтры</button>
+      </aside>
+
+      
+      <div class="courses-grid">
+        <div class="course-card course-card-1"></div>
+        <div class="course-card course-card-2"></div>
+        <div class="course-card course-card-3"></div>
+        <div class="course-card course-card-4"></div>
+      </div>
+    </div>
+
+      <section class="signup-section">
+  <div class="signup-form-wrapper">
+    <div class="signup-form-content">
+      <div class="signup-text">
+        
+        <h3>Возникли вопросы??<br> Оставьте ваш запрос и мы обязательно свяжемся с вами!</h3>
+      </div>
+
+      <form id="contactFormCourses" class="signup-form">
+        <input type="text" name="name" placeholder="Имя" class="form-input" required>
+        <input type="email" name="email" placeholder="Почта" class="form-input" required>
+        <input type="tel" name="phone" placeholder="Номер телефона" class="form-input" required>
+        
+        <div class="form-checkbox">
+          <input type="checkbox" id="consent" name="consent" class="checkbox-input" required>
+          <label for="consent">
+            Даю согласие на обработку персональных данных, в том числе в целью получения информации о новых продуктах, демо доступах, скидках, персонализированных предложениях, акциях и полезных вебинарах <a href="#" class="consent-link">на следующих условиях</a>
+          </label>
+        </div>
+        
+        <button type="submit" class="submit-button">Отправить</button>
+      </form>
+    </div>
+  </div>
+</section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-column footer-contacts">
+        <p class="footer-phone">+375 29 XXX XX XX</p>
+        <p class="footer-email">Learnly@gmail.com</p>
+
+        <div class="footer-links">
+          <a href="#">Публичный договор</a>
+          <a href="#">Политика обработки персональных данных</a>
+          <a href="#">Отзыв согласия на обработку персональных данных</a>
+        </div>
+      </div>
+
+      <div class="footer-column">
+        <h4>Все курсы</h4>
+        <ul>
+          <li><a href="#">Фронтенд-разработка</a></li>
+          <li><a href="#">Дизайн</a></li>
+          <li><a href="#">Бэкенд-разработка</a></li>
+          <li><a href="#">3D-моделирование</a></li>
+          <li><a href="#">Java-разработчик</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <ul class="footer-courses-list">
+          <li><a href="#">Python-разработчик</a></li>
+          <li><a href="#">Дизайн в Figma</a></li>
+          <li><a href="#">JavaScript-фронтенд</a></li>
+          <li><a href="#">JavaScript-бэкенд</a></li>
+          <li><a href="#">2D-моделирование</a></li>
+          <li><a href="#">Roblox-конструирование</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+  <script>
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  document.getElementById('contactFormCourses').addEventListener('submit', function(event) {
+    event.preventDefault(); 
+    
+    const formData = new FormData(this);
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const phone = formData.get('phone');
+    
+    
+    const data = {
+      name: name,
+      email: email,
+      phone: phone
+    };
+    
+    console.log('Отправляем запрос:', data);
+    
+    fetch('http://127.0.0.1:4000/api/auth/createApplication', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (!response.ok) {
+        return response.json().then(err => {
+          throw new Error(err.message || 'Ошибка отправки запроса');
+        });
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Запрос успешно отправлен:', data);
+      alert('Спасибо! Ваш запрос принят. Мы свяжемся с вами в ближайшее время!');
+      
+      
+      document.getElementById('contactFormCourses').reset();
+    })
+    .catch(error => {
+      console.error('Ошибка:', error);
+      alert('Ошибка при отправке запроса: ' + error.message);
+    });
+  });
+</script>
+</body>
+</html>

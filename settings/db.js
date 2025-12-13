@@ -1,12 +1,12 @@
 const mysql = require('mysql')
-const env = require('./../')
+const config = require('../config')
 
 const connection = mysql.createConnection({
-    host:'localhost',
-    port: 3306,
-    user:'root',
-    password:'',
-    database:'learnly'
+    host:config.HOST,
+    port: config.PORT,
+    user:config.DBUSER,
+    password:config.DBPASSWORD,
+    database:config.DBNAME
 })
 
 connection.connect((error)=>{

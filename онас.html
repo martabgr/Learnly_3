@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>О нас - Lernly</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="главная.css">
+  <link rel="stylesheet" href="онас.css">
+</head>
+<body>
+  <header>
+    <div class="logo">Lernly</div>
+    <nav>
+      <a href="главная.html" class="nav-link">Главная</a>
+      <a href="онас.html" class="nav-link">О нас</a>
+      <a href="курсы.html" class="nav-link">Курсы</a>
+      <a href="avtorandreg.html" class="icon-link">
+       <img src="iconka.jpg" alt="Войти/Регистрация" class="nav-icon">
+      </a>
+    </nav>
+  </header>
+
+  <main class="about-page">
+    <section class="about-hero">
+      <div class="about-content">
+        <h1>О нас</h1>
+        <p class="about-description">
+          Lernly - помогает каждому учиться с радостью и уверенностью, чтобы быть востребованными специалистом уже сегодня. Независимо от опыта, возраста или места, мы создаем пространство, где знания становятся теплыми, понятными и применимыми
+        </p>
+      </div>
+
+      <div class="about-image-wrapper">
+        <div class="image-label">
+          <span class="label-text">Lernly</span>
+          <div class="label-line"></div>
+        </div>
+        <img src="image 1.png" alt="Обучение с Lernly" class="about-image">
+        <div class="image-caption">шаг к себе настоящему</div>
+      </div>
+    </section>
+    
+   
+  <div class="signup-form-wrapper">
+    <div class="signup-form-content">
+      <div class="signup-text">
+        <h3>Возникли вопросы??<br> Оставьте ваш запрос и мы обязательно свяжемся с вами!</h3>
+      </div>
+      
+      <form id="contactForm" class="signup-form">
+        <input type="text" name="name" placeholder="Имя" class="form-input" required>
+        <input type="email" name="email" placeholder="Почта" class="form-input" required>
+        <input type="tel" name="phone" placeholder="Номер телефона" class="form-input" required>
+        
+        <div class="form-checkbox">
+          <input type="checkbox" id="consent" name="consent" class="checkbox-input" required>
+          <label for="consent">
+            Даю согласие на обработку персональных данных, в том числе в целью получения информации о новых продуктах, демо доступах, скидках, персонализированных предложениях, акциях и полезных вебинарах <a href="#" class="consent-link">на следующих условиях</a>
+          </label>
+        </div>
+        
+        <button type="submit" class="submit-button">Отправить</button>
+      </form>
+    </div>
+  </div>
+</section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-column footer-contacts">
+        <p class="footer-phone">+375 29 XXX XX XX</p>
+        <p class="footer-email">Learnly@gmail.com</p>
+
+        <div class="footer-links">
+          <a href="#">Публичный договор</a>
+          <a href="#">Политика обработки персональных данных</a>
+          <a href="#">Отзыв согласия на обработку персональных данных</a>
+        </div>
+      </div>
+
+      <div class="footer-column">
+        <h4>Все курсы</h4>
+        <ul>
+          <li><a href="#">Фронтенд-разработка</a></li>
+          <li><a href="#">Дизайн</a></li>
+          <li><a href="#">Бэкенд-разработка</a></li>
+          <li><a href="#">3D-моделирование</a></li>
+          <li><a href="#">Java-разработчик</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <ul class="footer-courses-list">
+          <li><a href="#">Python-разработчик</a></li>
+          <li><a href="#">Дизайн в Figma</a></li>
+          <li><a href="#">JavaScript-фронтенд</a></li>
+          <li><a href="#">JavaScript-бэкенд</a></li>
+          <li><a href="#">2D-моделирование</a></li>
+          <li><a href="#">Roblox-конструирование</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+  <script>
+  
+  document.getElementById('contactForm').addEventListener('submit', function(event) {
+    event.preventDefault(); 
+    
+    const formData = new FormData(this);
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const phone = formData.get('phone');
+    
+    
+    const data = {
+      name: name,
+      email: email,
+      phone: phone
+    };
+    
+    console.log('Отправляем запрос:', data);
+    
+    fetch('http://127.0.0.1:4000/api/auth/createApplication', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (!response.ok) {
+        return response.json().then(err => {
+          throw new Error(err.message || 'Ошибка отправки запроса');
+        });
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Запрос успешно отправлен:', data);
+      alert('Спасибо! Ваш запрос принят. Мы свяжемся с вами в ближайшее время!');
+      
+      // Очищаем форму
+      document.getElementById('contactForm').reset();
+    })
+    .catch(error => {
+      console.error('Ошибка:', error);
+      alert('Ошибка при отправке запроса: ' + error.message);
+    });
+  });
+</script>
+</body>
+</html>

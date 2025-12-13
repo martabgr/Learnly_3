@@ -1,0 +1,260 @@
+/* Страница курсов */
+
+.courses-page {
+  background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            color: var(--text-primary);
+  min-height: calc(100vh - 200px);
+  padding: 2rem 5%;
+}
+
+/* Розовые кнопки навигации */
+.nav-link-pink {
+  background: #d98ba3;
+  padding: 0.6rem 1.5rem;
+  border-radius: 50px;
+  color: white !important;
+  transition: all 0.3s;
+}
+
+.nav-link-pink:hover {
+  background: #c75580;
+}
+
+.courses-container {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Панель фильтров */
+.filter-panel {
+  background: #e8a5b8;
+  border-radius: 20px;
+  padding: 2rem 1.5rem;
+  height: fit-content;
+  position: sticky;
+  top: 100px;
+}
+
+.filter-title {
+  color: #000;
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+}
+
+.filter-section {
+  margin-bottom: 2rem;
+}
+
+.filter-section h3 {
+  color: #000;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+
+/* Радио-кнопки */
+.filter-radio {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #000;
+}
+
+.filter-radio input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #c75580;
+}
+
+/* Поля длительности */
+.duration-inputs {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.duration-input {
+  width: 100px;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 50px;
+  padding: 0.6rem 1rem;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.85rem;
+  color: #666;
+  outline: none;
+}
+
+.duration-input::placeholder {
+  color: #aaa;
+  font-size: 0.85rem;
+}
+
+/* Toggle switch */
+.filter-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #000;
+}
+
+.toggle-input {
+  display: none;
+}
+
+.toggle-slider {
+  position: relative;
+  width: 42px;
+  height: 22px;
+  background: #ccc;
+  border-radius: 50px;
+  transition: all 0.3s;
+}
+
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: white;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: all 0.3s;
+}
+
+.toggle-input:checked + .toggle-slider {
+  background: #c75580;
+}
+
+.toggle-input:checked + .toggle-slider::before {
+  transform: translateX(20px);
+}
+
+/* Поиск направления */
+.filter-search {
+  width: 100%;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 50px;
+  padding: 0.6rem 1rem;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.85rem;
+  color: #666;
+  outline: none;
+  margin-bottom: 1rem;
+}
+
+.filter-search::placeholder {
+  color: #aaa;
+}
+
+/* Кнопка сброса */
+.reset-button {
+  width: 100%;
+  background: white;
+  border: none;
+  border-radius: 50px;
+  padding: 0.7rem 1.5rem;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 1rem;
+}
+
+.reset-button:hover {
+  background: #f5f5f5;
+  color: #333;
+}
+
+/* Сетка курсов */
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  grid-auto-rows: 200px;
+}
+
+.course-card {
+  border-radius: 20px;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.course-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+/* Разные цвета для карточек */
+.course-card-1 {
+  background: #c98ba0;
+  grid-row: span 1;
+}
+
+.course-card-2 {
+  background: #d9a5b8;
+  grid-row: span 1;
+}
+
+.course-card-3 {
+  background: #c98ba0;
+  grid-row: span 1;
+}
+
+.course-card-4 {
+  background: #b87a90;
+  grid-row: span 1;
+}
+
+.course-card-5 {
+  background: #d9a5b8;
+  grid-column: span 2;
+}
+
+.course-card-6 {
+  background: #c98ba0;
+  grid-column: span 2;
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+  .courses-container {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-panel {
+    position: static;
+  }
+
+  .courses-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .course-card-5,
+  .course-card-6 {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .courses-page {
+    padding: 1rem 3%;
+  }
+
+  .filter-panel {
+    padding: 1.5rem 1rem;
+  }
+}
