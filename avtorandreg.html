@@ -7,6 +7,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="главная.css">
   <link rel="stylesheet" href="avtorandreg.css">
+  <style>
+    .password-field {
+      position: relative;
+      margin-bottom: 15px;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 10px; /* Ближе к краю */
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body class="auth-body login-active">
   <main class="auth-page">
@@ -37,10 +53,7 @@
           <div class="password-field">
             <input type="password" placeholder="Пароль" class="auth-input" id="loginPassword" name="password" required>
             <button type="button" class="toggle-password" onclick="togglePassword('loginPassword')">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                <circle cx="12" cy="12" r="3"></circle>
-              </svg>
+            
             </button>
           </div>
 
@@ -56,49 +69,40 @@
         </form>
 
         <!-- Форма регистрации -->
-        <!-- Форма регистрации -->
-<form id="registerForm" class="auth-form">
-  <div class="teacher-checkbox teacher-checkbox-pink">
-    <label>
-      <span>Я преподаватель</span>
-      <input type="checkbox" id="registerTeacher" name="role">
-    </label>
-  </div>
+        <form id="registerForm" class="auth-form">
+          <div class="teacher-checkbox teacher-checkbox-pink">
+            <label>
+              <span>Я преподаватель</span>
+              <input type="checkbox" id="registerTeacher" name="role">
+            </label>
+          </div>
 
-  <input type="text" placeholder="Введите свое Имя" class="auth-input" name="name" required>
-  <input type="email" placeholder="Введите email" class="auth-input" name="email" required>
+          <input type="text" placeholder="Введите свое Имя" class="auth-input" name="name" required>
+          <input type="email" placeholder="Введите email" class="auth-input" name="email" required>
 
-  <div class="password-field">
-    <input type="password" placeholder="Пароль" class="auth-input" id="registerPassword" name="password" required>
-    <button type="button" class="toggle-password" onclick="togglePassword('registerPassword')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-        <circle cx="12" cy="12" r="3"></circle>
-      </svg>
-    </button>
-  </div>
+          <div class="password-field">
+            <input type="password" placeholder="Пароль" class="auth-input" id="registerPassword" name="password" required>
+            <button type="button" class="toggle-password" onclick="togglePassword('registerPassword')">
+            </button>
+          </div>
 
-  <div class="password-field">
-    <input type="password" placeholder="Повторите пароль" class="auth-input" id="registerPassword2" required>
-    <button type="button" class="toggle-password" onclick="togglePassword('registerPassword2')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-        <circle cx="12" cy="12" r="3"></circle>
-      </svg>
-    </button>
-  </div>
+          <div class="password-field">
+            <input type="password" placeholder="Повторите пароль" class="auth-input" id="registerPassword2" required>
+            <button type="button" class="toggle-password" onclick="togglePassword('registerPassword2')">
+            </button>
+          </div>
 
-  <label class="consent-checkbox">
-    <input type="checkbox" required>
-    <span>Я соглашаюсь на обработку персональных данных</span>
-  </label>
+          <label class="consent-checkbox">
+            <input type="checkbox" required>
+            <span>Я соглашаюсь на обработку персональных данных</span>
+          </label>
 
-  <button class="auth-submit-button" type="submit">Зарегистрироваться</button>
+          <button class="auth-submit-button" type="submit">Зарегистрироваться</button>
 
-  <p class="register-note">
-    Нажимая на кнопку, я соглашаюсь с публичной офертой, правилами акции «Поможем найти работу или вернем деньги» и с правилами программы лояльности.
-  </p>
-</form>
+          <p class="register-note">
+            Нажимая на кнопку, я соглашаюсь с публичной офертой, правилами акции «Поможем найти работу или вернем деньги» и с правилами программы лояльности.
+          </p>
+        </form>
       </div>
     </section>
   </main>
@@ -140,133 +144,133 @@
     </div>
   </footer>
 
- <script>
-  function switchAuthTab(tab) {
-    const loginForm = document.getElementById('loginForm');
-    const registerForm = document.getElementById('registerForm');
-    const tabs = document.querySelectorAll('.auth-tab');
-    
-    if (tab === 'login') {
-      loginForm.classList.add('auth-form-active');
-      registerForm.classList.remove('auth-form-active');
-      tabs[0].classList.add('auth-tab-active');
-      tabs[1].classList.remove('auth-tab-active');
-    } else {
-      registerForm.classList.add('auth-form-active');
-      loginForm.classList.remove('auth-form-active');
-      tabs[1].classList.add('auth-tab-active');
-      tabs[0].classList.remove('auth-tab-active');
-    }
-  }
-
-  // РЕГИСТРАЦИЯ
-  document.getElementById('registerForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    
-    const formData = new FormData(this);
-    const name = formData.get('name');
-    const email = formData.get('email');
-    const password = formData.get('password');
-    const password2 = document.getElementById('registerPassword2').value;
-    
-    if (password !== password2) {
-      alert('Пароли не совпадают!');
-      return;
-    }
-    
-    const role = document.getElementById('registerTeacher').checked ? 'teacher' : 'student';
-    
-    const data = {
-      name: name,
-      email: email,
-      password: password,
-      role: role
-    };
-    
-    console.log('Отправляем данные регистрации:', data);
-    
-    fetch('http://127.0.0.1:4000/api/auth/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => {
-      if (!response.ok) {
-        return response.json().then(err => {
-          throw new Error(err.message || 'Ошибка регистрации');
-        });
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log('Успешная регистрация:', data);
-      alert('Регистрация прошла успешно! Теперь войдите в систему.');
-      switchAuthTab('login');
-      document.getElementById('registerForm').reset();
-    })
-    .catch(error => {
-      console.error('Ошибка:', error);
-      alert('Произошла ошибка при регистрации: ' + error.message);
-    });
-  });
-
-  // ВХОД
-  document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    
-    const formData = new FormData(this);
-    const email = formData.get('email');
-    const password = formData.get('password');
-    const role = document.getElementById('loginTeacher').checked ? 'teacher' : 'student';
-    
-    const data = {
-      email: email,
-      password: password,
-      role: role
-    };
-    
-    console.log('Отправляем данные для входа:', data);
-    
-    fetch('http://127.0.0.1:4000/api/auth/signin', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => {
-      if (!response.ok) {
-        return response.json().then(err => {
-          throw new Error(err.message || 'Ошибка входа');
-        });
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log('Успешный вход:', data);
+  <script>
+    function switchAuthTab(tab) {
+      const loginForm = document.getElementById('loginForm');
+      const registerForm = document.getElementById('registerForm');
+      const tabs = document.querySelectorAll('.auth-tab');
       
-      if (data.token) {
-        localStorage.setItem('authToken', data.token);
-        localStorage.setItem('userName', data.name);
-        localStorage.setItem('userRole', data.role);
-        localStorage.setItem('userId', data.id);
+      if (tab === 'login') {
+        loginForm.classList.add('auth-form-active');
+        registerForm.classList.remove('auth-form-active');
+        tabs[0].classList.add('auth-tab-active');
+        tabs[1].classList.remove('auth-tab-active');
+      } else {
+        registerForm.classList.add('auth-form-active');
+        loginForm.classList.remove('auth-form-active');
+        tabs[1].classList.add('auth-tab-active');
+        tabs[0].classList.remove('auth-tab-active');
+      }
+    }
+
+    // РЕГИСТРАЦИЯ
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      const formData = new FormData(this);
+      const name = formData.get('name');
+      const email = formData.get('email');
+      const password = formData.get('password');
+      const password2 = document.getElementById('registerPassword2').value;
+      
+      if (password !== password2) {
+        alert('Пароли не совпадают!');
+        return;
       }
       
-      alert('Добро пожаловать, ' + data.name + '!');
-      window.location.href = 'главная.html';
-    })
-    .catch(error => {
-      console.error('Ошибка:', error);
-      alert('Ошибка при входе: ' + error.message);
+      const role = document.getElementById('registerTeacher').checked ? 'teacher' : 'student';
+      
+      const data = {
+        name: name,
+        email: email,
+        password: password,
+        role: role
+      };
+      
+      console.log('Отправляем данные регистрации:', data);
+      
+      fetch('http://127.0.0.1:4000/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        if (!response.ok) {
+          return response.json().then(err => {
+            throw new Error(err.message || 'Ошибка регистрации');
+          });
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Успешная регистрация:', data);
+        alert('Регистрация прошла успешно! Теперь войдите в систему.');
+        switchAuthTab('login');
+        document.getElementById('registerForm').reset();
+      })
+      .catch(error => {
+        console.error('Ошибка:', error);
+        alert('Произошла ошибка при регистрации: ' + error.message);
+      });
     });
-  });
 
-  function togglePassword(fieldId) {
-    const field = document.getElementById(fieldId);
-    field.type = field.type === 'password' ? 'text' : 'password';
-  }
-</script>
+    // ВХОД
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      const formData = new FormData(this);
+      const email = formData.get('email');
+      const password = formData.get('password');
+      const role = document.getElementById('loginTeacher').checked ? 'teacher' : 'student';
+      
+      const data = {
+        email: email,
+        password: password,
+        role: role
+      };
+      
+      console.log('Отправляем данные для входа:', data);
+      
+      fetch('http://127.0.0.1:4000/api/auth/signin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        if (!response.ok) {
+          return response.json().then(err => {
+            throw new Error(err.message || 'Ошибка входа');
+          });
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Успешный вход:', data);
+        
+        if (data.token) {
+          localStorage.setItem('authToken', data.token);
+          localStorage.setItem('userName', data.name);
+          localStorage.setItem('userRole', data.role);
+          localStorage.setItem('userId', data.id);
+        }
+        
+        alert('Добро пожаловать, ' + data.name + '!');
+        window.location.href = 'главная.html';
+      })
+      .catch(error => {
+        console.error('Ошибка:', error);
+        alert('Ошибка при входе: ' + error.message);
+      });
+    });
+
+    function togglePassword(fieldId) {
+      const field = document.getElementById(fieldId);
+      field.type = field.type === 'password' ? 'text' : 'password';
+    }
+  </script>
 </body>
 </html>

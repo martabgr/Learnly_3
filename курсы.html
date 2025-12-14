@@ -16,7 +16,7 @@
       <a href="онас.html" class="nav-link nav-link-pink">О нас</a>
       <a href="курсы.html" class="nav-link nav-link-pink">Курсы</a>
       <a href="avtorandreg.html" class="icon-link">
-        <img src="iconka.jpg" alt="Войти/Регистрация" class="nav-icon">
+        <img src="ic.png" alt="Войти/Регистрация" class="nav-icon">
       </a>
     </nav>
   </header>
@@ -90,41 +90,103 @@
       </aside>
 
       
-      <div class="courses-grid">
-        <div class="course-card course-card-1"></div>
-        <div class="course-card course-card-2"></div>
-        <div class="course-card course-card-3"></div>
-        <div class="course-card course-card-4"></div>
-      </div>
+    <div class="courses-grid">
+    <div class="course-card course-card-1">
+        <img src="питон.jpg" alt="Python" class="course-image">
     </div>
+    <div class="course-card course-card-2">
+        <img src="питон.jpg" alt="Python" class="course-image">
+    </div>
+    <div class="course-card course-card-3">
+        <img src="питон.jpg" alt="Python" class="course-image">
+    </div>
+    <div class="course-card course-card-4">
+        <img src="питон.jpg" alt="Python" class="course-image">
+    </div>
+</div>
+<div class="courses-grid">
+    <div class="course-card course-card-1">
+        <img src="питон.jpg" alt="Python" class="course-image">
+    </div>
+    <!-- Другие карточки курса -->
+</div>
 
-      <section class="signup-section">
-  <div class="signup-form-wrapper">
-    <div class="signup-form-content">
-      <div class="signup-text">
-        
-        <h3>Возникли вопросы??<br> Оставьте ваш запрос и мы обязательно свяжемся с вами!</h3>
-      </div>
-
-      <form id="contactFormCourses" class="signup-form">
-        <input type="text" name="name" placeholder="Имя" class="form-input" required>
-        <input type="email" name="email" placeholder="Почта" class="form-input" required>
-        <input type="tel" name="phone" placeholder="Номер телефона" class="form-input" required>
-        
-        <div class="form-checkbox">
-          <input type="checkbox" id="consent" name="consent" class="checkbox-input" required>
-          <label for="consent">
-            Даю согласие на обработку персональных данных, в том числе в целью получения информации о новых продуктах, демо доступах, скидках, персонализированных предложениях, акциях и полезных вебинарах <a href="#" class="consent-link">на следующих условиях</a>
-          </label>
+<!-- Модальное окно -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Python-разработчик</h2>
+        <div class="modal-body">
+            <div class="info-block">
+                <div class="info-section">
+                    <p>Длительность: <strong>6 месяцев</strong></p>
+                    <p>Формат обучения:</p>
+                    <label><input type="radio" name="format" value="individual"> Индивидуально</label>
+                    <label><input type="radio" name="format" value="group"> В группе</label>
+                </div>
+                <div class="info-section">
+                    <p>Оплата:</p>
+                    <label><input type="radio" name="payment" value="lump-sum"> Единым платежом - <strong>1600₽</strong></label>
+                    <label><input type="radio" name="payment" value="monthly"> Ежемесячно - <strong>26₽</strong></label>
+                </div>
+            </div>
+            <div class="image-container">
+                <img src="питон.jpg" alt="Python" class="course-image">
+                <button id="enroll">Записаться</button>
+            </div>
         </div>
-        
-        <button type="submit" class="submit-button">Отправить</button>
-      </form>
     </div>
-  </div>
-</section>
-  </main>
+</div>
+    <script>
+    var modal = document.getElementById("modal");
+    var courseCard = document.querySelector(".course-card-1");
+    var span = document.getElementsByClassName("close")[0];
 
+    courseCard.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+  </main>
+</section>
+    <!-- Секция "Открой для себя мир IT" -->
+    <section class="signup-section" id="signup">
+      <h2>Открой для себя мир IT</h2>
+      <p class="signup-subtitle" >Запишись на курсы сейчас!</p>
+      <form id="applicationForm">
+        <div class="signup-form-wrapper">
+          <div class="signup-form-content">
+            <div class="signup-text">
+              <h3>Не знаешь с чего начать?<br>Мы поможем!</h3>
+            </div>
+
+            <div class="signup-form" >
+              <input type="text" name="name" placeholder="Имя" class="form-input" required>
+              <input type="email" name="email" placeholder="Почта" class="form-input" required>
+              <input type="tel" name="phone" placeholder="Номер телефона" class="form-input" required>
+              
+              <div class="form-checkbox">
+                <input type="checkbox" id="consent" name="consent" class="checkbox-input" required>
+                <label for="consent">
+                  Даю согласие на обработку персональных данных <a href="#" class="consent-link">на следующих условиях</a>
+                </label>
+              </div>
+              
+              <button type="submit" class="submit-button">Отправить</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
   <footer>
     <div class="footer-content">
       <div class="footer-column footer-contacts">

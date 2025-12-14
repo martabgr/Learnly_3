@@ -184,15 +184,97 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
-  grid-auto-rows: 200px;
+  /* убираем фиксированную высоту */
+}
+.modal {
+    display: none; /* Скрыто по умолчанию */
+    position: fixed; /* Остаться на месте */
+    z-index: 1; /* На переднем плане */
+    left: 0;
+    top: 0;
+    width: 100%; /* Полная ширина */
+    height: 100%; /* Полная высота */
+    overflow: auto; /* Включает прокрутку, если необходимо */
 }
 
+.modal-content {
+    background-color: #8fe3b1; /* Светлый фон для содержимого */
+    margin: 5% auto; /* 5% от верхней и центра по ширине */
+    padding: 20px;
+    border-radius: 15px; /* Скругленные углы */
+    width: 600px; /* Ширина модального окна */
+}
+
+.modal-body {
+    display: flex; /* Расположение по горизонтали */
+    width: 100%;
+}
+
+.info-block {
+    flex: 1; /* Занять оставшуюся ширину */
+    display: flex;
+    flex-direction: column; /* Вертикальное расположение элементов внутри блока */
+    gap: 15px; /* Отступы между блоками */
+}
+
+.info-section {
+    background-color: #ffb3b3; /* Розовый фон для блоков */
+    padding: 15px;
+    border-radius: 10px; /* Скругленные углы для блоков */
+}
+
+.image-container {
+    display: flex;
+    flex-direction: column; /* Вертикальное выравнивание */
+    align-items: center; /* Центрируем по горизонтали */
+    margin-left: 20px; /* Отступ между блоком и изображением */
+}
+
+.course-image {
+    max-width: 150px; /* Ограничение ширины изображения */
+    border-radius: 10px; /* Скругленные углы */
+    margin-bottom: 10px; /* Отступ под изображением */
+}
+
+button {
+    background-color: #ff6f61; /* Цвет кнопки */
+    color: white; /* Цвет текста кнопки */
+    border: none; /* Убираем границу */
+    padding: 10px 20px; /* Отступы внутри кнопки */
+    border-radius: 5px; /* Скругленные углы кнопки */
+    cursor: pointer; /* Курсор в виде указателя */
+    font-size: 16px; /* Размер шрифта */
+}
+
+button:hover {
+    background-color: #ff5e50; /* Цвет кнопки при наведении */
+}
+
+.close {
+    color: #aaa; /* Цвет кнопки закрытия */
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black; /* Цвет при наведении */
+    text-decoration: none;
+    cursor: pointer;
+}
 .course-card {
   border-radius: 20px;
-  transition: all 0.3s;
-  cursor: pointer;
+  overflow: hidden; /* чтобы картинка не вылазила */
+  display: flex;
+  flex-direction: column;
 }
-
+.course-image {
+  width: 100%;       /* картинка на всю ширину карточки */
+  height: 300px;     /* фиксированная высота */
+  object-fit: cover; /* обрезаем лишнее */
+  display: block;
+}
 .course-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 30px rgba(0,0,0,0.15);
