@@ -190,7 +190,7 @@
           localStorage.setItem('userId', data.id);
         }
         alert('Регистрация прошла успешно!');
-        window.location.href = 'lk.html'; // сразу в личный кабинет
+        window.location.href = 'лк.html'; // сразу в личный кабинет
       })
       .catch(error => {
         alert('Ошибка при регистрации: ' + error.message);
@@ -226,7 +226,7 @@
           localStorage.setItem('userId', data.id);
         }
         alert('Добро пожаловать, ' + data.name + '!');
-        window.location.href = 'lk.html'; // сразу в личный кабинет
+        window.location.href = 'лк.html'; // сразу в личный кабинет
       })
       .catch(error => {
         alert('Ошибка при входе: ' + error.message);
