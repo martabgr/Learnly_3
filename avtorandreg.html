@@ -12,10 +12,9 @@
       position: relative;
       margin-bottom: 15px;
     }
-
     .toggle-password {
       position: absolute;
-      right: 10px; /* Ближе к краю */
+      right: 10px;
       top: 50%;
       transform: translateY(-50%);
       background: none;
@@ -26,14 +25,11 @@
 </head>
 <body class="auth-body login-active">
   <main class="auth-page">
-  
     <a href="главная.html" class="back-button">←</a>
-
     <section class="auth-section">
       <h1>Добро пожаловать в Lernly!</h1>
 
       <div class="auth-container">
-       
         <div class="auth-tabs">
           <button class="auth-tab auth-tab-active" onclick="switchAuthTab('login')">Вход</button>
           <button class="auth-tab" onclick="switchAuthTab('register')">Регистрация</button>
@@ -49,12 +45,9 @@
           </div>
 
           <input type="email" placeholder="Введите email" class="auth-input" name="email" required>
-
           <div class="password-field">
             <input type="password" placeholder="Пароль" class="auth-input" id="loginPassword" name="password" required>
-            <button type="button" class="toggle-password" onclick="togglePassword('loginPassword')">
-            
-            </button>
+            <button type="button" class="toggle-password" onclick="togglePassword('loginPassword')"></button>
           </div>
 
           <div class="auth-footer">
@@ -82,14 +75,12 @@
 
           <div class="password-field">
             <input type="password" placeholder="Пароль" class="auth-input" id="registerPassword" name="password" required>
-            <button type="button" class="toggle-password" onclick="togglePassword('registerPassword')">
-            </button>
+            <button type="button" class="toggle-password" onclick="togglePassword('registerPassword')"></button>
           </div>
 
           <div class="password-field">
             <input type="password" placeholder="Повторите пароль" class="auth-input" id="registerPassword2" required>
-            <button type="button" class="toggle-password" onclick="togglePassword('registerPassword2')">
-            </button>
+            <button type="button" class="toggle-password" onclick="togglePassword('registerPassword2')"></button>
           </div>
 
           <label class="consent-checkbox">
@@ -112,7 +103,6 @@
       <div class="footer-column footer-contacts">
         <p class="footer-phone">+375 29 XXX XX XX</p>
         <p class="footer-email">Learnly@gmail.com</p>
-
         <div class="footer-links">
           <a href="#">Публичный договор</a>
           <a href="#">Политика обработки персональных данных</a>
@@ -179,43 +169,33 @@
       }
       
       const role = document.getElementById('registerTeacher').checked ? 'teacher' : 'student';
-      
-      const data = {
-        name: name,
-        email: email,
-        password: password,
-        role: role
-      };
-      
-      console.log('Отправляем данные регистрации:', data);
+      const data = { name, email, password, role };
       
       fetch('http://127.0.0.1:4000/api/auth/signup', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       })
       .then(response => {
         if (!response.ok) {
-          return response.json().then(err => {
-            throw new Error(err.message || 'Ошибка регистрации');
-          });
+          return response.json().then(err => { throw new Error(err.message || 'Ошибка регистрации'); });
         }
         return response.json();
       })
       .then(data => {
-        console.log('Успешная регистрация:', data);
-        alert('Регистрация прошла успешно! Теперь войдите в систему.');
-        switchAuthTab('login');
-        document.getElementById('registerForm').reset();
+        if (data.token) {
+          localStorage.setItem('authToken', data.token);
+          localStorage.setItem('userName', data.name);
+          localStorage.setItem('userRole', data.role);
+          localStorage.setItem('userId', data.id);
+        }
+        alert('Регистрация прошла успешно!');
+        window.location.href = 'lk.html'; // сразу в личный кабинет
       })
       .catch(error => {
-        console.error('Ошибка:', error);
-        alert('Произошла ошибка при регистрации: ' + error.message);
+        alert('Ошибка при регистрации: ' + error.message);
       });
     });
-
     // ВХОД
     document.getElementById('loginForm').addEventListener('submit', function(event) {
       event.preventDefault();
@@ -225,44 +205,30 @@
       const password = formData.get('password');
       const role = document.getElementById('loginTeacher').checked ? 'teacher' : 'student';
       
-      const data = {
-        email: email,
-        password: password,
-        role: role
-      };
-      
-      console.log('Отправляем данные для входа:', data);
+      const data = { email, password, role };
       
       fetch('http://127.0.0.1:4000/api/auth/signin', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       })
       .then(response => {
         if (!response.ok) {
-          return response.json().then(err => {
-            throw new Error(err.message || 'Ошибка входа');
-          });
+          return response.json().then(err => { throw new Error(err.message || 'Ошибка входа'); });
         }
         return response.json();
       })
       .then(data => {
-        console.log('Успешный вход:', data);
-        
         if (data.token) {
           localStorage.setItem('authToken', data.token);
           localStorage.setItem('userName', data.name);
           localStorage.setItem('userRole', data.role);
           localStorage.setItem('userId', data.id);
         }
-        
         alert('Добро пожаловать, ' + data.name + '!');
-        window.location.href = 'главная.html';
+        window.location.href = 'lk.html'; // сразу в личный кабинет
       })
       .catch(error => {
-        console.error('Ошибка:', error);
         alert('Ошибка при входе: ' + error.message);
       });
     });

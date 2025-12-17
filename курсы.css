@@ -198,7 +198,7 @@
 }
 
 .modal-content {
-    background-color: #8fe3b1; /* Светлый фон для содержимого */
+    background-color: #bedfcb; /* Светлый фон для содержимого */
     margin: 5% auto; /* 5% от верхней и центра по ширине */
     padding: 20px;
     border-radius: 15px; /* Скругленные углы */
@@ -231,13 +231,13 @@
 }
 
 .course-image {
-    max-width: 150px; /* Ограничение ширины изображения */
+    max-width: 200px; /* Ограничение ширины изображения */
     border-radius: 10px; /* Скругленные углы */
     margin-bottom: 10px; /* Отступ под изображением */
 }
 
 button {
-    background-color: #ff6f61; /* Цвет кнопки */
+    background-color: #b97297; /* Цвет кнопки */
     color: white; /* Цвет текста кнопки */
     border: none; /* Убираем границу */
     padding: 10px 20px; /* Отступы внутри кнопки */
@@ -247,7 +247,7 @@ button {
 }
 
 button:hover {
-    background-color: #ff5e50; /* Цвет кнопки при наведении */
+    background-color: #b97297; /* Цвет кнопки при наведении */
 }
 
 .close {

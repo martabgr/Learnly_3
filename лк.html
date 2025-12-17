@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="лк.css">
+  <title>Личный кабинет</title>
+</head>
+<body>
+  <div class="profile">
+    <div class="greeting">Привет, <span id="userName"></span>!</div>
+    <img src="обезьянка.jpg" alt="Profile Photo" />
+    <div class="role" id="userRole"></div>
+    <div class="button-container">
+      <button class="button">Настройки</button>
+      <button class="button" onclick="window.location.href='курс.html'">Мои уроки</button>
+    </div>
+  </div>
+
+  <script>
+    const name = localStorage.getItem('userName');
+    const role = localStorage.getItem('userRole');
+
+    document.getElementById('userName').textContent = name || 'Гость';
+    document.getElementById('userRole').textContent = role || '';
+  </script>
+</body>
+</html>
