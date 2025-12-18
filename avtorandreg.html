@@ -200,9 +200,8 @@
     })
     .then(data => {
       console.log('Успешная регистрация:', data);
-      alert('Регистрация прошла успешно! Теперь войдите в систему.');
-      switchAuthTab('login');
-      document.getElementById('registerForm').reset();
+      alert('Регистрация прошла успешно!');
+      window.location.href = 'лк.html';
     })
     .catch(error => {
       console.error('Ошибка:', error);
@@ -253,7 +252,7 @@
       }
       
       alert('Добро пожаловать, ' + data.name + '!');
-      window.location.href = 'главная.html';
+      window.location.href = 'лк.html';
     })
     .catch(error => {
       console.error('Ошибка:', error);

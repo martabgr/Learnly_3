@@ -1,0 +1,157 @@
+<html>
+<head>
+    <title>Python-разработчик - Lernly</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="главная.css">
+    <link rel="stylesheet" href="курс.css">
+</head>
+<body>
+    <header>
+    <div class="logo">Lernly</div>
+    <nav>
+      <a href="главная.html" class="nav-link nav-link-pink">Главная</a>
+      <a href="онас.html" class="nav-link nav-link-pink">О нас</a>
+      <a href="курсы.html" class="nav-link nav-link-pink">Курсы</a>
+      <a href="avtorandreg.html" class="icon-link">
+        <img src="ic.png" alt="Войти/Регистрация" class="nav-icon">
+      </a>
+    </nav>
+  </header>
+
+    <div class="course-container">
+        <aside class="sidebar">
+            <h2 class="sidebar-title">Курсы</h2>
+            <input type="text" class="sidebar-search" placeholder="Поиск">
+            <ul class="course-list">
+                <li class="course-item active">Python-разработчик</li>
+                <li class="course-item">3D-дизайн</li>
+                <li class="course-item">UI/UX дизайн</li>
+                <li class="course-item">Java-разработчик</li>
+            </ul>
+        </aside>
+
+        <main class="course-main">
+            <div class="course-content">
+                <h1 class="course-title">Python- разработчик</h1>
+
+                <section class="lectures-section">
+                    <h2 class="section-title">Лекции</h2>
+                    <div class="items-list">
+                        <label class="item">
+                            <span class="item-number">Лекция 1</span>
+                            <span class="item-text">Введение в Python: синтаксис, переменные и типы данных</span>
+                            <input type="radio" name="lecture" class="item-radio">
+                            <span class="item-circle"></span>
+                        </label>
+                        <label class="item">
+                            <span class="item-number">Лекция 2</span>
+                            <span class="item-text">Управляющие конструкции: условия, циклы и логика исполнения</span>
+                            <input type="radio" name="lecture" class="item-radio">
+                            <span class="item-circle"></span>
+                        </label>
+                        <label class="item">
+                            <span class="item-number">Лекция 3</span>
+                            <span class="item-text">Функции и области видимости: модульность и переиспользование кода</span>
+                            <input type="radio" name="lecture" class="item-radio">
+                            <span class="item-circle"></span>
+                        </label>
+                        <label class="item">
+                            <span class="item-number">Лекция 4</span>
+                            <span class="item-text">Структуры данных: списки, словари, множества и кортежи</span>
+                            <input type="radio" name="lecture" class="item-radio">
+                            <span class="item-circle"></span>
+                        </label>
+                    </div>
+                </section>
+
+                <section class="tasks-section">
+                    <h2 class="section-title">Практические задания</h2>
+                    <div class="items-list">
+                        <label class="item">
+                            <span class="item-number">Задание 1</span>
+                            <span class="item-text">Калькулятор типов</span>
+                            <input type="radio" name="task" class="item-radio">
+                            <span class="item-circle"></span>
+                        </label>
+                        <label class="item">
+                            <span class="item-number">Задание 2</span>
+                            <span class="item-text">Фильтр чётных чисел</span>
+                            <input type="radio" name="task" class="item-radio">
+                            <span class="item-circle"></span>
+                        </label>
+                        <label class="item">
+                            <span class="item-number">Задание 3</span>
+                            <span class="item-text">Генератор паролей</span>
+                            <input type="radio" name="task" class="item-radio">
+                            <span class="item-circle"></span>
+                        </label>
+                        <label class="item">
+                            <span class="item-number">Задание 4</span>
+                            <span class="item-text">Анализ текста</span>
+                            <input type="radio" name="task" class="item-radio">
+                            <span class="item-circle"></span>
+                        </label>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <p>+375 29 XXX XX XX</p>
+                <p>Learnly@gmail.com</p>
+                <p style="margin-top: 2rem; font-weight: 600;">Публичный договор</p>
+                <p>Политика обработки персональных данных</p>
+                <p>Отзыв согласия на обработку персональных данных</p>
+            </div>
+            <div class="footer-column">
+                <p style="font-weight: 600; margin-bottom: 1rem;">Все курсы</p>
+                <p>Фронтенд-разработка</p>
+                <p>Дизайн</p>
+                <p>Бэкенд-разработка</p>
+                <p>3D-моделирование</p>
+                <p>Java-разработчик</p>
+            </div>
+            <div class="footer-column">
+                <p>Python-разработчик</p>
+                <p>Дизайн в Figma</p>
+                <p>JavaScript-фронтенд</p>
+                <p>JavaScript-бэкенд</p>
+                <p>2D-моделирование</p>
+                <p>Roblox-конструирование</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Поддержка темной темы
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+
+   // Функция входа
+   function handleLogin() {
+     // TODO: Здесь будет проверка с БД
+     // Пока просто перенаправляем на страницу курса
+      window.location.href = 'курс.html';
+    }
+
+    // Функция регистрации
+     function handleRegister() {
+      // TODO: Здесь будет регистрация в БД       // После успешной регистрации перенаправляем на страницу курса
+       window.location.href = 'курс.html';
+     }
+    </script>
+</body>
+</html>

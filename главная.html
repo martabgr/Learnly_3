@@ -11,11 +11,11 @@
   <header>
     <div class="logo">Lernly</div>
     <nav>
-      <a href="#" class="nav-link">Главная</a>
+       <a href="index.html" class="nav-link">Главная</a>
       <a href="онас.html" class="nav-link">О нас</a>
       <a href="курсы.html" class="nav-link">Курсы</a>
       <a href="avtorandreg.html" class="icon-link">
-  <img src="iconka.jpg" alt="Войти/Регистрация" class="nav-icon">
+  <img src="ic.png" alt="Войти/Регистрация" class="nav-icon">
 </a>
     </nav>
   </header>
@@ -178,7 +178,17 @@
         </div>
       </div>
     </section>
-
+<section class="leave-review-section">
+  <h3 class="review-header">Оставьте свой отзыв</h3>
+  <form id="reviewForm">
+    <div class="review-form-wrapper">
+      <input type="text" name="name" placeholder="Ваше имя" class="form-input" required>
+      <input type="email" name="email" placeholder="Ваша почта" class="form-input" required>
+      <textarea name="review" placeholder="Ваш отзыв" class="form-textarea" required></textarea>
+      <button type="submit" class="submit-button">Отправить отзыв</button>
+    </div>
+  </form>
+</section>
     <!-- Секция "Открой для себя мир IT" -->
     <section class="signup-section" id="signup">
       <h2>Открой для себя мир IT</h2>
@@ -208,44 +218,35 @@
         </div>
       </form>
     </section>
-     <footer>
-    <div class="footer-content">
-      <div class="footer-column footer-contacts">
-        <p class="footer-phone">+375 29 XXX XX XX</p>
-        <p class="footer-email">Learnly@gmail.com</p>
-        
-        <div class="footer-links">
-          <a href="#">Публичный договор</a>
-          <a href="#">Политика обработки персональных данных</a>
-          <a href="#">Отзыв согласия на обработку персональных данных</a>
-        </div>
-      </div>
-      
-      <div class="footer-column">
-        <h4>Все курсы</h4>
-        <ul>
-          <li><a href="#">Фронтенд-разработка</a></li>
-          <li><a href="#">Дизайн</a></li>
-          <li><a href="#">Бэкенд-разработка</a></li>
-          <li><a href="#">3D-моделирование</a></li>
-          <li><a href="#">Java-разработчик</a></li>
-        </ul>
-      </div>
-      
-      <div class="footer-column">
-        <ul class="footer-courses-list">
-          <li><a href="#">Python-разработчик</a></li>
-          <li><a href="#">Дизайн в Figma</a></li>
-          <li><a href="#">JavaScript-фронтенд</a></li>
-          <li><a href="#">JavaScript-бэкенд</a></li>
-          <li><a href="#">2D-моделирование</a></li>
-          <li><a href="#">Roblox-конструирование</a></li>
-        </ul>
-      </div>
-    </div>
-  </footer>
+ 
   </main>
-
+<footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <p>+375 29 XXX XX XX</p>
+                <p>Learnly@gmail.com</p>
+                <p style="margin-top: 2rem; font-weight: 600;">Публичный договор</p>
+                <p>Политика обработки персональных данных</p>
+                <p>Отзыв согласия на обработку персональных данных</p>
+            </div>
+            <div class="footer-column">
+                <p style="font-weight: 600; margin-bottom: 1rem;">Все курсы</p>
+                <p>Фронтенд-разработка</p>
+                <p>Дизайн</p>
+                <p>Бэкенд-разработка</p>
+                <p>3D-моделирование</p>
+                <p>Java-разработчик</p>
+            </div>
+            <div class="footer-column">
+                <p>Python-разработчик</p>
+                <p>Дизайн в Figma</p>
+                <p>JavaScript-фронтенд</p>
+                <p>JavaScript-бэкенд</p>
+                <p>2D-моделирование</p>
+                <p>Roblox-конструирование</p>
+            </div>
+        </div>
+    </footer>
  <script>
   let currentSlide = 1;
   const cards = document.querySelectorAll('.feature-card');
