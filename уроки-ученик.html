@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок - Ученик</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #c5d99e;
+            --card-bg: #f0c0c8;
+            --section-header-bg: #d8a0a8;
+            --item-bg: #f8d8dc;
+            --button-bg: #c98a94;
+            --button-text: #fff;
+            --title-text: #5a4a4a;
+            --section-title-text: #fff;
+            --label-text: #555;
+            --desc-text: #777;
+            --checkbox-border: #ccc;
+            --checkbox-checked: #c98a94;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        .dark {
+            --bg-main: #3a4a2e;
+            --card-bg: #8a5a64;
+            --section-header-bg: #7a4a54;
+            --item-bg: #9a6a74;
+            --button-bg: #a06a74;
+            --button-text: #fff;
+            --title-text: #fff;
+            --section-title-text: #fff;
+            --label-text: #ddd;
+            --desc-text: #ccc;
+            --checkbox-border: #aaa;
+            --checkbox-checked: #e8a0a8;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'Comfortaa', cursive;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-family: 'Comfortaa', cursive;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: fit-content;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .back-arrow {
+            font-size: 18px;
+        }
+
+        .course-card {
+            background-color: var(--card-bg);
+            border-radius: 30px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .course-title {
+            color: var(--title-text);
+            font-size: 26px;
+            font-weight: 700;
+            padding-left: 5px;
+        }
+
+        .section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .section-header {
+            background-color: var(--section-header-bg);
+            color: var(--section-title-text);
+            font-size: 18px;
+            font-weight: 600;
+            padding: 12px 20px;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .items-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .item-row {
+            background-color: var(--item-bg);
+            border-radius: 25px;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .item-row:hover {
+            transform: translateX(4px);
+        }
+
+        .item-label {
+            color: var(--label-text);
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            min-width: 90px;
+        }
+
+        .item-desc {
+            color: var(--desc-text);
+            font-size: 14px;
+            flex: 1;
+        }
+
+        .item-checkbox {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 3px solid var(--checkbox-border);
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .item-checkbox.checked {
+            border-color: var(--checkbox-checked);
+            background-color: var(--checkbox-checked);
+        }
+
+        .item-checkbox.checked::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: #fff;
+            border-radius: 50%;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+
+            .back-btn {
+                font-size: 14px;
+                padding: 10px 18px;
+            }
+
+            .course-card {
+                border-radius: 25px;
+                padding: 20px 15px;
+                gap: 15px;
+            }
+
+            .course-title {
+                font-size: 22px;
+            }
+
+            .section-header {
+                font-size: 16px;
+                padding: 10px 15px;
+            }
+
+            .item-row {
+                flex-wrap: wrap;
+                padding: 12px 15px;
+                gap: 10px;
+            }
+
+            .item-label {
+                font-size: 13px;
+                min-width: 80px;
+            }
+
+            .item-desc {
+                font-size: 13px;
+                flex-basis: calc(100% - 120px);
+            }
+
+            .item-checkbox {
+                width: 24px;
+                height: 24px;
+                margin-left: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-btn">
+            <span class="back-arrow">←</span>
+            вернуться назад
+        </button>
+
+        <div class="course-card">
+            <h1 class="course-title">Python- разработчик</h1>
+
+            <section class="section">
+                <h2 class="section-header">Лекции</h2>
+                <div class="items-list">
+                    <div class="item-row">
+                        <span class="item-label">Лекция 1</span>
+                        <span class="item-desc">Введение в Python: синтаксис, переменные и типы данных</span>
+                        <div class="item-checkbox checked"></div>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-label">Лекция 2</span>
+                        <span class="item-desc">Управляющие конструкции: условия, циклы и логика исполнения</span>
+                        <div class="item-checkbox"></div>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-label">Лекция 3</span>
+                        <span class="item-desc">Функции и области видимости: модульность и переиспользование кода</span>
+                        <div class="item-checkbox"></div>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-label">Лекция 4</span>
+                        <span class="item-desc">Структуры данных: списки, словари, множества и кортежи</span>
+                        <div class="item-checkbox"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-header">Практические задания</h2>
+                <div class="items-list">
+                    <div class="item-row">
+                        <span class="item-label">Задание 1</span>
+                        <span class="item-desc">Калькулятор типов</span>
+                        <div class="item-checkbox checked"></div>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-label">Задание 2</span>
+                        <span class="item-desc">Фильтр чётных чисел</span>
+                        <div class="item-checkbox"></div>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-label">Задание 3</span>
+                        <span class="item-desc">Генератор паролей</span>
+                        <div class="item-checkbox"></div>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-label">Задание 4</span>
+                        <span class="item-desc">Анализ текста</span>
+                        <div class="item-checkbox"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Dark mode detection
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+
+        // Toggle checkbox on click
+        document.querySelectorAll('.item-row').forEach(row => {
+            row.addEventListener('click', function() {
+                const checkbox = this.querySelector('.item-checkbox');
+                checkbox.classList.toggle('checked');
+            });
+        });
+    </script>
+</body>
+</html>

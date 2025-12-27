@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Настройки уроков</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #c5d99e;
+            --bg-sidebar: #9cb86b;
+            --panel-bg: #d4a0a8;
+            --section-bg: #e8c0c6;
+            --item-bg: #f5dde0;
+            --button-bg: #c98a94;
+            --button-text: #fff;
+            --title-text: #fff;
+            --label-text: #666;
+            --desc-text: #888;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        .dark {
+            --bg-main: #3a4a2e;
+            --bg-sidebar: #4a5a3e;
+            --panel-bg: #8a5a64;
+            --section-bg: #9a6a74;
+            --item-bg: #7a5a64;
+            --button-bg: #a06a74;
+            --button-text: #fff;
+            --title-text: #fff;
+            --label-text: #ddd;
+            --desc-text: #ccc;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'Comfortaa', cursive;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: var(--bg-main);
+            border-radius: 40px;
+            width: 100%;
+            max-width: 1000px;
+            min-height: 700px;
+            display: flex;
+            overflow: hidden;
+            box-shadow: 0 10px 40px var(--shadow);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background-color: var(--bg-sidebar);
+            width: 280px;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .sidebar-title {
+            color: var(--title-text);
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            padding-left: 10px;
+        }
+
+        .lessons-container {
+            background-color: var(--panel-bg);
+            border-radius: 30px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            flex: 1;
+        }
+
+        .lessons-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            flex: 1;
+        }
+
+        .lesson-btn {
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            border: none;
+            border-radius: 25px;
+            padding: 16px 24px;
+            font-size: 16px;
+            font-family: 'Comfortaa', cursive;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-align: center;
+        }
+
+        .lesson-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .lesson-btn.active {
+            background-color: #b07a84;
+        }
+
+        .add-btn {
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            border: none;
+            border-radius: 25px;
+            padding: 14px 24px;
+            font-size: 16px;
+            font-family: 'Comfortaa', cursive;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-top: auto;
+        }
+
+        .add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Main content */
+        .main-content {
+            flex: 1;
+            background-color: var(--panel-bg);
+            padding: 25px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow-y: auto;
+        }
+
+        .course-title {
+            color: var(--title-text);
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .section {
+            background-color: var(--section-bg);
+            border-radius: 20px;
+            padding: 20px;
+        }
+
+        .section-title {
+            color: var(--title-text);
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .items-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .item-row {
+            background-color: var(--item-bg);
+            border-radius: 25px;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            min-height: 48px;
+        }
+
+        .item-label {
+            background-color: var(--item-bg);
+            color: var(--label-text);
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            min-width: 90px;
+        }
+
+        .item-desc {
+            color: var(--desc-text);
+            font-size: 14px;
+            flex: 1;
+        }
+
+        .item-row.empty {
+            background-color: var(--item-bg);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                border-radius: 30px;
+                min-height: auto;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 20px;
+            }
+
+            .sidebar-title {
+                font-size: 26px;
+                margin-bottom: 15px;
+            }
+
+            .lessons-container {
+                flex-direction: row;
+                flex-wrap: wrap;
+                align-items: center;
+            }
+
+            .lessons-list {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 10px;
+                flex: 1;
+            }
+
+            .lesson-btn {
+                padding: 12px 18px;
+                font-size: 14px;
+            }
+
+            .add-btn {
+                margin-top: 0;
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .course-title {
+                font-size: 20px;
+            }
+
+            .section {
+                padding: 15px;
+            }
+
+            .section-title {
+                font-size: 18px;
+            }
+
+            .item-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                padding: 14px 16px;
+            }
+
+            .item-label {
+                font-size: 13px;
+            }
+
+            .item-desc {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .sidebar {
+                padding: 15px;
+            }
+
+            .sidebar-title {
+                font-size: 22px;
+            }
+
+            .lesson-btn, .add-btn {
+                padding: 10px 14px;
+                font-size: 12px;
+                border-radius: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h1 class="sidebar-title">уроки</h1>
+            <div class="lessons-container">
+                <div class="lessons-list">
+                    <button class="lesson-btn active">название урока</button>
+                    <button class="lesson-btn">название урока</button>
+                </div>
+                <button class="add-btn">добавить</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <h2 class="course-title">Python- разработчик</h2>
+
+            <section class="section">
+                <h3 class="section-title">Лекции</h3>
+                <div class="items-list">
+                    <div class="item-row">
+                        <span class="item-label">Лекция 1</span>
+                        <span class="item-desc">Введение в Python: синтаксис, переменные и типы данных</span>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-label">Лекция 2</span>
+                        <span class="item-desc">Управляющие конструкции: условия, циклы и логика исполнения</span>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-label">Лекция 3</span>
+                        <span class="item-desc">Функции и области видимости: модульность и переиспользование кода</span>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-label">Лекция 4</span>
+                        <span class="item-desc">Структуры данных: списки, словари, множества и кортежи</span>
+                    </div>
+                    <div class="item-row empty"></div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h3 class="section-title">Практические задания</h3>
+                <div class="items-list">
+                    <div class="item-row">
+                        <span class="item-label">Задание 1</span>
+                        <span class="item-desc">Калькулятор типов</span>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-label">Задание 2</span>
+                        <span class="item-desc">Фильтр чётных чисел</span>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-label">Задание 3</span>
+                        <span class="item-desc">Генератор паролей</span>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-label">Задание 4</span>
+                        <span class="item-desc">Анализ текста</span>
+                    </div>
+                    <div class="item-row empty"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Dark mode detection
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+
+        // Lesson button click handling
+        document.querySelectorAll('.lesson-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.lesson-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Настройки профиля</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #c5d99e;
+            --text-dark: #5a6a4a;
+            --panel-bg: #c4909a;
+            --button-bg: #f2c4cb;
+            --button-text: #d4707a;
+            --label-text: #fff;
+            --value-text: #f0b8c0;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        .dark {
+            --bg-main: #3a4a2e;
+            --text-dark: #d0e0c0;
+            --panel-bg: #8a5a64;
+            --button-bg: #b87a84;
+            --button-text: #fff;
+            --label-text: #fff;
+            --value-text: #e0a0a8;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'Comfortaa', cursive;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: var(--bg-main);
+            border-radius: 40px;
+            width: 100%;
+            max-width: 700px;
+            min-height: 550px;
+            display: flex;
+            flex-direction: column;
+            padding: 25px;
+            box-shadow: 0 10px 40px var(--shadow);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 25px;
+            font-size: 18px;
+            font-family: 'Comfortaa', cursive;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: fit-content;
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .back-arrow {
+            font-size: 20px;
+        }
+
+        .settings-card {
+            background-color: var(--panel-bg);
+            border-radius: 30px;
+            padding: 35px;
+            flex: 1;
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .photo-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            flex-shrink: 0;
+        }
+
+        .avatar-container {
+            width: 220px;
+            height: 280px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .avatar-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .change-photo-btn {
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            border: none;
+            border-radius: 20px;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-family: 'Comfortaa', cursive;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .change-photo-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .info-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 25px;
+            padding: 20px 0;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .info-label {
+            color: var(--label-text);
+            font-size: 18px;
+            font-weight: 700;
+            min-width: 80px;
+        }
+
+        .info-value {
+            color: var(--value-text);
+            font-size: 18px;
+            flex: 1;
+        }
+
+        .edit-btn {
+            background: none;
+            border: none;
+            color: var(--label-text);
+            cursor: pointer;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+
+        .edit-btn:hover {
+            transform: scale(1.15);
+        }
+
+        .edit-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                border-radius: 30px;
+                padding: 20px;
+            }
+
+            .back-btn {
+                font-size: 14px;
+                padding: 10px 18px;
+            }
+
+            .settings-card {
+                flex-direction: column;
+                align-items: center;
+                padding: 25px 20px;
+                gap: 25px;
+            }
+
+            .avatar-container {
+                width: 160px;
+                height: 200px;
+            }
+
+            .info-section {
+                width: 100%;
+                gap: 20px;
+            }
+
+            .info-row {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .info-label {
+                font-size: 16px;
+                min-width: 70px;
+            }
+
+            .info-value {
+                font-size: 15px;
+                flex: 1;
+                min-width: 120px;
+            }
+
+            .change-photo-btn {
+                font-size: 14px;
+                padding: 12px 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-btn">
+            <span class="back-arrow">←</span>
+            личный кабинет
+        </button>
+
+        <div class="settings-card">
+            <div class="photo-section">
+                <div class="avatar-container">
+                    <!-- Замените src на путь к вашему фото -->
+                    <img src="обезьянка.jpg" alt="Аватар">
+                </div>
+                <button class="change-photo-btn">изменить фото</button>
+            </div>
+
+            <div class="info-section">
+                <div class="info-row">
+                    <span class="info-label">имя :</span>
+                    <span class="info-value">текущее имя</span>
+                    <button class="edit-btn" aria-label="Редактировать имя">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label">почта:</span>
+                    <span class="info-value">текущая почта</span>
+                    <button class="edit-btn" aria-label="Редактировать почту">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label">пароль:</span>
+                    <span class="info-value">текущий пароль</span>
+                    <button class="edit-btn" aria-label="Редактировать пароль">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dark mode detection
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+    </script>
+</body>
+</html>
