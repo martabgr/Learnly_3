@@ -165,6 +165,7 @@
             box-shadow: 0 8px 16px var(--shadow);
             border: none;
             cursor: pointer;
+            margin-top: 20px;
         }
 
         .cta-button:hover {
@@ -283,7 +284,7 @@
 
 .card-grid {
   display: flex;
-  gap: 30px;
+  gap: 20px;
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -331,74 +332,38 @@
   border-radius: 20px;
   font-weight: 600;
   transition: background 0.3s ease;
+ 
 }
 
 .card-button:hover {
   background: var(--accent-pink-hover);
+  
 }
-
-
 .leave-review-section {
-  padding: 20px; /* Уменьшен отступ */
-  background-color: #b36989;; /* Светлый фон для секции */
-  border-radius: 20px; /* Скругленные углы */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Легкая тень */
-  max-width: 350px; /* Максимальная ширина контейнера */
-  margin: 40px auto; /* Центрирование на странице */
-}
-.review-header {
-  color: white; /* Цвет текста */
-  font-size: 24px; /* Размер шрифта */
-  text-align: right; /* Выравнивание по центру */
-  margin-bottom: 20px; /* Отступ снизу */
-}
-.review-form-wrapper {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    justify-content: flex-end; /* Выравнивание кнопки вправо */
+    padding: 10px; /* Отступы для внешнего вида */
 }
 
-.form-input {
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  transition: border-color 0.3s; /* Плавный переход цвета границы */
+.feedback-button {
+  display: inline-block;
+            padding: 20px 80px;
+            background: var(--accent-pink);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 24px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 16px var(--shadow);
+            border: none;
+            cursor: pointer;
 }
 
-.form-input:focus {
-  border-color: #007BFF; /* Цвет границы при фокусе */
+.feedback-button:hover {
+    background-color: #c75580; /* Цвет кнопки при наведении */
 }
 
-.form-textarea {
-  padding: 10px;
-  height: 50px; /* Уменьшена высота текстового поля */
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  resize: none; /* Запрет изменения размеров */
-  transition: border-color 0.3s; /* Плавный переход цвета границы */
-}
-
-.form-textarea:focus {
-  border-color: #007BFF; /* Цвет границы при фокусе */
-}
-
-.submit-button {
-  background-color: #007BFF;
-  color: white;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s; /* Плавный переход цвета фона */
-}
-
-.submit-button:hover {
-  background-color: #0056b3; /* Цвет кнопки при наведении */
-}
-.view-more {
-  margin-top: 50px;
-}
 /* Секция "Поможем достичь результата" */
 .results-section {
   background: var(--lime-bg);
@@ -607,6 +572,90 @@
   .reviews-section h2 {
     font-size: 2.5rem;
   }
+}
+
+/* Стиль модального окна */
+.modal {
+    display: none; /* Скрыто по умолчанию */
+    position: fixed; /* Позиция фиксированная */
+    z-index: 1000; /* Поверх остальных элементов */
+    left: 0;
+    top: 0;
+    width: 100%; /* Ширина на весь экран */
+    height: 100%; /* Высота на весь экран */
+    overflow: auto; /* Добавляет прокрутку при необходимости */
+    background-color: rgb(0, 0, 0); /* Цвет фона */
+    background-color: rgba(0, 0, 0, 0.4); /* Полупрозрачный фон */
+}
+
+/* Стиль модального окна */
+.modal {
+  display: none; /* Скрыто по умолчанию */
+  position: fixed; /* Позиция фиксированная */
+  z-index: 1000; /* Поверх остальных элементов */
+  left: 0;
+  top: 0;
+  width: 100%; /* Ширина на весь экран */
+  height: 100%; /* Высота на весь экран */
+  background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
+}
+
+/* Содержимое модального окна */
+.modal-content {
+  background-color: #fff; /* Цвет фона содержимого */
+  margin: 15% auto; /* Центрируем по вертикали */
+  padding: 20px; /* Внутренние отступы */
+  border-radius: 8px; /* Скругление углов */
+  width: 90%; /* Ширина */
+  max-width: 500px; /* Максимальная ширина */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Тень */
+}
+
+/* Группа форм */
+.form-group {
+  margin-bottom: 15px; /* Отступ между элементами */
+}
+
+/* Поля ввода и текстовая область */
+.form-input, .form-textarea {
+  
+  max-width: 100%;
+  width: 100%;
+  max-height: 30%;
+  padding: 10px; /* Внутренние отступы */
+  border: 1px solid #ccc; /* Граница */
+  border-radius: 5px; /* Скругление углов */
+}
+
+/* Кнопка отправки */
+.submit-button {
+  background-color: #e67e22; /* Цвет кнопки */
+  color: white; /* Цвет текста */
+  border: none; /* Убираем границы */
+  padding: 10px; /* Отступы внутри кнопки */
+  border-radius: 5px; /* Скругление углов */
+  cursor: pointer; /* Указатель нажатия */
+  transition: background-color 0.3s; /* Плавный переход цвета */
+  width: 100%; /* Ширина на весь экран */
+}
+
+.submit-button:hover {
+  background-color: #d96a21; /* Цвет кнопки при наведении */
+}
+
+/* Кнопка закрытия */
+.close {
+  color: #aaa; /* Цвет текста */
+  float: right; /* Справа */
+  font-size: 28px; /* Размер шрифта */
+  font-weight: bold; /* Жирный */
+}
+
+.close:hover,
+.close:focus {
+  color: black; /* Цвет при наведении */
+  text-decoration: none; /* Убираем подчеркивание */
+  cursor: pointer; /* Указатель нажатия */
 }
 /* Секция "Открой для себя мир IT" */
 .signup-section {

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оплата курса</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="оплата.css">
+</head>
+<body>
+    <main class="main-content" id="mainContent">
+        <!-- Payment Form View -->
+        <div id="paymentView">
+            <h1 class="page-title">Оплата курса</h1>
+
+            <div class="payment-card">
+            <div class="info-row">
+                <span class="info-label">Курс:</span>
+                <span class="info-value">Здесь будет название выбранного курса</span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">Цена:</span>
+                <span class="info-value">Здесь будет цена выбранного курса</span>
+            </div>
+
+            <form id="paymentForm">
+                <div class="form-group">
+                    <input
+                        type="text"
+                        id="cardNumber"
+                        class="input-field"
+                        placeholder="Введите номер карты"
+                        maxlength="19"
+                        inputmode="numeric"
+                        autocomplete="cc-number"
+                    >
+                    <div class="error-message" id="cardNumberError">Введите корректный номер карты (16 цифр)</div>
+                </div>
+
+                <div class="input-row">
+                    <div class="form-group">
+                        <input
+                            type="text"
+                            id="expiryDate"
+                            class="input-field"
+                            placeholder="Срок действия"
+                            maxlength="5"
+                            inputmode="numeric"
+                            autocomplete="cc-exp"
+                        >
+                        <div class="error-message" id="expiryDateError">Введите корректную дату (ММ/ГГ)</div>
+                    </div>
+
+                    <div class="form-group">
+                        <input
+                            type="text"
+                            id="cvv"
+                            class="input-field"
+                            placeholder="CVV / CVC"
+                            maxlength="4"
+                            inputmode="numeric"
+                            autocomplete="cc-csc"
+                        >
+                        <div class="error-message" id="cvvError">Введите 3 или 4 цифры</div>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">Записаться</button>
+            </form>
+        </div>
+        </div>
+
+        <!-- Success View -->
+        <div id="successView" class="success-view" style="display: none;">
+            <h1 class="success-title">Оплата прошла успешно!</h1>
+            <a href="лк.html" class="success-btn">Перейти в личный кабинет</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <p>+375 29 XXX XX XX</p>
+                <a href="mailto:Learnly@gmail.com">Learnly@gmail.com</a>
+                <br>
+                <a href="#">Публичный договор</a>
+                <a href="#">Политика обработки персональных данных</a>
+                <a href="#">Отзыв согласия на обработку персональных данных</a>
+            </div>
+
+            <div class="footer-section">
+                <h4>Все курсы</h4>
+                <div class="footer-links">
+                    <div class="footer-links-column">
+                        <a href="#">Фронтент-разработка</a>
+                        <a href="#">Дизайн</a>
+                        <a href="#">Бэкенд-разработка</a>
+                        <a href="#">3D-моделирование</a>
+                        <a href="#">Java-разработчик</a>
+                    </div>
+                    <div class="footer-links-column">
+                        <a href="#">Python-разработчик</a>
+                        <a href="#">Дизайн в Figma</a>
+                        <a href="#">JavaScript-фронтенд</a>
+                        <a href="#">JavaScript-бэкенд</a>
+                        <a href="#">2D-моделирование</a>
+                        <a href="#">Roblox-конструирование</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content">
+            <div class="modal-icon" id="modalIcon">✓</div>
+            <h3 class="modal-title" id="modalTitle">Успешно!</h3>
+            <p class="modal-message" id="modalMessage">Ваша заявка принята</p>
+            <button class="modal-btn" onclick="closeModal()">OK</button>
+        </div>
+    </div>
+
+    <script>
+        // Dark mode detection
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+
+        // DOM Elements
+        const form = document.getElementById('paymentForm');
+        const cardNumberInput = document.getElementById('cardNumber');
+        const expiryDateInput = document.getElementById('expiryDate');
+        const cvvInput = document.getElementById('cvv');
+
+        // Format card number with spaces
+        cardNumberInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            value = value.substring(0, 16);
+            let formatted = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+            e.target.value = formatted;
+            validateField(cardNumberInput, validateCardNumber);
+        });
+
+        // Format expiry date
+        expiryDateInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            value = value.substring(0, 4);
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2);
+            }
+            e.target.value = value;
+            validateField(expiryDateInput, validateExpiryDate);
+        });
+
+        // Format CVV
+        cvvInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            e.target.value = value.substring(0, 4);
+            validateField(cvvInput, validateCVV);
+        });
+
+        // Luhn algorithm for card validation
+        function luhnCheck(cardNumber) {
+            const digits = cardNumber.replace(/\D/g, '');
+            if (digits.length !== 16) return false;
+
+            let sum = 0;
+            let isEven = false;
+
+            for (let i = digits.length - 1; i >= 0; i--) {
+                let digit = parseInt(digits[i], 10);
+
+                if (isEven) {
+                    digit *= 2;
+                    if (digit > 9) {
+                        digit -= 9;
+                    }
+                }
+
+                sum += digit;
+                isEven = !isEven;
+            }
+
+            return sum % 10 === 0;
+        }
+
+        // Validation functions
+        function validateCardNumber(value) {
+            const digits = value.replace(/\D/g, '');
+            return digits.length === 16 && luhnCheck(digits);
+        }
+
+        function validateExpiryDate(value) {
+            const regex = /^(0[1-9]|1[0-2])\/(\d{2})$/;
+            if (!regex.test(value)) return false;
+
+            const [month, year] = value.split('/');
+            const expMonth = parseInt(month, 10);
+            const expYear = parseInt('20' + year, 10);
+
+            const now = new Date();
+            const currentMonth = now.getMonth() + 1;
+            const currentYear = now.getFullYear();
+
+            if (expYear < currentYear) return false;
+            if (expYear === currentYear && expMonth < currentMonth) return false;
+            if (expYear > currentYear + 20) return false;
+
+            return true;
+        }
+
+        function validateCVV(value) {
+            const digits = value.replace(/\D/g, '');
+            return digits.length >= 3 && digits.length <= 4;
+        }
+
+        // Validate field and show/hide error
+        function validateField(input, validationFn) {
+            const errorElement = document.getElementById(input.id + 'Error');
+            const isValid = validationFn(input.value);
+
+            if (input.value.length === 0) {
+                input.classList.remove('error', 'valid');
+                errorElement.classList.remove('show');
+            } else if (isValid) {
+                input.classList.remove('error');
+                input.classList.add('valid');
+                errorElement.classList.remove('show');
+            } else {
+                input.classList.add('error');
+                input.classList.remove('valid');
+                errorElement.classList.add('show');
+            }
+
+            return isValid;
+        }
+
+        // Modal functions
+        function showModal(isSuccess, title, message) {
+            const modal = document.getElementById('modal');
+            const modalIcon = document.getElementById('modalIcon');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalMessage = document.getElementById('modalMessage');
+
+            modalIcon.textContent = isSuccess ? '✓' : '✕';
+            modalIcon.className = 'modal-icon ' + (isSuccess ? 'success' : 'error');
+            modalTitle.textContent = title;
+            modalMessage.textContent = message;
+
+            modal.classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('show');
+        }
+
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const isCardValid = validateField(cardNumberInput, validateCardNumber);
+            const isExpiryValid = validateField(expiryDateInput, validateExpiryDate);
+            const isCVVValid = validateField(cvvInput, validateCVV);
+
+            // Check if any field is empty
+            if (cardNumberInput.value.length === 0) {
+                cardNumberInput.classList.add('error');
+                document.getElementById('cardNumberError').classList.add('show');
+            }
+            if (expiryDateInput.value.length === 0) {
+                expiryDateInput.classList.add('error');
+                document.getElementById('expiryDateError').classList.add('show');
+            }
+            if (cvvInput.value.length === 0) {
+                cvvInput.classList.add('error');
+                document.getElementById('cvvError').classList.add('show');
+            }
+
+            if (isCardValid && isExpiryValid && isCVVValid) {
+                // Hide payment form and show success view
+                document.getElementById('paymentView').style.display = 'none';
+                document.getElementById('successView').style.display = 'flex';
+                form.reset();
+                [cardNumberInput, expiryDateInput, cvvInput].forEach(input => {
+                    input.classList.remove('valid', 'error');
+                });
+            } else {
+                showModal(false, 'Ошибка', 'Пожалуйста, проверьте правильность введённых данных карты.');
+            }
+        });
+
+        // Close modal on overlay click
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -11,7 +11,7 @@
   <header>
     <div class="logo">Lernly</div>
     <nav>
-       <a href="index.html" class="nav-link">Главная</a>
+       <a href="главная.html" class="nav-link">Главная</a>
       <a href="онас.html" class="nav-link">О нас</a>
       <a href="курсы.html" class="nav-link">Курсы</a>
       <a href="avtorandreg.html" class="icon-link">
@@ -36,21 +36,22 @@
     <div class="card">
       <h3>Python-разработчик</h3>
       <p>Изучи Python и начни свой путь в IT</p>
-      <img src="обезьянка.jpg" alt="Python-разработчик">
+      <img src="питон.jpg" alt="Python-разработчик">
       <a href="#" class="card-button">Подробнее ➝</a>
     </div>
 
     <div class="card">
       <h3>3D-моделирование</h3>
       <p>Попробуй себя в роли 3D-дизайнера</p>
-      <img src="обезьянка.jpg" alt="3D-моделирование">
+      <img src="3дмоделирование.jpg" alt="3D-моделирование">
       <a href="#" class="card-button">Подробнее ➝</a>
     </div>
 
     <div class="card">
       <h3>Дизайн в Figma</h3>
       <p>Научись создавать ходовой дизайн с нуля</p>
-      <img src="обезьянка.jpg" alt="Дизайн в Figma">
+      <img src="фигма.jpg" alt="Дизайн в Figma">
+      
       <a href="#" class="card-button">Подробнее ➝</a>
     </div>
   </div>
@@ -179,16 +180,27 @@
       </div>
     </section>
 <section class="leave-review-section">
-  <h3 class="review-header">Оставьте свой отзыв</h3>
-  <form id="reviewForm">
-    <div class="review-form-wrapper">
-      <input type="text" name="name" placeholder="Ваше имя" class="form-input" required>
-      <input type="email" name="email" placeholder="Ваша почта" class="form-input" required>
-      <textarea name="review" placeholder="Ваш отзыв" class="form-textarea" required></textarea>
-      <button type="submit" class="submit-button">Отправить отзыв</button>
-    </div>
-  </form>
+  <button class="feedback-button" onclick="openReviewForm()">Оставить отзыв →</button>
 </section>
+
+<div id="reviewModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeReviewForm()">&times;</span>
+    <h3>Оставьте свой отзыв</h3>
+    <form id="reviewForm">
+      <div class="form-group">
+        <input type="text" name="name" placeholder="Ваше имя" class="form-input" required>
+      </div>
+      <div class="form-group">
+        <input type="email" name="email" placeholder="Ваша почта" class="form-input" required>
+      </div>
+      <div class="form-group">
+        <textarea name="review" placeholder="Ваш отзыв" class="form-textarea" required></textarea>
+      </div>
+      <button type="submit" class="submit-button">Отправить отзыв</button>
+    </form>
+  </div>
+</div>
     <!-- Секция "Открой для себя мир IT" -->
     <section class="signup-section" id="signup">
       <h2>Открой для себя мир IT</h2>
@@ -320,6 +332,21 @@
       alert('Ошибка при отправке заявки: ' + error.message);
     });
   });
+  function openReviewForm() {
+    document.getElementById("reviewModal").style.display = "block"; // Показываем модальное окно
+}
+
+function closeReviewForm() {
+    document.getElementById("reviewModal").style.display = "none"; // Скрываем модальное окно
+}
+
+// Закрытие модального окна при щелчке вне его содержимого
+window.onclick = function(event) {
+    const modal = document.getElementById("reviewModal");
+    if (event.target === modal) {
+        modal.style.display = "none"; // Скрываем модальное окно
+    }
+}
 </script>
   
 </body>
