@@ -234,15 +234,14 @@
     </div>
   </footer>
   <script>
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  document.getElementById('contactFormCourses').addEventListener('submit', function(event) {
+  // ОБРАБОТКА ФОРМЫ ЗАЯВКИ
+  document.getElementById('applicationForm').addEventListener('submit', function(event) {
     event.preventDefault(); 
     
     const formData = new FormData(this);
     const name = formData.get('name');
     const email = formData.get('email');
     const phone = formData.get('phone');
-    
     
     const data = {
       name: name,
@@ -271,8 +270,7 @@
       console.log('Запрос успешно отправлен:', data);
       alert('Спасибо! Ваш запрос принят. Мы свяжемся с вами в ближайшее время!');
       
-      
-      document.getElementById('contactFormCourses').reset();
+      document.getElementById('applicationForm').reset();
     })
     .catch(error => {
       console.error('Ошибка:', error);

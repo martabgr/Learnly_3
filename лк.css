@@ -1,4 +1,4 @@
- * {
+* {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -148,3 +148,56 @@
                 grid-template-columns: 1fr;
             }
         }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #b1d298;
+            font-family: Arial, sans-serif;
+        }
+
+        .profile {
+            text-align: center;
+        }
+
+        .profile img {
+            width: 100px;
+            height: auto;
+            border-radius: 20%;
+           
+        }
+
+        .greeting {
+            font-size: 24px;
+            margin: 10px 0;
+        }
+
+        .role {
+            font-size: 18px;
+            color: #855e94;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            background-color: #d481b2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .button:hover {
+            background-color: #d24892;
+        }
+    
+
