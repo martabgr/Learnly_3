@@ -12,7 +12,7 @@
   <main class="auth-page">
   
     <a href="главная.html" class="back-button">←</a>
-`
+
     <section class="auth-section">
       <h1>Добро пожаловать в Lernly!</h1>
 
@@ -55,48 +55,49 @@
           <button class="auth-submit-button" type="submit">Войти</button>
         </form>
 
-<form id="registerForm" class="auth-form">
-  <div class="teacher-checkbox teacher-checkbox-pink">
-    <label>
-      <span>Я преподаватель</span>
-      <input type="checkbox" id="registerTeacher" name="role">
-    </label>
-  </div>
+        <!-- Форма регистрации -->
+        <form id="registerForm" class="auth-form">
+          <div class="teacher-checkbox teacher-checkbox-pink">
+            <label>
+              <span>Я преподаватель</span>
+              <input type="checkbox" id="registerTeacher" name="role">
+            </label>
+          </div>
 
-  <input type="text" placeholder="Введите свое Имя" class="auth-input" name="name" required>
-  <input type="email" placeholder="Введите email" class="auth-input" name="email" required>
+          <input type="text" placeholder="Введите свое Имя" class="auth-input" name="name" required>
+          <input type="email" placeholder="Введите email" class="auth-input" name="email" required>
 
-  <div class="password-field">
-    <input type="password" placeholder="Пароль" class="auth-input" id="registerPassword" name="password" required>
-    <button type="button" class="toggle-password" onclick="togglePassword('registerPassword')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-        <circle cx="12" cy="12" r="3"></circle>
-      </svg>
-    </button>
-  </div>
+          <div class="password-field">
+            <input type="password" placeholder="Пароль" class="auth-input" id="registerPassword" name="password" required>
+            <button type="button" class="toggle-password" onclick="togglePassword('registerPassword')">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
 
-  <div class="password-field">
-    <input type="password" placeholder="Повторите пароль" class="auth-input" id="registerPassword2" required>
-    <button type="button" class="toggle-password" onclick="togglePassword('registerPassword2')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-        <circle cx="12" cy="12" r="3"></circle>
-      </svg>
-    </button>
-  </div>
+          <div class="password-field">
+            <input type="password" placeholder="Повторите пароль" class="auth-input" id="registerPassword2" required>
+            <button type="button" class="toggle-password" onclick="togglePassword('registerPassword2')">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
 
-  <label class="consent-checkbox">
-    <input type="checkbox" required>
-    <span>Я соглашаюсь на обработку персональных данных</span>
-  </label>
+          <label class="consent-checkbox">
+            <input type="checkbox" required>
+            <span>Я соглашаюсь на обработку персональных данных</span>
+          </label>
 
-  <button class="auth-submit-button" type="submit">Зарегистрироваться</button>
+          <button class="auth-submit-button" type="submit">Зарегистрироваться</button>
 
-  <p class="register-note">
-    Нажимая на кнопку, я соглашаюсь с публичной офертой, правилами акции «Поможем найти работу или вернем деньги» и с правилами программы лояльности.
-  </p>
-</form>
+          <p class="register-note">
+            Нажимая на кнопку, я соглашаюсь с публичной офертой, правилами акции «Поможем найти работу или вернем деньги» и с правилами программы лояльности.
+          </p>
+        </form>
       </div>
     </section>
   </main>
@@ -138,7 +139,7 @@
     </div>
   </footer>
 
- <script>
+  <script>
   function switchAuthTab(tab) {
     const loginForm = document.getElementById('loginForm');
     const registerForm = document.getElementById('registerForm');
@@ -155,6 +156,32 @@
       tabs[1].classList.add('auth-tab-active');
       tabs[0].classList.remove('auth-tab-active');
     }
+  }
+
+  // Функция для автоматического входа после регистрации
+  function autoLogin(email, password, role) {
+    return fetch('http://127.0.0.1:4000/api/auth/signin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, password, role })
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Ошибка автоматического входа');
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (data.token) {
+        localStorage.setItem('authToken', data.token);
+        localStorage.setItem('userName', data.name);
+        localStorage.setItem('userRole', data.role);
+        localStorage.setItem('userId', data.id);
+      }
+      return data;
+    });
   }
 
   // РЕГИСТРАЦИЯ
@@ -200,12 +227,15 @@
     })
     .then(data => {
       console.log('Успешная регистрация:', data);
-      alert('Регистрация прошла успешно!');
+      return autoLogin(email, password, role);
+    })
+    .then(loginData => {
+      alert('Регистрация прошла успешно! Добро пожаловать, ' + loginData.name + '!');
       window.location.href = 'лк.html';
     })
     .catch(error => {
       console.error('Ошибка:', error);
-      alert('Произошла ошибка при регистрации: ' + error.message);
+      alert('Произошла ошибка: ' + error.message);
     });
   });
 
