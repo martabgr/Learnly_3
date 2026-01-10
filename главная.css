@@ -878,3 +878,202 @@ footer {
 .footer-column ul li a:hover {
     opacity: 0.7; /* Эффект наведения */
 }
+/* ===== ПРОСТЫЕ И КРАСИВЫЕ СТИЛИ ДЛЯ ОТЗЫВОВ ===== */
+
+/* Секция отзывов */
+.reviews-section {
+    padding: 4rem 2rem;
+    background: var(--bg-main);
+}
+
+.reviews-section h2 {
+    text-align: center;
+    font-size: 3rem;
+    color: var(--white);
+    font-weight: 900;
+    margin-bottom: 2rem;
+}
+
+/* Контейнер с отзывами */
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+.review-card {
+    background: #e879a3;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.review-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--accent-pink);
+    box-shadow: 0 15px 35px rgba(199, 122, 159, 0.2);
+}
+
+/* Заголовок карточки */
+.review-header h3 {
+    color: var(--text-primary);
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Текст отзыва */
+.review-card p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+/* Кнопка "Оставить отзыв" */
+.feedback-button {
+    display: block;
+    width: 250px;
+    margin: 3rem auto 0;
+    padding: 1rem 2rem;
+    background: var(--accent-pink);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.feedback-button:hover {
+    background: var(--accent-pink-hover);
+    transform: scale(1.05);
+}
+
+/* Модальное окно - ПРОСТО И ЧИСТО */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    position: relative;
+    background: #e879a3;
+    width: 90%;
+    max-width: 500px;
+    margin: 100px auto;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+/* Кнопка закрытия */
+.close {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #666;
+}
+
+/* Поля формы */
+.form-input, .form-textarea {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 2px solid #b8cc5c;
+    border-radius: 10px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+}
+
+.form-input:focus, .form-textarea:focus {
+    outline: none;
+    border-color: var(--accent-pink);
+}
+
+.form-textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+/* Кнопка отправки */
+.submit-button {
+    width: 100%;
+    padding: 1rem;
+    background: var(--accent-pink);
+    color: #b8cc5c;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.submit-button:hover {
+    background: var(--accent-pink-hover);
+}
+
+/* Адаптивность */
+@media (max-width: 900px) {
+    .reviews-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .reviews-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .reviews-section {
+        padding: 2rem 1rem;
+    }
+    
+    .reviews-section h2 {
+        font-size: 2.2rem;
+    }
+    
+    .modal-content {
+        margin: 50px auto;
+        padding: 1.5rem;
+    }
+}
+
+/* Темная тема */
+.dark .review-card {
+    background: var(--bg-gradient-start);
+    color: var(--text-primary);
+}
+
+.dark .review-card p {
+    color: var(--text-secondary);
+}
+
+.dark .modal-content {
+    background: var(--bg-gradient-end);
+}
+
+.dark .form-input,
+.dark .form-textarea {
+    background: var(--bg-main);
+    color: var(--text-primary);
+    border-color: var(--text-secondary);
+}

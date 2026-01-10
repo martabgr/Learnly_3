@@ -121,3 +121,42 @@ exports.createApplication = (req, res) => {
         });
     });
 };
+
+// Получить все комментарии
+exports.getComments = (req, res) => {
+  const sql = "SELECT * FROM `comments` ORDER BY `id` DESC";
+  db.query(sql, (error, results) => {
+    if (error) {
+      console.error("Ошибка получения комментариев:", error);
+      return res.status(500).json({ message: 'Ошибка сервера', error });
+    }
+    res.status(200).json(results); // Возвращаем все комментарии
+  });
+};
+
+// Добавить новый комментарий
+exports.addComment = (req, res) => {
+  const { name, email, reviewText } = req.body;
+
+  // Проверка наличия пользователя в базе по email
+  db.query("SELECT `id`, `name` FROM `users` WHERE `email` = ?", [email], (error, results) => {
+    if (error) {
+      return res.status(500).json({ message: 'Ошибка базы данных', error });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ message: 'Пользователь с таким email не найден' });
+    }
+
+    // Добавление комментария в таблицу comments
+    const sql = "INSERT INTO `comments`(`comment_text`, `name`) VALUES (?, ?)";
+    db.query(sql, [reviewText, name], (error, results) => {
+      if (error) {
+        console.error("Ошибка добавления комментария:", error);
+        return res.status(500).json({ message: 'Ошибка при добавлении комментария', error });
+      }
+      
+      res.status(201).json({ message: 'Комментарий добавлен!', comment: { name, comment_text: reviewText } });
+    });
+  });
+};
