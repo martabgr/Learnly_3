@@ -36,7 +36,33 @@
             flex-direction: column;
             transition: background-color 0.3s ease;
         }
+/* Кнопка "Назад" */
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 5%;
+  background: #e8a5b8;
+  color: white;
+  border: none;
+  padding: 15px 50px;
+  border-radius: 60px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 100;
+}
 
+.back-button:hover {
+  background: #d98ba3;
+  transform: scale(1.05);
+}
+
+/* Добавь position: relative к родителю */
+.courses-page {
+  position: relative;
+}
         .main-content {
             flex: 1;
             display: flex;

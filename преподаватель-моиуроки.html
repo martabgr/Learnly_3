@@ -45,64 +45,58 @@
         html, body {
             height: 100%;
             font-family: 'Comfortaa', cursive;
+            overflow-x: hidden;
         }
 
         body {
             background-color: var(--bg-main);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            min-height: 100vh;
-        }
-
-        .container {
-            background-color: var(--bg-main);
-            border-radius: 40px;
-            width: 100%;
-            max-width: 900px;
-            min-height: 600px;
-            display: flex;
-            flex-direction: column;
             padding: 30px;
-            box-shadow: 0 10px 40px var(--shadow);
+            min-height: 100vh;
+            overflow-y: auto;
         }
 
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background-color: var(--button-light-bg);
-            color: var(--button-light-text);
-            border: none;
-            border-radius: 25px;
-            padding: 12px 25px;
-            font-size: 18px;
+        /* КНОПКА НАЗАД */
+        .back-button {
+            display: inline-block;
+            background: #e8a5b8;
+            color: white;
+            text-decoration: none;
+            padding: 15px 50px;
+            border-radius: 50px;
             font-family: 'Comfortaa', cursive;
-            font-weight: 600;
+            font-size: 1.1rem;
+            font-weight: 700;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: all 0.3s ease;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            width: fit-content;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
+            margin-left: 20px;
         }
 
-        .back-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        .back-button:hover {
+            background: #d98ba3;
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
-        .back-arrow {
-            font-size: 20px;
+        .dark .back-button {
+            background: #b87a8a;
         }
 
+        .dark .back-button:hover {
+            background: #a86a7a;
+        }
+
+        /* СЕТКА КУРСОВ */
         .courses-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
+            gap: 30px;
+            padding: 0 20px;
+            margin-bottom: 50px;
         }
 
+        /* КАРТОЧКА КУРСА */
         .course-card {
             background-color: var(--card-bg);
             border-radius: 25px;
@@ -111,11 +105,41 @@
             flex-direction: column;
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-decoration: none;
+            position: relative;
+            box-shadow: 0 4px 20px var(--shadow);
         }
 
         .course-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        /* СТАТУС КУРСА */
+        .course-status {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-approved {
+            background-color: #a8e6a3;
+            color: #2d6a2d;
+        }
+
+        .status-pending {
+            background-color: #ffeaa7;
+            color: #8a6d3b;
+        }
+
+        .status-rejected {
+            background-color: #ffb8b8;
+            color: #a94442;
         }
 
         .course-image {
@@ -124,6 +148,10 @@
             width: 100%;
             aspect-ratio: 4 / 3;
             margin-bottom: 15px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .course-image img {
@@ -138,8 +166,18 @@
             font-size: 20px;
             font-weight: 700;
             text-align: center;
+            margin-top: 10px;
         }
 
+        .course-description {
+            color: var(--card-text);
+            font-size: 14px;
+            text-align: center;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        /* КНОПКА ДОБАВИТЬ КУРС */
         .add-course-btn {
             display: inline-flex;
             align-items: center;
@@ -155,7 +193,8 @@
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            width: fit-content;
+            margin: 0 auto 40px auto;
+            display: block;
         }
 
         .add-course-btn:hover {
@@ -163,7 +202,7 @@
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
         }
 
-        /* Modal styles */
+        /* МОДАЛЬНЫЕ ОКНА */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -190,8 +229,11 @@
             padding: 50px 60px;
             display: flex;
             flex-direction: column;
-            gap: 25px;
+            gap: 20px;
             animation: modalSlideIn 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
         }
 
         @keyframes modalSlideIn {
@@ -211,14 +253,14 @@
             font-weight: 700;
             font-style: italic;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
-        .modal-input {
+        .modal-input, .modal-textarea {
             background-color: var(--input-bg);
             border: none;
-            border-radius: 25px;
-            padding: 18px 25px;
+            border-radius: 20px;
+            padding: 15px 20px;
             font-size: 16px;
             font-family: 'Comfortaa', cursive;
             color: var(--input-text);
@@ -227,62 +269,51 @@
             transition: box-shadow 0.2s ease;
         }
 
-        .modal-input::placeholder {
+        .modal-input::placeholder, .modal-textarea::placeholder {
             color: var(--input-placeholder);
         }
 
-        .modal-input:focus {
+        .modal-input:focus, .modal-textarea:focus {
             box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
         }
 
         .modal-textarea {
-            background-color: var(--input-bg);
-            border: none;
-            border-radius: 25px;
-            padding: 18px 25px;
-            font-size: 16px;
-            font-family: 'Comfortaa', cursive;
-            color: var(--input-text);
-            width: 100%;
-            min-height: 150px;
+            min-height: 120px;
             resize: vertical;
-            outline: none;
-            transition: box-shadow 0.2s ease;
         }
 
-        .modal-textarea::placeholder {
-            color: var(--input-placeholder);
+        .file-upload-container {
+            background-color: var(--input-bg);
+            border-radius: 20px;
+            padding: 20px;
+            border: 2px dashed #ccc;
+            text-align: center;
         }
 
-        .modal-textarea:focus {
-            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
-        }
-
-        .file-upload-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
+        .dark .file-upload-container {
+            border-color: #666;
         }
 
         .file-upload-label {
-            color: #fff;
+            color: var(--input-text);
             font-size: 18px;
             font-weight: 600;
-            opacity: 0.8;
+            margin-bottom: 10px;
+            display: block;
         }
 
         .file-upload-btn {
             background-color: var(--button-light-bg);
             color: var(--button-light-text);
             border: none;
-            border-radius: 25px;
-            padding: 14px 30px;
+            border-radius: 20px;
+            padding: 12px 25px;
             font-size: 16px;
             font-family: 'Comfortaa', cursive;
             font-weight: 600;
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: inline-block;
         }
 
         .file-upload-btn:hover {
@@ -294,11 +325,24 @@
             display: none;
         }
 
+        .file-info {
+            margin-top: 15px;
+        }
+
         .file-name {
-            color: #fff;
+            color: var(--input-text);
             font-size: 14px;
-            opacity: 0.7;
-            margin-top: -10px;
+            margin-bottom: 5px;
+            word-break: break-all;
+        }
+
+        .file-size {
+            color: #888;
+            font-size: 12px;
+        }
+
+        .dark .file-size {
+            color: #aaa;
         }
 
         .modal-submit-btn {
@@ -306,14 +350,16 @@
             color: var(--button-dark-text);
             border: none;
             border-radius: 30px;
-            padding: 18px 60px;
-            font-size: 20px;
+            padding: 16px 50px;
+            font-size: 18px;
             font-family: 'Comfortaa', cursive;
             font-weight: 700;
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             align-self: center;
-            margin-top: 30px;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 300px;
         }
 
         .modal-submit-btn:hover {
@@ -321,19 +367,58 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         }
 
+        /* УВЕДОМЛЕНИЕ */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1001;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* АДАПТИВНОСТЬ */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 15px;
+            }
+            
+            .back-button {
+                padding: 12px 30px;
+                font-size: 1rem;
+                margin-left: 0;
+                margin-bottom: 30px;
+            }
+            
+            .courses-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+                padding: 0 10px;
+            }
+            
+            .add-course-btn {
+                padding: 14px 30px;
+                font-size: 16px;
+            }
+        }
+
         @media (max-width: 600px) {
-            .container {
-                border-radius: 30px;
-                padding: 20px;
-                min-height: auto;
-            }
-
-            .back-btn {
-                font-size: 14px;
-                padding: 10px 18px;
-                margin-bottom: 20px;
-            }
-
             .courses-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
@@ -359,90 +444,110 @@
 
             .modal {
                 border-radius: 30px;
-                padding: 30px 25px;
-                gap: 20px;
+                padding: 25px 20px;
+                gap: 15px;
+                max-height: 85vh;
             }
 
             .modal-title {
                 font-size: 24px;
-                margin-bottom: 10px;
+                margin-bottom: 5px;
             }
 
-            .modal-input,
-            .modal-textarea {
-                padding: 14px 20px;
+            .modal-input, .modal-textarea {
+                padding: 12px 16px;
                 font-size: 14px;
-                border-radius: 20px;
+                border-radius: 18px;
             }
 
             .modal-textarea {
-                min-height: 120px;
+                min-height: 100px;
             }
 
-            .file-upload-row {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
+            .file-upload-container {
+                padding: 15px;
+            }
+
+            .file-upload-label {
+                font-size: 16px;
             }
 
             .file-upload-btn {
-                padding: 12px 24px;
+                padding: 10px 20px;
                 font-size: 14px;
             }
 
             .modal-submit-btn {
-                padding: 14px 40px;
+                padding: 14px 30px;
                 font-size: 16px;
-                margin-top: 20px;
+                margin-top: 15px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            body {
+                padding: 15px 10px;
+            }
+            
+            .back-button {
+                padding: 10px 25px;
+                font-size: 0.9rem;
+            }
+            
+            .courses-grid {
+                padding: 0 5px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <button class="back-btn">
-            <span class="back-arrow">←</span>
-            личный кабинет
-        </button>
+    <!-- КНОПКА НАЗАД -->
+    <a href="лк-преподаватель.html" class="back-button">назад</a>
 
-        <div class="courses-grid">
-            <div class="course-card">
-                <div class="course-image">
-                    <!-- Замените на изображение курса -->
-                </div>
-                <h3 class="course-title">название курса</h3>
-            </div>
-
-            <div class="course-card">
-                <div class="course-image">
-                    <!-- Замените на изображение курса -->
-                </div>
-                <h3 class="course-title">название курса</h3>
-            </div>
-        </div>
-
-        <button class="add-course-btn" id="openModalBtn">добавить курс</button>
+    <!-- СЕТКА КУРСОВ -->
+    <div class="courses-grid" id="coursesGrid">
+        <!-- Курсы будут загружаться через JavaScript -->
     </div>
 
-    <!-- Modal -->
+    <!-- КНОПКА ДОБАВИТЬ КУРС -->
+    <button class="add-course-btn" id="openModalBtn">добавить курс</button>
+
+    <!-- МОДАЛЬНОЕ ОКНО СОЗДАНИЯ КУРСА -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
-            <h2 class="modal-title">создание курса</h2>
+            <h2 class="modal-title">Создание нового курса</h2>
 
-            <input type="text" class="modal-input" placeholder="введите название урока">
+            <input type="text" class="modal-input" id="courseName" placeholder="Название курса *" required>
 
-            <textarea class="modal-textarea" placeholder="введите описание урока"></textarea>
+            <textarea class="modal-textarea" id="courseDescription" placeholder="Подробное описание курса *" required></textarea>
 
-            <div class="file-upload-row">
-                <span class="file-upload-label">загрузить видео</span>
-                <button class="file-upload-btn" id="fileUploadBtn">выбрать файл</button>
-                <input type="file" class="file-input" id="fileInput" accept="video/*">
+            <input type="text" class="modal-input" id="courseCategory" placeholder="Категория (например: Программирование) *" required>
+
+            <input type="text" class="modal-input" id="courseLevel" placeholder="Уровень (Начальный/Средний/Продвинутый) *" required>
+
+            <input type="number" class="modal-input" id="courseDuration" placeholder="Продолжительность курса (часы)" min="1">
+
+            <input type="number" class="modal-input" id="coursePrice" placeholder="Стоимость курса (руб.)" min="0" step="100">
+
+            <div class="file-upload-container">
+                <span class="file-upload-label">Загрузите материалы курса *</span>
+                <p style="color: var(--input-text); opacity: 0.7; font-size: 14px; margin: 10px 0;">
+                    Можно загрузить программу курса, презентацию, видео-превью
+                </p>
+                <button class="file-upload-btn" id="fileUploadBtn">Выбрать файл</button>
+                <input type="file" class="file-input" id="fileInput" accept=".pdf,.doc,.docx,.ppt,.pptx,.zip,.rar,.mp4,.mov,.avi">
+                <div class="file-info" id="fileInfo" style="display: none;">
+                    <div class="file-name" id="fileName"></div>
+                    <div class="file-size" id="fileSize"></div>
+                </div>
             </div>
-            <span class="file-name" id="fileName"></span>
 
-            <button class="modal-submit-btn">добавить</button>
+            <button class="modal-submit-btn" id="submitCourseBtn">Отправить на одобрение</button>
         </div>
     </div>
+
+    <!-- УВЕДОМЛЕНИЕ -->
+    <div class="notification" id="notification"></div>
 
     <script>
         // Dark mode detection
@@ -457,40 +562,361 @@
             }
         });
 
-        // Modal functionality
+        // Глобальная система хранения данных
+        const STORAGE_KEYS = {
+            TEACHER_COURSES: 'teacher_courses',
+            ADMIN_REQUESTS: 'admin_course_requests',
+            PAYMENT_REQUESTS: 'admin_payment_requests'
+        };
+
+        // DOM элементы
         const openModalBtn = document.getElementById('openModalBtn');
         const modalOverlay = document.getElementById('modalOverlay');
-        const modal = document.querySelector('.modal');
         const fileUploadBtn = document.getElementById('fileUploadBtn');
         const fileInput = document.getElementById('fileInput');
+        const fileInfo = document.getElementById('fileInfo');
         const fileName = document.getElementById('fileName');
+        const fileSize = document.getElementById('fileSize');
+        const submitCourseBtn = document.getElementById('submitCourseBtn');
+        const notification = document.getElementById('notification');
+        const coursesGrid = document.getElementById('coursesGrid');
 
+        // Текущий загруженный файл
+        let currentFile = null;
+
+        // Инициализация страницы
+        function initPage() {
+            loadCourses();
+            renderCourses();
+        }
+
+        // Загрузка курсов преподавателя
+        function loadCourses() {
+            const teacherId = getCurrentTeacherId();
+            const allCourses = JSON.parse(localStorage.getItem(STORAGE_KEYS.TEACHER_COURSES)) || [];
+            
+            // Возвращаем только курсы текущего преподавателя
+            return allCourses.filter(course => course.teacherId === teacherId);
+        }
+
+        // Получение ID текущего преподавателя
+        function getCurrentTeacherId() {
+            // В реальном приложении здесь была бы авторизация
+            // Для демо используем фиксированный ID
+            return 'teacher_001';
+        }
+
+        // Отображение курсов
+        function renderCourses() {
+            const courses = loadCourses();
+            coursesGrid.innerHTML = '';
+            
+            if (courses.length === 0) {
+                coursesGrid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--card-text);">
+                        <h3>У вас пока нет курсов</h3>
+                        <p style="margin-top: 10px;">Создайте свой первый курс!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            courses.forEach(course => {
+                const card = document.createElement(course.status === 'approved' ? 'a' : 'div');
+                card.className = 'course-card';
+                
+                if (course.status === 'approved' && course.link) {
+                    card.href = course.link;
+                }
+                
+                // Определяем статус
+                let statusText = '';
+                let statusClass = '';
+                switch(course.status) {
+                    case 'approved':
+                        statusText = 'Одобрено';
+                        statusClass = 'status-approved';
+                        break;
+                    case 'pending':
+                        statusText = 'На рассмотрении';
+                        statusClass = 'status-pending';
+                        break;
+                    case 'rejected':
+                        statusText = 'Отклонено';
+                        statusClass = 'status-rejected';
+                        break;
+                }
+                
+                // Информация о цене
+                const priceInfo = course.price > 0 ? 
+                    `<div style="color: white; font-size: 13px; margin-top: 8px; text-align: center;">
+                        <strong>${course.price.toLocaleString('ru-RU')} руб.</strong> | ${course.duration} часов
+                    </div>` : 
+                    `<div style="color: white; font-size: 13px; margin-top: 8px; text-align: center;">
+                        <strong>Бесплатно</strong> | ${course.duration} часов
+                    </div>`;
+                
+                // Информация о файле
+                const fileInfo = course.file ? 
+                    `<div style="color: ${course.status === 'pending' ? '#ffeb3b' : '#ff9800'}; font-size: 12px; margin-top: 5px; text-align: center;">
+                        📎 ${course.file.name}
+                    </div>` : '';
+                
+                card.innerHTML = `
+                    <span class="course-status ${statusClass}">${statusText}</span>
+                    <div class="course-image">
+                        ${course.image ? `<img src="${course.image}" alt="${course.name}">` : ''}
+                    </div>
+                    <h3 class="course-title">${course.name}</h3>
+                    <p class="course-description">${course.description}</p>
+                    ${priceInfo}
+                    ${fileInfo}
+                `;
+                
+                coursesGrid.appendChild(card);
+            });
+        }
+
+        // Открытие модального окна
         openModalBtn.addEventListener('click', () => {
             modalOverlay.classList.add('active');
+            clearForm();
         });
 
+        // Закрытие модального окна
         modalOverlay.addEventListener('click', (e) => {
             if (e.target === modalOverlay) {
                 modalOverlay.classList.remove('active');
+                clearForm();
             }
         });
 
+        // Загрузка файла
         fileUploadBtn.addEventListener('click', () => {
             fileInput.click();
         });
 
         fileInput.addEventListener('change', (e) => {
             if (e.target.files.length > 0) {
-                fileName.textContent = e.target.files[0].name;
+                const file = e.target.files[0];
+                currentFile = file;
+                
+                // Показываем информацию о файле
+                fileName.textContent = file.name;
+                fileSize.textContent = formatFileSize(file.size);
+                fileInfo.style.display = 'block';
             }
         });
 
-        // Close modal on Escape key
+        // Форматирование размера файла
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // Отправка курса на одобрение
+        submitCourseBtn.addEventListener('click', () => {
+            const courseName = document.getElementById('courseName').value;
+            const courseDescription = document.getElementById('courseDescription').value;
+            const courseCategory = document.getElementById('courseCategory').value;
+            const courseLevel = document.getElementById('courseLevel').value;
+            const courseDuration = parseInt(document.getElementById('courseDuration').value) || 0;
+            const coursePrice = parseInt(document.getElementById('coursePrice').value) || 0;
+            
+            // Валидация
+            if (!courseName || !courseDescription || !courseCategory || !courseLevel) {
+                showNotification('Пожалуйста, заполните обязательные поля (отмечены *)!', 'error');
+                return;
+            }
+            
+            if (!currentFile) {
+                showNotification('Пожалуйста, загрузите материалы курса!', 'error');
+                return;
+            }
+            
+            // Создаем новый курс
+            const newCourse = {
+                id: Date.now(),
+                name: courseName,
+                description: courseDescription,
+                status: 'pending',
+                category: courseCategory,
+                level: courseLevel,
+                duration: courseDuration,
+                price: coursePrice,
+                file: {
+                    name: currentFile.name,
+                    size: formatFileSize(currentFile.size),
+                    type: currentFile.type
+                },
+                image: '',
+                link: '',
+                createdAt: new Date().toISOString(),
+                teacherId: getCurrentTeacherId(),
+                teacherName: 'Преподаватель',
+                adminNotes: ''
+            };
+            
+            // Сохраняем курс в общем хранилище
+            const allCourses = JSON.parse(localStorage.getItem(STORAGE_KEYS.TEACHER_COURSES)) || [];
+            allCourses.push(newCourse);
+            localStorage.setItem(STORAGE_KEYS.TEACHER_COURSES, JSON.stringify(allCourses));
+            
+            // Добавляем в список запросов для админа
+            const adminRequests = JSON.parse(localStorage.getItem(STORAGE_KEYS.ADMIN_REQUESTS)) || [];
+            adminRequests.push({
+                ...newCourse,
+                adminViewDate: new Date().toISOString()
+            });
+            localStorage.setItem(STORAGE_KEYS.ADMIN_REQUESTS, JSON.stringify(adminRequests));
+            
+            // Показываем уведомление
+            showNotification('Курс отправлен на одобрение администратору!', 'success');
+            
+            // Закрываем модальное окно
+            modalOverlay.classList.remove('active');
+            
+            // Обновляем список курсов
+            renderCourses();
+            
+            // Очищаем форму
+            clearForm();
+        });
+
+        // Функция показа уведомления
+        function showNotification(message, type = 'success') {
+            notification.textContent = message;
+            notification.style.backgroundColor = type === 'success' ? '#4CAF50' : '#f44336';
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Очистка формы
+        function clearForm() {
+            document.getElementById('courseName').value = '';
+            document.getElementById('courseDescription').value = '';
+            document.getElementById('courseCategory').value = '';
+            document.getElementById('courseLevel').value = '';
+            document.getElementById('courseDuration').value = '';
+            document.getElementById('coursePrice').value = '';
+            fileInput.value = '';
+            fileInfo.style.display = 'none';
+            currentFile = null;
+        }
+
+        // Закрытие по Escape
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
                 modalOverlay.classList.remove('active');
+                clearForm();
             }
         });
+
+        // Проверка обновлений статусов от админа
+        function checkForAdminUpdates() {
+            const allCourses = JSON.parse(localStorage.getItem(STORAGE_KEYS.TEACHER_COURSES)) || [];
+            const myCourses = allCourses.filter(course => course.teacherId === getCurrentTeacherId());
+            
+            // Сохраняем обратно только наши курсы (в реальности нужно обновить статусы)
+            localStorage.setItem(STORAGE_KEYS.TEACHER_COURSES, JSON.stringify(allCourses));
+            
+            // Перерисовываем
+            renderCourses();
+        }
+
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', () => {
+            initPage();
+            
+            // Проверяем обновления статусов каждые 3 секунды
+            setInterval(checkForAdminUpdates, 3000);
+        });
+
+        // Глобальные функции для админской страницы
+        window.getPendingCourses = function() {
+            const allCourses = JSON.parse(localStorage.getItem(STORAGE_KEYS.TEACHER_COURSES)) || [];
+            return allCourses.filter(course => course.status === 'pending');
+        };
+
+        window.approveCourse = function(courseId) {
+            const allCourses = JSON.parse(localStorage.getItem(STORAGE_KEYS.TEACHER_COURSES)) || [];
+            const courseIndex = allCourses.findIndex(course => course.id === courseId);
+            
+            if (courseIndex !== -1) {
+                allCourses[courseIndex].status = 'approved';
+                allCourses[courseIndex].approvedAt = new Date().toISOString();
+                localStorage.setItem(STORAGE_KEYS.TEACHER_COURSES, JSON.stringify(allCourses));
+                return true;
+            }
+            return false;
+        };
+
+        window.rejectCourse = function(courseId, notes = '') {
+            const allCourses = JSON.parse(localStorage.getItem(STORAGE_KEYS.TEACHER_COURSES)) || [];
+            const courseIndex = allCourses.findIndex(course => course.id === courseId);
+            
+            if (courseIndex !== -1) {
+                allCourses[courseIndex].status = 'rejected';
+                allCourses[courseIndex].adminNotes = notes;
+                allCourses[courseIndex].rejectedAt = new Date().toISOString();
+                localStorage.setItem(STORAGE_KEYS.TEACHER_COURSES, JSON.stringify(allCourses));
+                return true;
+            }
+            return false;
+        };
+
+        // Система оплат
+        window.createPaymentRequest = function(email, amount, courseName) {
+            const paymentRequests = JSON.parse(localStorage.getItem(STORAGE_KEYS.PAYMENT_REQUESTS)) || [];
+            const newPayment = {
+                id: Date.now(),
+                email: email,
+                amount: amount,
+                courseName: courseName,
+                date: new Date().toISOString(),
+                status: 'pending'
+            };
+            
+            paymentRequests.push(newPayment);
+            localStorage.setItem(STORAGE_KEYS.PAYMENT_REQUESTS, JSON.stringify(paymentRequests));
+            return newPayment.id;
+        };
+
+        window.getPendingPayments = function() {
+            return JSON.parse(localStorage.getItem(STORAGE_KEYS.PAYMENT_REQUESTS)) || [];
+        };
+
+        window.approvePayment = function(paymentId) {
+            const payments = JSON.parse(localStorage.getItem(STORAGE_KEYS.PAYMENT_REQUESTS)) || [];
+            const paymentIndex = payments.findIndex(p => p.id === paymentId);
+            
+            if (paymentIndex !== -1) {
+                payments[paymentIndex].status = 'approved';
+                payments[paymentIndex].approvedAt = new Date().toISOString();
+                localStorage.setItem(STORAGE_KEYS.PAYMENT_REQUESTS, JSON.stringify(payments));
+                return true;
+            }
+            return false;
+        };
+
+        window.rejectPayment = function(paymentId) {
+            const payments = JSON.parse(localStorage.getItem(STORAGE_KEYS.PAYMENT_REQUESTS)) || [];
+            const paymentIndex = payments.findIndex(p => p.id === paymentId);
+            
+            if (paymentIndex !== -1) {
+                payments[paymentIndex].status = 'rejected';
+                payments[paymentIndex].rejectedAt = new Date().toISOString();
+                localStorage.setItem(STORAGE_KEYS.PAYMENT_REQUESTS, JSON.stringify(payments));
+                return true;
+            }
+            return false;
+        };
     </script>
 </body>
 </html>

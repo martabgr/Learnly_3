@@ -2,7 +2,7 @@
 
 .courses-page {
   background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
-            color: var(--text-primary);
+  color: var(--text-primary);
   min-height: calc(100vh - 200px);
   padding: 2rem 5%;
 }
@@ -21,260 +21,114 @@
 }
 
 .courses-container {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 2rem;
   max-width: 1400px;
   margin: 0 auto;
 }
 
-/* Панель фильтров */
-.filter-panel {
-  background: #e8a5b8;
-  border-radius: 20px;
-  padding: 2rem 1.5rem;
-  height: fit-content;
-  position: sticky;
-  top: 100px;
-}
 
-.filter-title {
-  color: #000;
-  font-size: 1.3rem;
-  font-weight: 800;
-  margin-bottom: 1.5rem;
-}
-
-.filter-section {
-  margin-bottom: 2rem;
-}
-
-.filter-section h3 {
-  color: #000;
-  font-size: 0.95rem;
-  font-weight: 600;
-  margin-bottom: 0.8rem;
-}
-
-/* Радио-кнопки */
-.filter-radio {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin-bottom: 0.6rem;
-  cursor: pointer;
-  font-size: 0.9rem;
-  color: #000;
-}
-
-.filter-radio input[type="radio"] {
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-  accent-color: #c75580;
-}
-
-/* Поля длительности */
-.duration-inputs {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.duration-input {
-  width: 100px;
-  background: white;
-  border: 1px solid #e0e0e0;
-  border-radius: 50px;
-  padding: 0.6rem 1rem;
-  font-family: 'Nunito', sans-serif;
-  font-size: 0.85rem;
-  color: #666;
-  outline: none;
-}
-
-.duration-input::placeholder {
-  color: #aaa;
-  font-size: 0.85rem;
-}
-
-/* Toggle switch */
-.filter-toggle {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  font-size: 0.9rem;
-  color: #000;
-}
-
-.toggle-input {
-  display: none;
-}
-
-.toggle-slider {
+/* Добавь position: relative к родителю */
+.courses-page {
   position: relative;
-  width: 42px;
-  height: 22px;
-  background: #ccc;
-  border-radius: 50px;
-  transition: all 0.3s;
 }
-
-.toggle-slider::before {
-  content: '';
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  background: white;
-  border-radius: 50%;
-  top: 2px;
-  left: 2px;
-  transition: all 0.3s;
-}
-
-.toggle-input:checked + .toggle-slider {
-  background: #c75580;
-}
-
-.toggle-input:checked + .toggle-slider::before {
-  transform: translateX(20px);
-}
-
-/* Поиск направления */
-.filter-search {
-  width: 100%;
-  background: white;
-  border: 1px solid #e0e0e0;
-  border-radius: 50px;
-  padding: 0.6rem 1rem;
-  font-family: 'Nunito', sans-serif;
-  font-size: 0.85rem;
-  color: #666;
-  outline: none;
-  margin-bottom: 1rem;
-}
-
-.filter-search::placeholder {
-  color: #aaa;
-}
-
-/* Кнопка сброса */
-.reset-button {
-  width: 100%;
-  background: white;
-  border: none;
-  border-radius: 50px;
-  padding: 0.7rem 1.5rem;
-  font-family: 'Nunito', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #666;
-  cursor: pointer;
-  transition: all 0.3s;
-  margin-top: 1rem;
-}
-
-.reset-button:hover {
-  background: #f5f5f5;
-  color: #333;
-}
-
 /* Сетка курсов */
 .courses-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
-  /* убираем фиксированную высоту */
 }
+
 .modal {
-    display: none; /* Скрыто по умолчанию */
-    position: fixed; /* Остаться на месте */
-    z-index: 1; /* На переднем плане */
-    left: 0;
-    top: 0;
-    width: 100%; /* Полная ширина */
-    height: 100%; /* Полная высота */
-    overflow: auto; /* Включает прокрутку, если необходимо */
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
 }
 
 .modal-content {
-    background-color: #bedfcb; /* Светлый фон для содержимого */
-    margin: 5% auto; /* 5% от верхней и центра по ширине */
-    padding: 20px;
-    border-radius: 15px; /* Скругленные углы */
-    width: 600px; /* Ширина модального окна */
+  background-color: #ffffff;
+  margin: 5% auto;
+  padding: 20px;
+  border-radius: 15px;
+  width: 600px;
 }
 
 .modal-body {
-    display: flex; /* Расположение по горизонтали */
-    width: 100%;
+  display: flex;
+  width: 100%;
 }
 
 .info-block {
-    flex: 1; /* Занять оставшуюся ширину */
-    display: flex;
-    flex-direction: column; /* Вертикальное расположение элементов внутри блока */
-    gap: 15px; /* Отступы между блоками */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .info-section {
-    background-color: #ffb3b3; /* Розовый фон для блоков */
-    padding: 15px;
-    border-radius: 10px; /* Скругленные углы для блоков */
+  background-color: #ffb3b3;
+  padding: 15px;
+  border-radius: 10px;
 }
 
 .image-container {
-    display: flex;
-    flex-direction: column; /* Вертикальное выравнивание */
-    align-items: center; /* Центрируем по горизонтали */
-    margin-left: 20px; /* Отступ между блоком и изображением */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 20px;
 }
 
 .course-image {
-    max-width: 5000px; /* Ограничение ширины изображения */
-    border-radius: 10px; /* Скругленные углы */
-    margin-bottom: 10px; /* Отступ под изображением */
+  max-width: 5000px;
+  border-radius: 10px;
+  margin-bottom: 10px;
 }
 
 button {
-    background-color: #b97297; /* Цвет кнопки */
-    color: white; /* Цвет текста кнопки */
-    border: none; /* Убираем границу */
-    padding: 10px 20px; /* Отступы внутри кнопки */
-    border-radius: 5px; /* Скругленные углы кнопки */
-    cursor: pointer; /* Курсор в виде указателя */
-    font-size: 16px; /* Размер шрифта */
+  background-color: #b97297;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 button:hover {
-    background-color: #b97297; /* Цвет кнопки при наведении */
+  background-color: #b97297;
 }
 
 .close {
-    color: #aaa; /* Цвет кнопки закрытия */
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-    color: black; /* Цвет при наведении */
-    text-decoration: none;
-    cursor: pointer;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
+
 .course-card {
   border-radius: 20px;
-  overflow: hidden; /* чтобы картинка не вылазила */
+  overflow: hidden;
   display: flex;
   flex-direction: column;
 }
+
 .course-image {
-  width: 100%;       /* картинка на всю ширину карточки */
-  height: 300px;     /* фиксированная высота */
-  object-fit: cover; /* обрезаем лишнее */
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
   display: block;
 }
+
 .course-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 30px rgba(0,0,0,0.15);
@@ -313,14 +167,6 @@ button:hover {
 
 /* Адаптивность */
 @media (max-width: 1024px) {
-  .courses-container {
-    grid-template-columns: 1fr;
-  }
-
-  .filter-panel {
-    position: static;
-  }
-
   .courses-grid {
     grid-template-columns: 1fr;
   }
@@ -334,9 +180,5 @@ button:hover {
 @media (max-width: 768px) {
   .courses-page {
     padding: 1rem 3%;
-  }
-
-  .filter-panel {
-    padding: 1.5rem 1rem;
   }
 }

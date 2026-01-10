@@ -7,12 +7,127 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="главная.css">
   <link rel="stylesheet" href="avtorandreg.css">
+  <style>
+    /* Минимальные стили для администратора */
+    .admin-section {
+      margin-bottom: 25px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 15px;
+      background: #f9f9f9;
+    }
+    
+    .admin-title {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .admin-title svg {
+      width: 16px;
+      height: 16px;
+    }
+    
+    .admin-checkbox-wrapper {
+      margin-bottom: 15px;
+    }
+    
+    .admin-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #333;
+    }
+    
+    .admin-checkbox input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #c98a94;
+    }
+    
+    .admin-key-field {
+      display: none;
+      margin-top: 10px;
+    }
+    
+    .admin-key-field.active {
+      display: block;
+    }
+    
+    .admin-key-input {
+      width: 100%;
+      padding: 10px 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      background: white;
+    }
+    
+    .admin-key-input:focus {
+      outline: none;
+      border-color: #c98a94;
+    }
+    
+    .demo-key-info {
+      font-size: 12px;
+      color: #666;
+      margin-top: 5px;
+      text-align: center;
+    }
+    
+    .admin-login-btn {
+      display: none;
+      width: 100%;
+      padding: 12px;
+      background: #c98a94;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    
+    .admin-login-btn.active {
+      display: block;
+    }
+    
+    /* Темная тема */
+    .dark .admin-section {
+      background: #3a4a2e;
+      border-color: #4a5a3e;
+    }
+    
+    .dark .admin-title {
+      color: #ddd;
+    }
+    
+    .dark .admin-checkbox {
+      color: #fff;
+    }
+    
+    .dark .admin-key-input {
+      background: #4a5a3e;
+      border-color: #5a6a4e;
+      color: #fff;
+    }
+    
+    .dark .demo-key-info {
+      color: #aaa;
+    }
+  </style>
 </head>
 <body class="auth-body login-active">
   <main class="auth-page">
   
     <a href="главная.html" class="back-button">←</a>
-`
+
     <section class="auth-section">
       <h1>Добро пожаловать в Lernly!</h1>
 
@@ -25,6 +140,38 @@
 
         <!-- Форма входа -->
         <form id="loginForm" class="auth-form auth-form-active">
+          <!-- Секция администратора -->
+          <div class="admin-section">
+            <div class="admin-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+              </svg>
+              Вход для администратора
+            </div>
+            
+            <div class="admin-checkbox-wrapper">
+              <label class="admin-checkbox">
+                <input type="checkbox" id="loginAdmin">
+                <span>Войти как администратор</span>
+              </label>
+            </div>
+            
+            <div class="admin-key-field" id="adminKeyField">
+              <input type="password" 
+                     placeholder="Ключ администратора" 
+                     class="admin-key-input" 
+                     id="adminKey">
+              <div class="demo-key-info">
+                Демо ключ: <strong>ADMIN2024</strong>
+              </div>
+            </div>
+            
+            <button type="button" class="admin-login-btn" id="adminLoginBtn">
+              Войти как администратор
+            </button>
+          </div>
+
+          <!-- Обычный вход -->
           <div class="teacher-checkbox teacher-checkbox-green">
             <label>
               <span>Я преподаватель</span>
@@ -55,48 +202,48 @@
           <button class="auth-submit-button" type="submit">Войти</button>
         </form>
 
-<form id="registerForm" class="auth-form">
-  <div class="teacher-checkbox teacher-checkbox-pink">
-    <label>
-      <span>Я преподаватель</span>
-      <input type="checkbox" id="registerTeacher" name="role">
-    </label>
-  </div>
+        <form id="registerForm" class="auth-form">
+          <div class="teacher-checkbox teacher-checkbox-pink">
+            <label>
+              <span>Я преподаватель</span>
+              <input type="checkbox" id="registerTeacher" name="role">
+            </label>
+          </div>
 
-  <input type="text" placeholder="Введите свое Имя" class="auth-input" name="name" required>
-  <input type="email" placeholder="Введите email" class="auth-input" name="email" required>
+          <input type="text" placeholder="Введите свое Имя" class="auth-input" name="name" required>
+          <input type="email" placeholder="Введите email" class="auth-input" name="email" required>
 
-  <div class="password-field">
-    <input type="password" placeholder="Пароль" class="auth-input" id="registerPassword" name="password" required>
-    <button type="button" class="toggle-password" onclick="togglePassword('registerPassword')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-        <circle cx="12" cy="12" r="3"></circle>
-      </svg>
-    </button>
-  </div>
+          <div class="password-field">
+            <input type="password" placeholder="Пароль" class="auth-input" id="registerPassword" name="password" required>
+            <button type="button" class="toggle-password" onclick="togglePassword('registerPassword')">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
 
-  <div class="password-field">
-    <input type="password" placeholder="Повторите пароль" class="auth-input" id="registerPassword2" required>
-    <button type="button" class="toggle-password" onclick="togglePassword('registerPassword2')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-        <circle cx="12" cy="12" r="3"></circle>
-      </svg>
-    </button>
-  </div>
+          <div class="password-field">
+            <input type="password" placeholder="Повторите пароль" class="auth-input" id="registerPassword2" required>
+            <button type="button" class="toggle-password" onclick="togglePassword('registerPassword2')">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
 
-  <label class="consent-checkbox">
-    <input type="checkbox" required>
-    <span>Я соглашаюсь на обработку персональных данных</span>
-  </label>
+          <label class="consent-checkbox">
+            <input type="checkbox" required>
+            <span>Я соглашаюсь на обработку персональных данных</span>
+          </label>
 
-  <button class="auth-submit-button" type="submit">Зарегистрироваться</button>
+          <button class="auth-submit-button" type="submit">Зарегистрироваться</button>
 
-  <p class="register-note">
-    Нажимая на кнопку, я соглашаюсь с публичной офертой, правилами акции «Поможем найти работу или вернем деньги» и с правилами программы лояльности.
-  </p>
-</form>
+          <p class="register-note">
+            Нажимая на кнопку, я соглашаюсь с публичной офертой, правилами акции «Поможем найти работу или вернем деньги» и с правилами программы лояльности.
+          </p>
+        </form>
       </div>
     </section>
   </main>
@@ -139,6 +286,9 @@
   </footer>
 
  <script>
+  // Константы
+  const ADMIN_DEMO_KEY = "ADMIN2024";
+
   function switchAuthTab(tab) {
     const loginForm = document.getElementById('loginForm');
     const registerForm = document.getElementById('registerForm');
@@ -155,6 +305,126 @@
       tabs[1].classList.add('auth-tab-active');
       tabs[0].classList.remove('auth-tab-active');
     }
+  }
+
+  // Переключение режима администратора
+  document.getElementById('loginAdmin').addEventListener('change', function() {
+    const adminKeyField = document.getElementById('adminKeyField');
+    const adminLoginBtn = document.getElementById('adminLoginBtn');
+    const teacherCheckbox = document.querySelector('.teacher-checkbox');
+    
+    if (this.checked) {
+      adminKeyField.classList.add('active');
+      adminLoginBtn.classList.add('active');
+      teacherCheckbox.style.display = 'none';
+    } else {
+      adminKeyField.classList.remove('active');
+      adminLoginBtn.classList.remove('active');
+      teacherCheckbox.style.display = 'block';
+    }
+  });
+
+  // Вход администратора
+  document.getElementById('adminLoginBtn').addEventListener('click', function() {
+    const email = document.querySelector('#loginForm input[name="email"]').value;
+    const password = document.querySelector('#loginForm input[name="password"]').value;
+    const adminKey = document.getElementById('adminKey').value;
+    
+    // Валидация
+    if (!email || !password) {
+      alert('Пожалуйста, введите email и пароль');
+      return;
+    }
+    
+    if (!adminKey) {
+      alert('Пожалуйста, введите ключ администратора');
+      return;
+    }
+    
+    // Проверка демо ключа
+    if (adminKey !== ADMIN_DEMO_KEY) {
+      alert('Неверный ключ администратора');
+      return;
+    }
+    
+    // Проверяем административные права
+    let isAdmin = false;
+    
+    // Проверяем специальные email для админов
+    const adminEmails = [
+      'admin@lernly.com',
+      'administrator@lernly.com',
+      'superadmin@lernly.com'
+    ];
+    
+    if (adminEmails.includes(email.toLowerCase())) {
+      isAdmin = true;
+    }
+    
+    // Также проверяем email с префиксом admin
+    if (email.toLowerCase().includes('admin')) {
+      isAdmin = true;
+    }
+    
+    if (!isAdmin) {
+      alert('Этот email не имеет прав администратора');
+      return;
+    }
+    
+    // Отправляем запрос на сервер для админского входа
+    adminLoginRequest(email, password, adminKey);
+  });
+
+  // Запрос на сервер для входа администратора
+  function adminLoginRequest(email, password, adminKey) {
+    const data = {
+      email: email,
+      password: password,
+      admin_key: adminKey,
+      role: 'admin'
+    };
+    
+    console.log('Админский вход:', data);
+    
+    // Демо-режим без сервера
+    setTimeout(() => {
+      // Сохраняем данные администратора
+      localStorage.setItem('authToken', 'admin_demo_token_' + Date.now());
+      localStorage.setItem('userName', 'Администратор');
+      localStorage.setItem('userRole', 'admin');
+      localStorage.setItem('userEmail', email);
+      localStorage.setItem('isAdmin', 'true');
+      
+      // Редирект в админ-панель
+      window.location.href = 'админ-панель.html';
+    }, 500);
+    
+    // В реальном приложении:
+    /*
+    fetch('http://127.0.0.1:4000/api/auth/admin-signin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        localStorage.setItem('authToken', data.token);
+        localStorage.setItem('userName', data.name);
+        localStorage.setItem('userRole', 'admin');
+        localStorage.setItem('isAdmin', 'true');
+        window.location.href = 'админ-панель.html';
+      } else {
+        alert('Ошибка: ' + data.message);
+      }
+    })
+    .catch(error => {
+      console.error('Ошибка:', error);
+      alert('Ошибка подключения к серверу');
+    });
+    */
   }
 
   // РЕГИСТРАЦИЯ
@@ -201,7 +471,21 @@
     .then(data => {
       console.log('Успешная регистрация:', data);
       alert('Регистрация прошла успешно!');
-      window.location.href = 'лк.html';
+      
+      // Сохраняем данные пользователя
+      if (data.token) {
+        localStorage.setItem('authToken', data.token);
+        localStorage.setItem('userName', data.name);
+        localStorage.setItem('userRole', data.role);
+        localStorage.setItem('userId', data.id);
+      }
+      
+      // ПЕРЕНАПРАВЛЕНИЕ В ЗАВИСИМОСТИ ОТ РОЛИ
+      if (role === 'teacher' || data.role === 'teacher') {
+        window.location.href = 'лк-преподаватель.html';
+      } else {
+        window.location.href = 'лк_ученик.html';
+      }
     })
     .catch(error => {
       console.error('Ошибка:', error);
@@ -209,9 +493,14 @@
     });
   });
 
-  // ВХОД
+  // ВХОД (обычный пользователь)
   document.getElementById('loginForm').addEventListener('submit', function(event) {
     event.preventDefault();
+    
+    // Если выбрана админская форма, не отправляем обычный запрос
+    if (document.getElementById('loginAdmin').checked) {
+      return;
+    }
     
     const formData = new FormData(this);
     const email = formData.get('email');
@@ -252,7 +541,14 @@
       }
       
       alert('Добро пожаловать, ' + data.name + '!');
-      window.location.href = 'лк.html';
+      
+      // ПЕРЕНАПРАВЛЕНИЕ В ЗАВИСИМОСТИ ОТ РОЛИ
+      // Проверяем роль из формы ИЛИ роль с сервера
+      if (role === 'teacher' || data.role === 'teacher') {
+        window.location.href = 'лк-преподаватель.html';
+      } else {
+        window.location.href = 'лк_ученик.html';
+      }
     })
     .catch(error => {
       console.error('Ошибка:', error);
@@ -264,6 +560,19 @@
     const field = document.getElementById(fieldId);
     field.type = field.type === 'password' ? 'text' : 'password';
   }
+
+  // Темная тема
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    document.documentElement.classList.add('dark');
+  }
+  
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+    if (event.matches) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  });
 </script>
 </body>
 </html>

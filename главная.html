@@ -6,6 +6,31 @@
   <title>Lernly - Онлайн обучение</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="главная.css">
+  <style>
+    /* Стили для кнопки личного кабинета */
+    .lk-button {
+      background: #c98a94;
+      color: white;
+      padding: 8px 20px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      transition: background 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .lk-button:hover {
+      background: #b87a8a;
+    }
+    
+    .lk-button svg {
+      width: 16px;
+      height: 16px;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -14,9 +39,12 @@
        <a href="главная.html" class="nav-link">Главная</a>
       <a href="онас.html" class="nav-link">О нас</a>
       <a href="курсы.html" class="nav-link">Курсы</a>
-      <a href="avtorandreg.html" class="icon-link">
-  <img src="ic.png" alt="Войти/Регистрация" class="nav-icon">
-</a>
+      <div id="authStatus">
+        <!-- Здесь будет либо иконка входа, либо кнопка ЛК -->
+        <a href="avtorandreg.html" class="icon-link">
+          <img src="ic.png" alt="Войти/Регистрация" class="nav-icon">
+        </a>
+      </div>
     </nav>
   </header>
 
@@ -180,7 +208,7 @@
       </div>
     </section>
 <section class="leave-review-section">
-  <button class="feedback-button" onclick="openReviewForm()">Оставить отзыв →</button>
+  <button class="feedback-button" id="leaveReviewBtn" onclick="checkAuthForReview()">Оставить отзыв →</button>
 </section>
 
 <div id="reviewModal" class="modal">
@@ -189,10 +217,10 @@
     <h3>Оставьте свой отзыв</h3>
     <form id="reviewForm">
       <div class="form-group">
-        <input type="text" name="name" placeholder="Ваше имя" class="form-input" required>
+        <input type="text" name="name" placeholder="Ваше имя" class="form-input" id="reviewName" required>
       </div>
       <div class="form-group">
-        <input type="email" name="email" placeholder="Ваша почта" class="form-input" required>
+        <input type="email" name="email" placeholder="Ваша почта" class="form-input" id="reviewEmail" required>
       </div>
       <div class="form-group">
         <textarea name="review" placeholder="Ваш отзыв" class="form-textarea" required></textarea>
@@ -213,8 +241,8 @@
             </div>
 
             <div class="signup-form" >
-              <input type="text" name="name" placeholder="Имя" class="form-input" required>
-              <input type="email" name="email" placeholder="Почта" class="form-input" required>
+              <input type="text" name="name" placeholder="Имя" class="form-input" id="appName" required>
+              <input type="email" name="email" placeholder="Почта" class="form-input" id="appEmail" required>
               <input type="tel" name="phone" placeholder="Номер телефона" class="form-input" required>
               
               <div class="form-checkbox">
@@ -260,6 +288,61 @@
         </div>
     </footer>
  <script>
+  // Проверяем авторизацию при загрузке
+  function checkAuth() {
+    const authStatus = document.getElementById('authStatus');
+    const authToken = localStorage.getItem('authToken');
+    const userName = localStorage.getItem('userName');
+    
+    if (authToken && userName) {
+      // Пользователь авторизован - показываем кнопку "Личный кабинет"
+      authStatus.innerHTML = `
+        <a href="лк.html" class="lk-button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          Личный кабинет
+        </a>
+      `;
+      
+      // Заполняем данные в форме отзыва
+      document.getElementById('reviewName').value = userName;
+      document.getElementById('reviewEmail').value = localStorage.getItem('userEmail') || '';
+      
+      // Заполняем данные в форме заявки
+      const appName = document.getElementById('appName');
+      const appEmail = document.getElementById('appEmail');
+      if (appName && !appName.value) appName.value = userName;
+      if (appEmail && !appEmail.value) appEmail.value = localStorage.getItem('userEmail') || '';
+      
+    } else {
+      // Пользователь не авторизован - показываем иконку входа
+      authStatus.innerHTML = `
+        <a href="avtorandreg.html" class="icon-link">
+          <img src="ic.png" alt="Войти/Регистрация" class="nav-icon">
+        </a>
+      `;
+    }
+  }
+
+  // Проверка авторизации для оставления отзыва
+  function checkAuthForReview() {
+    const authToken = localStorage.getItem('authToken');
+    
+    if (!authToken) {
+      // Если не авторизован, предлагаем войти
+      if (confirm('Чтобы оставить отзыв, нужно войти в аккаунт. Перейти на страницу входа?')) {
+        window.location.href = 'avtorandreg.html';
+      }
+      return;
+    }
+    
+    // Если авторизован, открываем форму отзыва
+    openReviewForm();
+  }
+
+  // Функции карусели
   let currentSlide = 1;
   const cards = document.querySelectorAll('.feature-card');
   const carousel = document.getElementById('featuresCarousel');
@@ -284,19 +367,31 @@
     updateCarousel();
   }
 
-  window.addEventListener('load', updateCarousel);
-  window.addEventListener('resize', updateCarousel);
+  function openReviewForm() {
+    document.getElementById("reviewModal").style.display = "block";
+  }
+
+  function closeReviewForm() {
+    document.getElementById("reviewModal").style.display = "none";
+  }
+
+  // Закрытие модального окна при щелчке вне его содержимого
+  window.onclick = function(event) {
+    const modal = document.getElementById("reviewModal");
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  };
 
   // ОБРАБОТКА ФОРМЫ ЗАЯВКИ
   document.getElementById('applicationForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Отменяем стандартную отправку формы
+    event.preventDefault();
     
     const formData = new FormData(this);
     const name = formData.get('name');
     const email = formData.get('email');
     const phone = formData.get('phone');
     
-    // Формируем JSON объект
     const data = {
       name: name,
       email: email,
@@ -323,8 +418,6 @@
     .then(data => {
       console.log('Заявка успешно отправлена:', data);
       alert('Спасибо! Ваша заявка принята. Мы свяжемся с вами в ближайшее время!');
-      
-      // Очищаем форму
       document.getElementById('applicationForm').reset();
     })
     .catch(error => {
@@ -332,21 +425,43 @@
       alert('Ошибка при отправке заявки: ' + error.message);
     });
   });
-  function openReviewForm() {
-    document.getElementById("reviewModal").style.display = "block"; // Показываем модальное окно
-}
 
-function closeReviewForm() {
-    document.getElementById("reviewModal").style.display = "none"; // Скрываем модальное окно
-}
+  // ОБРАБОТКА ФОРМЫ ОТЗЫВА
+  document.getElementById('reviewForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    const formData = new FormData(this);
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const review = formData.get('review');
+    
+    const data = {
+      name: name,
+      email: email,
+      review: review,
+      userId: localStorage.getItem('userId'),
+      date: new Date().toISOString()
+    };
+    
+    console.log('Отправляем отзыв:', data);
+    
+    // Сохраняем отзыв в localStorage
+    const reviews = JSON.parse(localStorage.getItem('courseReviews')) || [];
+    reviews.push(data);
+    localStorage.setItem('courseReviews', JSON.stringify(reviews));
+    
+    alert('Спасибо за ваш отзыв! Он будет опубликован после проверки.');
+    document.getElementById('reviewForm').reset();
+    closeReviewForm();
+  });
 
-// Закрытие модального окна при щелчке вне его содержимого
-window.onclick = function(event) {
-    const modal = document.getElementById("reviewModal");
-    if (event.target === modal) {
-        modal.style.display = "none"; // Скрываем модальное окно
-    }
-}
+  // Инициализация при загрузке
+  window.addEventListener('load', function() {
+    checkAuth();
+    updateCarousel();
+  });
+  
+  window.addEventListener('resize', updateCarousel);
 </script>
   
 </body>

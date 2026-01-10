@@ -7,6 +7,218 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="главная.css">
   <link rel="stylesheet" href="курсы.css">
+  <style>
+    /* Дополнительные стили для динамических курсов */
+    .courses-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .course-card {
+      width: 300px;
+      background: #f8e1e5;
+      border-radius: 20px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .course-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .course-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    
+    .course-info {
+      padding: 20px;
+    }
+    
+    .course-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    
+    .course-description {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    
+    .course-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 15px;
+    }
+    
+    .course-price {
+      font-size: 18px;
+      font-weight: 700;
+      color: #c98a94;
+      text-align: center;
+    }
+    
+    /* Универсальное модальное окно для курсов */
+    #universal-course-modal .modal-content {
+      max-width: 800px;
+      padding: 40px;
+    }
+    
+    #universal-course-modal .modal-body {
+      display: flex;
+      gap: 40px;
+      margin-top: 20px;
+    }
+    
+    #universal-course-modal .course-details {
+      flex: 1;
+    }
+    
+    #universal-course-modal .course-image-container {
+      flex: 1;
+      text-align: center;
+    }
+    
+    #universal-course-modal .course-image-container img {
+      max-width: 100%;
+      max-height: 300px;
+      border-radius: 10px;
+    }
+    
+    .course-detail-item {
+      margin-bottom: 15px;
+    }
+    
+    .course-detail-label {
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 5px;
+    }
+    
+    .course-detail-value {
+      color: #666;
+    }
+    
+    .enroll-btn {
+      background: #c98a94;
+      color: white;
+      border: none;
+      padding: 12px 40px;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-top: 20px;
+      width: 100%;
+    }
+    
+    .enroll-btn:hover {
+      background: #b87a8a;
+    }
+    
+    /* Стили для старых модальных окон */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      animation: fadeIn 0.3s ease;
+    }
+    
+    .modal-content {
+      background-color: white;
+      margin: 5% auto;
+      padding: 30px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 600px;
+      position: relative;
+      animation: slideIn 0.3s ease;
+    }
+    
+    .close {
+      position: absolute;
+      right: 20px;
+      top: 15px;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #333;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes slideIn {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    /* Темная тема */
+    .dark {
+      --bg-main: #2d3a22;
+      --button-bg: #a06a74;
+      --button-text: #fff;
+      --title-text: #fff;
+      --desc-text: #ccc;
+      --border-color: #3a4a2e;
+      --shadow: rgba(0, 0, 0, 0.3);
+    }
+    
+    .dark .course-card {
+      background: #9a6a74;
+    }
+    
+    .dark .course-title {
+      color: #fff;
+    }
+    
+    .dark .course-description {
+      color: #ddd;
+    }
+    
+    .dark .course-price {
+      color: #e8a5b8;
+    }
+    
+    .dark .modal-content {
+      background-color: #3a4a2e;
+      color: #fff;
+    }
+    
+    .dark .close {
+      color: #fff;
+    }
+    
+    .dark .course-detail-label {
+      color: #fff;
+    }
+    
+    .dark .course-detail-value {
+      color: #ccc;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -21,157 +233,206 @@
     </nav>
   </header>
 
-  <main class="courses-page">
-    <div class="courses-container">
-     
-      <aside class="filter-panel">
-        <h2 class="filter-title">ФИЛЬТР</h2>
-
-       
-        <div class="filter-section">
-          <h3>Уровень</h3>
-          <label class="filter-radio">
-            <input type="radio" name="level" value="all" checked>
-            <span>Выбрать все</span>
-          </label>
-          <label class="filter-radio">
-            <input type="radio" name="level" value="beginner">
-            <span>Для новичков</span>
-          </label>
-          <label class="filter-radio">
-            <input type="radio" name="level" value="advanced">
-            <span>Продвинутый</span>
-          </label>
-        </div>
-
-        
-        <div class="filter-section">
-          <h3>Длительность</h3>
-          <div class="duration-inputs">
-            <input type="number" placeholder="От, мес" class="duration-input">
-            <input type="number" placeholder="До, мес" class="duration-input">
+  <div class="courses-container">
+    <main class="courses-page">
+      <div class="courses-container">
+        <h1 style="text-align: center; margin: 40px 0; color: #333;">Наши курсы</h1>
+        <div class="courses-grid" id="coursesGrid">
+          <!-- Базовые курсы -->
+          <div class="course-card" onclick="openBaseCourseModal('python')">
+            <img src="питонн.jpg" alt="Python" class="course-image">
+            <div class="course-info">
+              <h3 class="course-title">Python-разработчик</h3>
+              <p class="course-description">Основы программирования на Python</p>
+              <div class="course-meta">
+                <span>6 месяцев</span>
+                <span>40 часов</span>
+              </div>
+              <div class="course-price">Бесплатно</div>
+            </div>
           </div>
-        </div>
-
-        
-        <div class="filter-section">
-          <label class="filter-toggle">
-            <span>С трудоустройством</span>
-            <input type="checkbox" class="toggle-input">
-            <span class="toggle-slider"></span>
-          </label>
-        </div>
-
-        
-        <div class="filter-section">
-          <h3>Направление</h3>
-          <input type="text" placeholder="Поиск" class="filter-search">
           
-          <label class="filter-radio">
-            <input type="radio" name="direction" value="python">
-            <span>Python-разработчик</span>
-          </label>
-          <label class="filter-radio">
-            <input type="radio" name="direction" value="3d">
-            <span>3D-дизайн</span>
-          </label>
-          <label class="filter-radio">
-            <input type="radio" name="direction" value="uiux">
-            <span>UI/UX дизайн</span>
-          </label>
-          <label class="filter-radio">
-            <input type="radio" name="direction" value="java">
-            <span>Java-разработчик</span>
-          </label>
-        </div>
-
-        
-        <button class="reset-button">Сбросить фильтры</button>
-      </aside>
-
-      
-    <div class="courses-grid">
-    <div class="course-card course-card-1">
-        <img src="питонн.jpg" alt="Python" class="course-image">
-    </div>
-    <div class="course-card course-card-2">
-        <img src="blender.jpg" alt="Python" class="course-image">
-    </div>
-    <div class="course-card course-card-3">
-        <img src="java.jpg" alt="Python" class="course-image">
-    </div>
-    <div class="course-card course-card-4">
-        <img src="roblox.jpg" alt="Python" class="course-image">
-    </div>
-</div>
-<div class="courses-grid">
-    <div class="course-card course-card-1">
-        <img src="питон.jpg" alt="Python" class="course-image">
-    </div>
-    <!-- Другие карточки курса -->
-</div>
-
-<!-- Модальное окно -->
-<div id="modal" class="modal">
-    <div class="modal-content">
-       
-        <h2>Python-разработчик
-
+          <div class="course-card" onclick="openBaseCourseModal('blender')">
+            <img src="blender.jpg" alt="Blender" class="course-image">
+            <div class="course-info">
+              <h3 class="course-title">3D-моделирование в Blender</h3>
+              <p class="course-description">Создание 3D-моделей и анимаций</p>
+              <div class="course-meta">
+                <span>8 месяцев</span>
+                <span>60 часов</span>
+              </div>
+              <div class="course-price">15 000 ₽</div>
+            </div>
+          </div>
           
-        </h2>
+          <div class="course-card" onclick="openBaseCourseModal('java')">
+            <img src="java.jpg" alt="Java" class="course-image">
+            <div class="course-info">
+              <h3 class="course-title">Java-разработчик</h3>
+              <p class="course-description">Разработка на Java для веб и мобильных приложений</p>
+              <div class="course-meta">
+                <span>7 месяцев</span>
+                <span>50 часов</span>
+              </div>
+              <div class="course-price">20 000 ₽</div>
+            </div>
+          </div>
+          
+          <div class="course-card" onclick="openBaseCourseModal('roblox')">
+            <img src="roblox.jpg" alt="Roblox" class="course-image">
+            <div class="course-info">
+              <h3 class="course-title">Roblox-разработчик</h3>
+              <p class="course-description">Создание игр на платформе Roblox</p>
+              <div class="course-meta">
+                <span>4 месяца</span>
+                <span>30 часов</span>
+              </div>
+              <div class="course-price">10 000 ₽</div>
+            </div>
+          </div>
+          
+          <!-- Динамические курсы будут добавляться здесь -->
+        </div>
+      </div>
 
-        <div class="modal-body">
+      <!-- Модальное окно для Python -->
+      <div id="modal-python" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeModal('modal-python')">&times;</span>
+          <h2>Python-разработчик</h2>
+          <div class="modal-body">
             <div class="info-block">
-                <div class="info-section">
-                    <p>Длительность: <strong>6 месяцев</strong></p>
-                    <p>Формат обучения:</p>
-                    <label><input type="radio" name="format" value="individual"> Индивидуально</label>
-                    <label><input type="radio" name="format" value="group"> В группе</label>
-                </div>
-                <div class="info-section">
-                    <p>Оплата:</p>
-                    <label><input type="radio" name="payment" value="lump-sum"> Единым платежом - <strong>1600р</strong></label>
-                    <label><input type="radio" name="payment" value="monthly"> Ежемесячно - <strong>26р</strong></label>
-                </div>
+              <div class="info-section">
+                <p>Длительность: <strong>6 месяцев</strong></p>
+                <p>Формат обучения:</p>
+                <label><input type="radio" name="format-python" value="individual"> Индивидуально</label>
+                <label><input type="radio" name="format-python" value="group"> В группе</label>
+              </div>
             </div>
             <div class="image-container">
-                <img src="питон.jpeg" alt="Python" class="course-image">
-                <button id="enroll">Записаться</button>
-
-<script>
-    document.getElementById('enroll').addEventListener('click', function() {
-        window.location.href = 'оплата.html';
-    });
-</script>
+              <img src="питонн.jpg" alt="Python" class="course-image">
+              <button class="enroll-btn" onclick="enrollCourse('Python-разработчик', 0)">Записаться</button>
             </div>
+          </div>
         </div>
-    </div>
-</div>
-    <script>
-    var modal = document.getElementById("modal");
-    var courseCard = document.querySelector(".course-card-1");
-    var span = document.getElementsByClassName("close")[0];
+      </div>
 
-    courseCard.onclick = function() {
-        modal.style.display = "block";
-    }
+      <!-- Модальное окно для Blender -->
+      <div id="modal-blender" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeModal('modal-blender')">&times;</span>
+          <h2>3D-моделирование в Blender</h2>
+          <div class="modal-body">
+            <div class="info-block">
+              <div class="info-section">
+                <p>Длительность: <strong>8 месяцев</strong></p>
+                <p>Формат обучения:</p>
+                <label><input type="radio" name="format-blender" value="individual"> Индивидуально</label>
+                <label><input type="radio" name="format-blender" value="group"> В группе</label>
+              </div>
+            </div>
+            <div class="image-container">
+              <img src="blender.jpg" alt="Blender" class="course-image">
+              <button class="enroll-btn" onclick="enrollCourse('3D-моделирование в Blender', 15000)">Записаться</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
+      <!-- Модальное окно для Java -->
+      <div id="modal-java" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeModal('modal-java')">&times;</span>
+          <h2>Java-разработчик</h2>
+          <div class="modal-body">
+            <div class="info-block">
+              <div class="info-section">
+                <p>Длительность: <strong>7 месяцев</strong></p>
+                <p>Формат обучения:</p>
+                <label><input type="radio" name="format-java" value="individual"> Индивидуально</label>
+                <label><input type="radio" name="format-java" value="group"> В группе</label>
+              </div>
+            </div>
+            <div class="image-container">
+              <img src="java.jpg" alt="Java" class="course-image">
+              <button class="enroll-btn" onclick="enrollCourse('Java-разработчик', 20000)">Записаться</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-</script>
-  </main>
-</section>
+      <!-- Модальное окно для Roblox -->
+      <div id="modal-roblox" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeModal('modal-roblox')">&times;</span>
+          <h2>Roblox-разработчик</h2>
+          <div class="modal-body">
+            <div class="info-block">
+              <div class="info-section">
+                <p>Длительность: <strong>4 месяца</strong></p>
+                <p>Формат обучения:</p>
+                <label><input type="radio" name="format-roblox" value="individual"> Индивидуально</label>
+                <label><input type="radio" name="format-roblox" value="group"> В группе</label>
+              </div>
+            </div>
+            <div class="image-container">
+              <img src="roblox.jpg" alt="Roblox" class="course-image">
+              <button class="enroll-btn" onclick="enrollCourse('Roblox-разработчик', 10000)">Записаться</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Универсальное модальное окно для динамических курсов -->
+      <div id="universal-course-modal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeUniversalModal()">&times;</span>
+          <h2 id="universal-course-title"></h2>
+          <div class="modal-body">
+            <div class="course-details">
+              <div class="course-detail-item">
+                <div class="course-detail-label">Описание:</div>
+                <div class="course-detail-value" id="universal-course-description"></div>
+              </div>
+              <div class="course-detail-item">
+                <div class="course-detail-label">Категория:</div>
+                <div class="course-detail-value" id="universal-course-category"></div>
+              </div>
+              <div class="course-detail-item">
+                <div class="course-detail-label">Уровень:</div>
+                <div class="course-detail-value" id="universal-course-level"></div>
+              </div>
+              <div class="course-detail-item">
+                <div class="course-detail-label">Продолжительность:</div>
+                <div class="course-detail-value" id="universal-course-duration"></div>
+              </div>
+              <div class="course-detail-item">
+                <div class="course-detail-label">Преподаватель:</div>
+                <div class="course-detail-value" id="universal-course-teacher"></div>
+              </div>
+              <div class="course-detail-item">
+                <div class="course-detail-label">Стоимость:</div>
+                <div class="course-detail-value" id="universal-course-price"></div>
+              </div>
+              <div class="form-group">
+                <p>Формат обучения:</p>
+                <label><input type="radio" name="universal-format" value="individual"> Индивидуально</label>
+                <label style="margin-left: 20px;"><input type="radio" name="universal-format" value="group"> В группе</label>
+              </div>
+              <button class="enroll-btn" id="universal-enroll-btn">Записаться</button>
+            </div>
+            <div class="course-image-container">
+              <img id="universal-course-image" src="" alt="" class="course-image" onerror="this.src='default-course.jpg'">
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
     <!-- Секция "Открой для себя мир IT" -->
     <section class="signup-section" id="signup">
       <h2>Открой для себя мир IT</h2>
-      <p class="signup-subtitle" >Запишись на курсы сейчас!</p>
+      <p class="signup-subtitle">Запишись на курсы сейчас!</p>
       <form id="applicationForm">
         <div class="signup-form-wrapper">
           <div class="signup-form-content">
@@ -179,7 +440,7 @@
               <h3>Не знаешь с чего начать?<br>Мы поможем!</h3>
             </div>
 
-            <div class="signup-form" >
+            <div class="signup-form">
               <input type="text" name="name" placeholder="Имя" class="form-input" required>
               <input type="email" name="email" placeholder="Почта" class="form-input" required>
               <input type="tel" name="phone" placeholder="Номер телефона" class="form-input" required>
@@ -197,86 +458,389 @@
         </div>
       </form>
     </section>
-  <footer>
-    <div class="footer-content">
-      <div class="footer-column footer-contacts">
-        <p class="footer-phone">+375 29 XXX XX XX</p>
-        <p class="footer-email">Learnly@gmail.com</p>
 
-        <div class="footer-links">
-          <a href="#">Публичный договор</a>
-          <a href="#">Политика обработки персональных данных</a>
-          <a href="#">Отзыв согласия на обработку персональных данных</a>
+    <footer>
+      <div class="footer-content">
+        <div class="footer-column footer-contacts">
+          <p class="footer-phone">+375 29 XXX XX XX</p>
+          <p class="footer-email">Learnly@gmail.com</p>
+
+          <div class="footer-links">
+            <a href="#">Публичный договор</a>
+            <a href="#">Политика обработки персональных данных</a>
+            <a href="#">Отзыв согласия на обработку персональных данных</a>
+          </div>
+        </div>
+
+        <div class="footer-column">
+          <h4>Все курсы</h4>
+          <ul>
+            <li><a href="#">Фронтенд-разработка</a></li>
+            <li><a href="#">Дизайн</a></li>
+            <li><a href="#">Бэкенд-разработка</a></li>
+            <li><a href="#">3D-моделирование</a></li>
+            <li><a href="#">Java-разработчик</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <ul class="footer-courses-list">
+            <li><a href="#">Python-разработчик</a></li>
+            <li><a href="#">Дизайн в Figma</a></li>
+            <li><a href="#">JavaScript-фронтенд</a></li>
+            <li><a href="#">JavaScript-бэкенд</a></li>
+            <li><a href="#">2D-моделирование</a></li>
+            <li><a href="#">Roblox-конструирование</a></li>
+          </ul>
         </div>
       </div>
+    </footer>
 
-      <div class="footer-column">
-        <h4>Все курсы</h4>
-        <ul>
-          <li><a href="#">Фронтенд-разработка</a></li>
-          <li><a href="#">Дизайн</a></li>
-          <li><a href="#">Бэкенд-разработка</a></li>
-          <li><a href="#">3D-моделирование</a></li>
-          <li><a href="#">Java-разработчик</a></li>
-        </ul>
-      </div>
+    <script>
+      // Константы для ключей localStorage
+      const STORAGE_KEYS = {
+        APPROVED_COURSES: 'approved_courses_public',
+        TEACHER_COURSES: 'teacher_courses',
+        PAYMENT_REQUESTS: 'payment_requests'
+      };
 
-      <div class="footer-column">
-        <ul class="footer-courses-list">
-          <li><a href="#">Python-разработчик</a></li>
-          <li><a href="#">Дизайн в Figma</a></li>
-          <li><a href="#">JavaScript-фронтенд</a></li>
-          <li><a href="#">JavaScript-бэкенд</a></li>
-          <li><a href="#">2D-моделирование</a></li>
-          <li><a href="#">Roblox-конструирование</a></li>
-        </ul>
-      </div>
-    </div>
-  </footer>
-  <script>
-  // ОБРАБОТКА ФОРМЫ ЗАЯВКИ
-  document.getElementById('applicationForm').addEventListener('submit', function(event) {
-    event.preventDefault(); 
-    
-    const formData = new FormData(this);
-    const name = formData.get('name');
-    const email = formData.get('email');
-    const phone = formData.get('phone');
-    
-    const data = {
-      name: name,
-      email: email,
-      phone: phone
-    };
-    
-    console.log('Отправляем запрос:', data);
-    
-    fetch('http://127.0.0.1:4000/api/auth/createApplication', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => {
-      if (!response.ok) {
-        return response.json().then(err => {
-          throw new Error(err.message || 'Ошибка отправки запроса');
+      // Текущий выбранный курс для записи
+      let currentSelectedCourse = null;
+
+      // Функции для модальных окон базовых курсов
+      function openBaseCourseModal(courseType) {
+        document.getElementById(`modal-${courseType}`).style.display = 'block';
+      }
+
+      function openModal(modalId) {
+        document.getElementById(modalId).style.display = 'block';
+      }
+
+      function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+      }
+
+      function closeUniversalModal() {
+        document.getElementById('universal-course-modal').style.display = 'none';
+      }
+
+      // Закрытие модального окна при клике вне его
+      window.onclick = function(event) {
+        if (event.target.classList.contains('modal')) {
+          event.target.style.display = 'none';
+        }
+      };
+
+      // Закрытие по клавише Escape
+      document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+          document.querySelectorAll('.modal').forEach(function(modal) {
+            modal.style.display = 'none';
+          });
+        }
+      });
+
+      // Функция для отображения одобренных курсов
+      function loadApprovedCourses() {
+        const coursesGrid = document.getElementById('coursesGrid');
+        const approvedCourses = getApprovedCourses();
+        
+        approvedCourses.forEach(course => {
+          const courseCard = createCourseCard(course);
+          coursesGrid.appendChild(courseCard);
         });
       }
-      return response.json();
-    })
-    .then(data => {
-      console.log('Запрос успешно отправлен:', data);
-      alert('Спасибо! Ваш запрос принят. Мы свяжемся с вами в ближайшее время!');
-      
-      document.getElementById('applicationForm').reset();
-    })
-    .catch(error => {
-      console.error('Ошибка:', error);
-      alert('Ошибка при отправке запроса: ' + error.message);
-    });
-  });
-</script>
-</body>
+
+      // Получение одобренных курсов
+      function getApprovedCourses() {
+        try {
+          // Пытаемся получить из публичного хранилища
+          const publicCourses = JSON.parse(localStorage.getItem(STORAGE_KEYS.APPROVED_COURSES)) || [];
+          
+          // Также получаем из teacher_courses (для обратной совместимости)
+          const allCourses = JSON.parse(localStorage.getItem(STORAGE_KEYS.TEACHER_COURSES)) || [];
+          const teacherApprovedCourses = allCourses.filter(course => course.status === 'approved');
+          
+          // Объединяем, убирая дубликаты по id
+          const allApproved = [...publicCourses];
+          teacherApprovedCourses.forEach(course => {
+            if (!allApproved.find(c => c.id === course.id)) {
+              allApproved.push(course);
+            }
+          });
+          
+          return allApproved;
+        } catch (e) {
+          console.error('Error loading approved courses:', e);
+          return [];
+        }
+      }
+
+      // Создание карточки курса
+      function createCourseCard(course) {
+        const card = document.createElement('div');
+        card.className = 'course-card';
+        
+        // Создаем изображение курса
+        const img = document.createElement('img');
+        img.className = 'course-image';
+        img.src = course.image || 'default-course.jpg';
+        img.alt = course.name;
+        img.onerror = function() {
+          this.src = 'default-course.jpg';
+        };
+        
+        // Создаем информацию о курсе
+        const info = document.createElement('div');
+        info.className = 'course-info';
+        
+        const title = document.createElement('h3');
+        title.className = 'course-title';
+        title.textContent = course.name;
+        
+        const description = document.createElement('p');
+        description.className = 'course-description';
+        description.textContent = course.description || 'Описание курса';
+        
+        const meta = document.createElement('div');
+        meta.className = 'course-meta';
+        meta.innerHTML = `
+          <span>${course.duration || '0'} часов</span>
+          <span>${course.level || 'Любой уровень'}</span>
+        `;
+        
+        const price = document.createElement('div');
+        price.className = 'course-price';
+        price.textContent = course.price && course.price > 0 ? 
+          `${course.price.toLocaleString('ru-RU')} ₽` : 'Бесплатно';
+        
+        // Добавляем обработчик клика
+        card.onclick = () => openDynamicCourseModal(course);
+        
+        // Собираем карточку
+        info.appendChild(title);
+        info.appendChild(description);
+        info.appendChild(meta);
+        info.appendChild(price);
+        
+        card.appendChild(img);
+        card.appendChild(info);
+        
+        return card;
+      }
+
+      // Открытие модального окна для динамического курса
+      function openDynamicCourseModal(course) {
+        const modal = document.getElementById('universal-course-modal');
+        const title = document.getElementById('universal-course-title');
+        const description = document.getElementById('universal-course-description');
+        const category = document.getElementById('universal-course-category');
+        const level = document.getElementById('universal-course-level');
+        const duration = document.getElementById('universal-course-duration');
+        const teacher = document.getElementById('universal-course-teacher');
+        const price = document.getElementById('universal-course-price');
+        const image = document.getElementById('universal-course-image');
+        const enrollBtn = document.getElementById('universal-enroll-btn');
+        
+        // Заполняем данные
+        title.textContent = course.name;
+        description.textContent = course.description || 'Описание отсутствует';
+        category.textContent = course.category || 'Не указана';
+        level.textContent = course.level || 'Любой уровень';
+        duration.textContent = course.duration ? `${course.duration} часов` : 'Не указано';
+        teacher.textContent = course.teacherName || 'Не указан';
+        price.textContent = course.price && course.price > 0 ? 
+          `${course.price.toLocaleString('ru-RU')} ₽` : 'Бесплатно';
+        
+        image.src = course.image || 'default-course.jpg';
+        
+        // Сохраняем текущий курс
+        currentSelectedCourse = course;
+        
+        // Обновляем обработчик кнопки записи
+        enrollBtn.onclick = () => enrollCourse(course.name, course.price || 0);
+        
+        // Показываем модальное окно
+        modal.style.display = 'block';
+      }
+
+      // Функция записи на курс
+      function enrollCourse(courseName, price) {
+        // Получаем выбранный формат обучения
+        const selectedFormat = document.querySelector('input[name="universal-format"]:checked')?.value || 
+                              document.querySelector('input[type="radio"]:checked')?.value || 
+                              'group';
+        
+        // Получаем email пользователя (в реальном приложении из системы авторизации)
+        const userEmail = prompt('Введите ваш email для записи на курс:', 'user@example.com');
+        
+        if (!userEmail) {
+          alert('Пожалуйста, введите email для записи на курс');
+          return;
+        }
+        
+        // Создаем запрос на оплату
+        createPaymentRequest(userEmail, price, courseName);
+        
+        // Показываем уведомление
+        alert(`Вы записаны на курс "${courseName}"!\nФормат: ${selectedFormat === 'individual' ? 'Индивидуально' : 'В группе'}\nСтоимость: ${price > 0 ? price + ' ₽' : 'Бесплатно'}\n\nОжидайте подтверждения оплаты администратором.`);
+        
+        // Закрываем все модальные окна
+        document.querySelectorAll('.modal').forEach(modal => {
+          modal.style.display = 'none';
+        });
+      }
+
+      // Создание запроса на оплату
+      function createPaymentRequest(email, amount, courseName) {
+        try {
+          const paymentRequests = JSON.parse(localStorage.getItem(STORAGE_KEYS.PAYMENT_REQUESTS)) || [];
+          const newPayment = {
+            id: Date.now(),
+            email: email,
+            amount: amount,
+            courseName: courseName,
+            userName: 'Пользователь', // В реальном приложении из профиля
+            date: new Date().toISOString(),
+            status: 'pending'
+          };
+          
+          paymentRequests.push(newPayment);
+          localStorage.setItem(STORAGE_KEYS.PAYMENT_REQUESTS, JSON.stringify(paymentRequests));
+          
+          console.log('Payment request created:', newPayment);
+          return newPayment.id;
+        } catch (e) {
+          console.error('Error creating payment request:', e);
+          return null;
+        }
+      }
+
+      // Функция для администратора для публикации курса
+      function publishCourseToPublic(courseId) {
+        try {
+          const allCourses = JSON.parse(localStorage.getItem(STORAGE_KEYS.TEACHER_COURSES)) || [];
+          const course = allCourses.find(c => c.id === courseId);
+          
+          if (!course || course.status !== 'approved') {
+            console.error('Course not found or not approved');
+            return false;
+          }
+          
+          // Создаем публичную версию курса
+          const publicCourse = {
+            id: course.id,
+            name: course.name,
+            description: course.description,
+            category: course.category,
+            level: course.level,
+            duration: course.duration,
+            price: course.price,
+            teacherName: course.teacherName || 'Преподаватель',
+            image: course.image || '',
+            publishedAt: new Date().toISOString()
+          };
+          
+          // Сохраняем в публичном хранилище
+          const publicCourses = JSON.parse(localStorage.getItem(STORAGE_KEYS.APPROVED_COURSES)) || [];
+          publicCourses.push(publicCourse);
+          localStorage.setItem(STORAGE_KEYS.APPROVED_COURSES, JSON.stringify(publicCourses));
+          
+          console.log('Course published to public:', publicCourse);
+          return true;
+        } catch (e) {
+          console.error('Error publishing course:', e);
+          return false;
+        }
+      }
+
+      // Инициализация страницы
+      function initCoursesPage() {
+        // Загружаем одобренные курсы
+        loadApprovedCourses();
+        
+        // Проверяем dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.classList.add('dark');
+        }
+        
+        // Слушаем изменения темы
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+          if (event.matches) {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        });
+        
+        // Обновляем курсы каждые 5 секунд (для демо)
+        setInterval(() => {
+          const approvedCourses = getApprovedCourses();
+          const currentCount = document.querySelectorAll('#coursesGrid .course-card').length;
+          
+          // Добавляем базовые 4 курса
+          if (currentCount !== approvedCourses.length + 4) {
+            // Удаляем все кроме первых 4 (базовых)
+            const allCards = document.querySelectorAll('#coursesGrid .course-card');
+            for (let i = 4; i < allCards.length; i++) {
+              allCards[i].remove();
+            }
+            
+            // Добавляем одобренные курсы
+            loadApprovedCourses();
+          }
+        }, 5000);
+      }
+
+      // ОБРАБОТКА ФОРМЫ ЗАЯВКИ
+      document.getElementById('applicationForm').addEventListener('submit', function(event) {
+        event.preventDefault(); 
+        
+        const formData = new FormData(this);
+        const name = formData.get('name');
+        const email = formData.get('email');
+        const phone = formData.get('phone');
+        
+        const data = {
+          name: name,
+          email: email,
+          phone: phone
+        };
+        
+        console.log('Отправляем запрос:', data);
+        
+        fetch('http://127.0.0.1:4000/api/auth/createApplication', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+        .then(response => {
+          if (!response.ok) {
+            return response.json().then(err => {
+              throw new Error(err.message || 'Ошибка отправки запроса');
+            });
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('Запрос успешно отправлен:', data);
+          alert('Спасибо! Ваш запрос принят. Мы свяжемся с вами в ближайшее время!');
+          document.getElementById('applicationForm').reset();
+        })
+        .catch(error => {
+          console.error('Ошибка:', error);
+          alert('Ошибка при отправке запроса: ' + error.message);
+        });
+      });
+
+      // Инициализация при загрузке
+      document.addEventListener('DOMContentLoaded', initCoursesPage);
+
+      // Глобальные функции для других страниц
+      window.publishCourseToPublic = publishCourseToPublic;
+      window.getApprovedCourses = getApprovedCourses;
+    </script>
+  </body>
 </html>

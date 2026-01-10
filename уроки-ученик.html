@@ -19,7 +19,11 @@
             --desc-text: #777;
             --checkbox-border: #ccc;
             --checkbox-checked: #c98a94;
+            --checkbox-rejected: #ff6b6b;
             --shadow: rgba(0, 0, 0, 0.1);
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+            --error-color: #f44336;
         }
 
         .dark {
@@ -35,6 +39,7 @@
             --desc-text: #ccc;
             --checkbox-border: #aaa;
             --checkbox-checked: #e8a0a8;
+            --checkbox-rejected: #ff8a8a;
             --shadow: rgba(0, 0, 0, 0.3);
         }
 
@@ -65,31 +70,34 @@
             gap: 20px;
         }
 
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background-color: var(--button-bg);
-            color: var(--button-text);
-            border: none;
-            border-radius: 25px;
-            padding: 12px 25px;
-            font-size: 16px;
+        .back-button {
+            display: inline-block;
+            background: #e8a5b8;
+            color: white;
+            text-decoration: none;
+            padding: 15px 50px;
+            border-radius: 50px;
             font-family: 'Comfortaa', cursive;
-            font-weight: 600;
+            font-size: 1.1rem;
+            font-weight: 700;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: all 0.3s ease;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             width: fit-content;
         }
 
-        .back-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        .back-button:hover {
+            background: #d98ba3;
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
-        .back-arrow {
-            font-size: 18px;
+        .dark .back-button {
+            background: #b87a8a;
+        }
+
+        .dark .back-button:hover {
+            background: #a86a7a;
         }
 
         .course-card {
@@ -169,6 +177,7 @@
             justify-content: center;
             flex-shrink: 0;
             transition: all 0.2s ease;
+            position: relative;
         }
 
         .item-checkbox.checked {
@@ -177,11 +186,228 @@
         }
 
         .item-checkbox.checked::after {
-            content: '';
-            width: 10px;
-            height: 10px;
-            background-color: #fff;
-            border-radius: 50%;
+            content: '✓';
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .item-checkbox.rejected {
+            border-color: var(--checkbox-rejected);
+            background-color: var(--checkbox-rejected);
+        }
+
+        .item-checkbox.rejected::after {
+            content: '✗';
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .item-checkbox.pending {
+            border-color: var(--warning-color);
+            background-color: var(--warning-color);
+            animation: pulse 2s infinite;
+        }
+
+        .item-checkbox.pending::after {
+            content: '...';
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+
+        .file-upload-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .upload-btn {
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            border: none;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-family: 'Comfortaa', cursive;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: fit-content;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        .upload-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--desc-text);
+        }
+
+        .file-icon {
+            color: var(--button-bg);
+        }
+
+        .file-name {
+            flex: 1;
+            word-break: break-all;
+        }
+
+        .teacher-feedback {
+            margin-top: 8px;
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 13px;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .feedback-approved {
+            color: var(--success-color);
+            border-left: 3px solid var(--success-color);
+        }
+
+        .feedback-rejected {
+            color: var(--error-color);
+            border-left: 3px solid var(--error-color);
+        }
+
+        .status-badge {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 10px;
+            font-weight: 600;
+        }
+
+        .status-approved {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .status-rejected {
+            background-color: var(--error-color);
+            color: white;
+        }
+
+        .status-pending {
+            background-color: var(--warning-color);
+            color: white;
+        }
+
+        .upload-progress {
+            width: 100%;
+            height: 4px;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--success-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal-title {
+            color: var(--title-text);
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .modal-message {
+            color: var(--desc-text);
+            font-size: 14px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-family: 'Comfortaa', cursive;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+        }
+
+        .modal-confirm {
+            background-color: var(--button-bg);
+            color: var(--button-text);
+        }
+
+        .modal-cancel {
+            background-color: transparent;
+            color: var(--desc-text);
+            border: 1px solid var(--desc-text);
         }
 
         @media (max-width: 600px) {
@@ -230,18 +456,19 @@
                 height: 24px;
                 margin-left: auto;
             }
+
+            .file-upload-section {
+                padding: 8px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <button class="back-btn">
-            <span class="back-arrow">←</span>
-            вернуться назад
-        </button>
+        <a href="лк-ученик-курсы.html" class="back-button">назад</a>
 
         <div class="course-card">
-            <h1 class="course-title">Python- разработчик</h1>
+            <h1 class="course-title">Python-разработчик</h1>
 
             <section class="section">
                 <h2 class="section-header">Лекции</h2>
@@ -256,44 +483,104 @@
                         <span class="item-desc">Управляющие конструкции: условия, циклы и логика исполнения</span>
                         <div class="item-checkbox"></div>
                     </div>
-                    <div class="item-row">
-                        <span class="item-label">Лекция 3</span>
-                        <span class="item-desc">Функции и области видимости: модульность и переиспользование кода</span>
-                        <div class="item-checkbox"></div>
-                    </div>
-                    <div class="item-row">
-                        <span class="item-label">Лекция 4</span>
-                        <span class="item-desc">Структуры данных: списки, словари, множества и кортежи</span>
-                        <div class="item-checkbox"></div>
-                    </div>
                 </div>
             </section>
 
             <section class="section">
                 <h2 class="section-header">Практические задания</h2>
                 <div class="items-list">
-                    <div class="item-row">
-                        <span class="item-label">Задание 1</span>
-                        <span class="item-desc">Калькулятор типов</span>
+                    <!-- Задание 1 (уже сданное) -->
+                    <div class="item-row" data-task-id="1">
+                        <div class="item-content">
+                            <span class="item-label">Задание 1</span>
+                            <span class="item-desc">Калькулятор типов 
+                                <span class="status-badge status-approved">ПРОВЕРЕНО</span>
+                            </span>
+                            <div class="teacher-feedback feedback-approved">
+                                ✅ Отлично! Все типы определены правильно. Можно добавить обработку исключений.
+                            </div>
+                            <div class="file-upload-section">
+                                <div class="file-info">
+                                    <span class="file-icon">📎</span>
+                                    <span class="file-name">solution_task1.py (загружено 12.04.2024)</span>
+                                </div>
+                            </div>
+                        </div>
                         <div class="item-checkbox checked"></div>
                     </div>
-                    <div class="item-row">
-                        <span class="item-label">Задание 2</span>
-                        <span class="item-desc">Фильтр чётных чисел</span>
+
+                    <!-- Задание 2 (ожидает проверки) -->
+                    <div class="item-row" data-task-id="2">
+                        <div class="item-content">
+                            <span class="item-label">Задание 2</span>
+                            <span class="item-desc">Фильтр чётных чисел 
+                                <span class="status-badge status-pending">ОЖИДАЕТ ПРОВЕРКИ</span>
+                            </span>
+                            <div class="file-upload-section">
+                                <div class="file-info">
+                                    <span class="file-icon">📎</span>
+                                    <span class="file-name">even_numbers.py (загружено 14.04.2024)</span>
+                                </div>
+                                <div class="upload-progress">
+                                    <div class="progress-bar" style="width: 100%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-checkbox pending"></div>
+                    </div>
+
+                    <!-- Задание 3 (не сдано) -->
+                    <div class="item-row" data-task-id="3">
+                        <div class="item-content">
+                            <span class="item-label">Задание 3</span>
+                            <span class="item-desc">Генератор паролей</span>
+                            <div class="file-upload-section">
+                                <button class="upload-btn" onclick="openFileUpload(3)">Загрузить решение</button>
+                                <div class="file-info" id="file-info-3" style="display: none;">
+                                    <span class="file-icon">📎</span>
+                                    <span class="file-name" id="file-name-3"></span>
+                                </div>
+                                <div class="upload-progress" id="progress-3" style="display: none;">
+                                    <div class="progress-bar" id="progress-bar-3"></div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="item-checkbox"></div>
                     </div>
-                    <div class="item-row">
-                        <span class="item-label">Задание 3</span>
-                        <span class="item-desc">Генератор паролей</span>
-                        <div class="item-checkbox"></div>
-                    </div>
-                    <div class="item-row">
-                        <span class="item-label">Задание 4</span>
-                        <span class="item-desc">Анализ текста</span>
+
+                    <!-- Задание 4 (не сдано) -->
+                    <div class="item-row" data-task-id="4">
+                        <div class="item-content">
+                            <span class="item-label">Задание 4</span>
+                            <span class="item-desc">Анализ текста</span>
+                            <div class="file-upload-section">
+                                <button class="upload-btn" onclick="openFileUpload(4)">Загрузить решение</button>
+                                <div class="file-info" id="file-info-4" style="display: none;">
+                                    <span class="file-icon">📎</span>
+                                    <span class="file-name" id="file-name-4"></span>
+                                </div>
+                                <div class="upload-progress" id="progress-4" style="display: none;">
+                                    <div class="progress-bar" id="progress-bar-4"></div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="item-checkbox"></div>
                     </div>
                 </div>
             </section>
+        </div>
+    </div>
+
+    <!-- Модальное окно для загрузки файла -->
+    <div class="modal-overlay" id="uploadModal">
+        <div class="modal">
+            <h2 class="modal-title">Загрузка решения</h2>
+            <p class="modal-message">Выберите файл с решением задания</p>
+            <input type="file" id="fileInput" accept=".py,.txt,.pdf,.doc,.docx,.zip,.rar" style="display: none;">
+            <div class="modal-actions">
+                <button class="modal-btn modal-confirm" onclick="uploadFile()">Загрузить</button>
+                <button class="modal-btn modal-cancel" onclick="closeUploadModal()">Отмена</button>
+            </div>
         </div>
     </div>
 
@@ -310,11 +597,219 @@
             }
         });
 
-        // Toggle checkbox on click
-        document.querySelectorAll('.item-row').forEach(row => {
-            row.addEventListener('click', function() {
-                const checkbox = this.querySelector('.item-checkbox');
-                checkbox.classList.toggle('checked');
+        let currentTaskId = null;
+        let selectedFile = null;
+
+        // Загрузка данных из localStorage
+        function loadTaskData() {
+            const savedTasks = localStorage.getItem('student_tasks_python');
+            if (savedTasks) {
+                const tasks = JSON.parse(savedTasks);
+                tasks.forEach(task => {
+                    updateTaskUI(task.id, task);
+                });
+            }
+        }
+
+        // Сохранение данных в localStorage
+        function saveTaskData(taskId, taskData) {
+            let tasks = JSON.parse(localStorage.getItem('student_tasks_python')) || [];
+            const existingIndex = tasks.findIndex(t => t.id === taskId);
+            
+            if (existingIndex >= 0) {
+                tasks[existingIndex] = { ...tasks[existingIndex], ...taskData };
+            } else {
+                tasks.push({ id: taskId, ...taskData });
+            }
+            
+            localStorage.setItem('student_tasks_python', JSON.stringify(tasks));
+            
+            // Также сохраняем в общий список для преподавателя
+            saveForTeacher(taskId, taskData);
+        }
+
+        // Сохранение для преподавателя
+        function saveForTeacher(taskId, taskData) {
+            let teacherTasks = JSON.parse(localStorage.getItem('teacher_submissions')) || {};
+            const courseName = 'Python-разработчик';
+            
+            if (!teacherTasks[courseName]) {
+                teacherTasks[courseName] = [];
+            }
+            
+            const submission = {
+                taskId: taskId,
+                studentName: 'Иван Иванов', // Здесь должна быть логика получения имени студента
+                taskName: document.querySelector(`[data-task-id="${taskId}"] .item-label`).textContent,
+                fileName: taskData.fileName,
+                fileContent: taskData.fileContent,
+                uploadDate: new Date().toISOString(),
+                status: 'pending',
+                feedback: ''
+            };
+            
+            // Удаляем старую запись если есть
+            teacherTasks[courseName] = teacherTasks[courseName].filter(s => s.taskId !== taskId);
+            teacherTasks[courseName].push(submission);
+            
+            localStorage.setItem('teacher_submissions', JSON.stringify(teacherTasks));
+        }
+
+        // Открытие модального окна загрузки
+        function openFileUpload(taskId) {
+            currentTaskId = taskId;
+            document.getElementById('uploadModal').classList.add('active');
+            document.getElementById('fileInput').click();
+        }
+
+        // Закрытие модального окна
+        function closeUploadModal() {
+            document.getElementById('uploadModal').classList.remove('active');
+            currentTaskId = null;
+            selectedFile = null;
+        }
+
+        // Обработка выбора файла
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            selectedFile = e.target.files[0];
+            if (selectedFile) {
+                document.querySelector('.modal-message').textContent = `Выбран файл: ${selectedFile.name}`;
+            }
+        });
+
+        // Загрузка файла
+        function uploadFile() {
+            if (!selectedFile || !currentTaskId) {
+                alert('Пожалуйста, выберите файл');
+                return;
+            }
+
+            // Показываем прогресс
+            const fileInfo = document.getElementById(`file-info-${currentTaskId}`);
+            const fileName = document.getElementById(`file-name-${currentTaskId}`);
+            const progress = document.getElementById(`progress-${currentTaskId}`);
+            const progressBar = document.getElementById(`progress-bar-${currentTaskId}`);
+            
+            fileInfo.style.display = 'flex';
+            fileName.textContent = `${selectedFile.name}`;
+            progress.style.display = 'block';
+            progressBar.style.width = '0%';
+
+            // Симуляция загрузки
+            let progressValue = 0;
+            const interval = setInterval(() => {
+                progressValue += 10;
+                progressBar.style.width = `${progressValue}%`;
+                
+                if (progressValue >= 100) {
+                    clearInterval(interval);
+                    
+                    // Чтение файла
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const fileContent = e.target.result;
+                        
+                        // Сохраняем данные
+                        const taskData = {
+                            fileName: selectedFile.name,
+                            fileContent: fileContent,
+                            uploadDate: new Date().toLocaleDateString('ru-RU'),
+                            status: 'pending'
+                        };
+                        
+                        saveTaskData(currentTaskId, taskData);
+                        updateTaskUI(currentTaskId, taskData);
+                        
+                        closeUploadModal();
+                        alert('Файл успешно загружен! Преподаватель получит ваше решение.');
+                    };
+                    reader.readAsDataURL(selectedFile);
+                }
+            }, 100);
+        }
+
+        // Обновление интерфейса задачи
+        function updateTaskUI(taskId, taskData) {
+            const taskRow = document.querySelector(`[data-task-id="${taskId}"]`);
+            if (!taskRow) return;
+            
+            const checkbox = taskRow.querySelector('.item-checkbox');
+            const desc = taskRow.querySelector('.item-desc');
+            const uploadSection = taskRow.querySelector('.file-upload-section');
+            
+            // Обновляем статус
+            if (taskData.status === 'approved') {
+                checkbox.className = 'item-checkbox checked';
+                // Добавляем бейдж если его нет
+                if (!desc.querySelector('.status-badge')) {
+                    const badge = document.createElement('span');
+                    badge.className = 'status-badge status-approved';
+                    badge.textContent = 'ПРОВЕРЕНО';
+                    desc.appendChild(badge);
+                }
+                
+                // Добавляем фидбек если есть
+                if (taskData.feedback && !uploadSection.querySelector('.teacher-feedback')) {
+                    const feedback = document.createElement('div');
+                    feedback.className = 'teacher-feedback feedback-approved';
+                    feedback.textContent = `✅ ${taskData.feedback}`;
+                    uploadSection.insertBefore(feedback, uploadSection.firstChild);
+                }
+                
+            } else if (taskData.status === 'rejected') {
+                checkbox.className = 'item-checkbox rejected';
+                if (!desc.querySelector('.status-badge')) {
+                    const badge = document.createElement('span');
+                    badge.className = 'status-badge status-rejected';
+                    badge.textContent = 'ВЕРНУТО НА ДОРАБОТКУ';
+                    desc.appendChild(badge);
+                }
+                
+                if (taskData.feedback && !uploadSection.querySelector('.teacher-feedback')) {
+                    const feedback = document.createElement('div');
+                    feedback.className = 'teacher-feedback feedback-rejected';
+                    feedback.textContent = `❌ ${taskData.feedback}`;
+                    uploadSection.insertBefore(feedback, uploadSection.firstChild);
+                }
+                
+            } else if (taskData.status === 'pending') {
+                checkbox.className = 'item-checkbox pending';
+                if (!desc.querySelector('.status-badge')) {
+                    const badge = document.createElement('span');
+                    badge.className = 'status-badge status-pending';
+                    badge.textContent = 'ОЖИДАЕТ ПРОВЕРКИ';
+                    desc.appendChild(badge);
+                }
+            }
+            
+            // Обновляем информацию о файле
+            if (taskData.fileName) {
+                const fileInfo = taskRow.querySelector('.file-info');
+                const fileName = taskRow.querySelector('.file-name');
+                const uploadBtn = taskRow.querySelector('.upload-btn');
+                
+                if (uploadBtn) uploadBtn.style.display = 'none';
+                if (fileInfo) fileInfo.style.display = 'flex';
+                if (fileName) fileName.textContent = `${taskData.fileName} (загружено ${taskData.uploadDate})`;
+            }
+        }
+
+        // Загружаем данные при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTaskData();
+            
+            // Закрытие модального окна по клику вне его
+            document.getElementById('uploadModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeUploadModal();
+                }
+            });
+            
+            // Закрытие по Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeUploadModal();
+                }
             });
         });
     </script>

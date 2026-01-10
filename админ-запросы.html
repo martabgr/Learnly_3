@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ - Управление запросами</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #d8e6c3;
+            --button-bg: #c98a94;
+            --button-text: #fff;
+            --title-text: #333;
+            --desc-text: #444;
+            --border-color: #b8c8a3;
+            --header-bg: #f8e1e5;
+        }
+
+        .dark {
+            --bg-main: #2d3a22;
+            --button-bg: #a06a74;
+            --button-text: #fff;
+            --title-text: #fff;
+            --desc-text: #ccc;
+            --border-color: #3a4a2e;
+            --header-bg: #9a6a74;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'Comfortaa', cursive;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            padding: 20px;
+        }
+
+        /* ШАПКА */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .page-title {
+            color: var(--title-text);
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        .back-button {
+            background: var(--button-bg);
+            color: white;
+            text-decoration: none;
+            padding: 12px 40px;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* ТАБЫ */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .tab-button {
+            background: transparent;
+            color: var(--title-text);
+            border: none;
+            padding: 12px 30px;
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .tab-button.active {
+            border-bottom: 3px solid var(--button-bg);
+        }
+
+        .tab-count {
+            background: var(--button-bg);
+            color: var(--button-text);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 14px;
+            margin-left: 8px;
+        }
+
+        /* КОНТЕЙНЕРЫ ТАБОВ */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* ТАБЛИЦЫ */
+        .table-container {
+            background: var(--header-bg);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .table-title {
+            color: var(--title-text);
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .requests-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .requests-table th {
+            color: var(--title-text);
+            font-size: 18px;
+            font-weight: 700;
+            padding: 15px;
+            text-align: left;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .requests-table td {
+            color: var(--desc-text);
+            font-size: 16px;
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .requests-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* КНОПКИ В ТАБЛИЦЕ */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .approve-btn, .reject-btn {
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+        }
+
+        .approve-btn {
+            background: #8bc34a;
+            color: white;
+        }
+
+        .reject-btn {
+            background: #f44336;
+            color: white;
+        }
+
+        /* СЧЕТЧИК */
+        .requests-count {
+            background: var(--button-bg);
+            color: var(--button-text);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        /* СООБЩЕНИЕ ОТСУТСТВИЯ */
+        .no-requests {
+            text-align: center;
+            padding: 40px;
+            color: var(--desc-text);
+            font-size: 18px;
+        }
+
+        /* Дополнительная информация */
+        .user-info {
+            font-size: 14px;
+            color: var(--desc-text);
+            margin-top: 5px;
+        }
+
+        .payment-info {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .payment-amount {
+            font-weight: 700;
+            color: var(--title-text);
+            font-size: 18px;
+        }
+
+        .payment-date {
+            font-size: 14px;
+            color: var(--desc-text);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab-button {
+                width: 100%;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .requests-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .page-title {
+                font-size: 28px;
+            }
+            
+            .back-button {
+                padding: 10px 30px;
+                font-size: 14px;
+            }
+            
+            .table-container {
+                padding: 15px;
+            }
+            
+            .requests-table th,
+            .requests-table td {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ШАПКА -->
+    <div class="header">
+        <h1 class="page-title">админ-панель</h1>
+        <button class="back-button" onclick="window.history.back()">назад</button>
+    </div>
+
+    <!-- ТАБЫ -->
+    <div class="tabs">
+        <button class="tab-button active" data-tab="courses">
+            Запросы на курсы <span class="tab-count" id="coursesTabCount">0</span>
+        </button>
+        <button class="tab-button" data-tab="payments">
+            Запросы на оплату <span class="tab-count" id="paymentsTabCount">0</span>
+        </button>
+    </div>
+
+    <!-- ТАБ "ЗАПРОСЫ НА КУРСЫ" -->
+    <div class="tab-content active" id="coursesTab">
+        <div class="table-container">
+            <div class="requests-count" id="coursesCount">Запросов на рассмотрение: 0</div>
+            <h2 class="table-title">курсы</h2>
+            
+            <table class="requests-table" id="coursesTable">
+                <thead>
+                    <tr>
+                        <th width="60%">название</th>
+                        <th width="40%">одобрить</th>
+                    </tr>
+                </thead>
+                <tbody id="coursesTableBody">
+                    <!-- Данные будут загружены через JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ТАБ "ЗАПРОСЫ НА ОПЛАТУ" -->
+    <div class="tab-content" id="paymentsTab">
+        <div class="table-container">
+            <div class="requests-count" id="paymentsCount">Запросов на рассмотрение: 0</div>
+            <h2 class="table-title">оплата</h2>
+            
+            <table class="requests-table" id="paymentsTable">
+                <thead>
+                    <tr>
+                        <th width="40%">почта</th>
+                        <th width="30%">информация</th>
+                        <th width="30%">одобрить</th>
+                    </tr>
+                </thead>
+                <tbody id="paymentsTableBody">
+                    <!-- Данные будут загружены через JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Dark mode detection
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+
+        // Константы для ключей localStorage
+        const STORAGE_KEYS = {
+            TEACHER_COURSES: 'teacher_courses',
+            PAYMENT_REQUESTS: 'admin_payment_requests'
+        };
+
+        // Переключение табов
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+                
+                // Убираем активный класс у всех кнопок
+                document.querySelectorAll('.tab-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Добавляем активный класс текущей кнопке
+                this.classList.add('active');
+                
+                // Скрываем все табы
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                // Показываем выбранный таб
+                document.getElementById(tabId + 'Tab').classList.add('active');
+                
+                // Обновляем данные для выбранной вкладки
+                if (tabId === 'courses') {
+                    loadCourseRequests();
+                } else if (tabId === 'payments') {
+                    loadPaymentRequests();
+                }
+            });
+        });
+
+        // Загрузка запросов на курсы
+        function loadCourseRequests() {
+            // Используем функцию из страницы преподавателя
+            const pendingCourses = window.getPendingCourses ? window.getPendingCourses() : [];
+            
+            const tbody = document.getElementById('coursesTableBody');
+            tbody.innerHTML = '';
+            
+            if (pendingCourses.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="2" style="text-align: center; padding: 40px;">
+                            Нет запросов на рассмотрение
+                        </td>
+                    </tr>
+                `;
+            } else {
+                pendingCourses.forEach(course => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>
+                            <div style="font-weight: 600;">${course.name}</div>
+                            <div class="user-info">Преподаватель: ${course.teacherName || 'Не указан'}</div>
+                            <div class="user-info">Категория: ${course.category || 'Не указана'}</div>
+                            <div class="user-info">Уровень: ${course.level || 'Не указан'}</div>
+                            ${course.file ? `<div class="user-info">Файл: ${course.file.name}</div>` : ''}
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="approve-btn" onclick="approveCourseRequest(${course.id})">одобрить</button>
+                                <button class="reject-btn" onclick="rejectCourseRequest(${course.id})">отклонить</button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+            
+            // Обновляем счетчики
+            document.getElementById('coursesCount').textContent = `Запросов на рассмотрение: ${pendingCourses.length}`;
+            document.getElementById('coursesTabCount').textContent = pendingCourses.length;
+        }
+
+        // Загрузка запросов на оплату
+        function loadPaymentRequests() {
+            const paymentRequests = window.getPendingPayments ? window.getPendingPayments() : [];
+            const pendingPayments = paymentRequests.filter(p => p.status === 'pending');
+            
+            const tbody = document.getElementById('paymentsTableBody');
+            tbody.innerHTML = '';
+            
+            if (pendingPayments.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="3" style="text-align: center; padding: 40px;">
+                            Нет запросов на оплату
+                        </td>
+                    </tr>
+                `;
+            } else {
+                pendingPayments.forEach(payment => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>
+                            <div style="font-weight: 600;">${payment.email}</div>
+                            <div class="user-info">${payment.userName || 'Пользователь'}</div>
+                        </td>
+                        <td>
+                            <div class="payment-info">
+                                <div class="payment-amount">${payment.amount}</div>
+                                <div class="payment-date">Курс: ${payment.courseName}</div>
+                                <div class="payment-date">Дата: ${new Date(payment.date).toLocaleDateString('ru-RU')}</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="approve-btn" onclick="approvePaymentRequest(${payment.id})">одобрить</button>
+                                <button class="reject-btn" onclick="rejectPaymentRequest(${payment.id})">отклонить</button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+            
+            // Обновляем счетчики
+            document.getElementById('paymentsCount').textContent = `Запросов на рассмотрение: ${pendingPayments.length}`;
+            document.getElementById('paymentsTabCount').textContent = pendingPayments.length;
+        }
+
+        // Функция одобрения курса
+        function approveCourseRequest(courseId) {
+            if (window.approveCourse && window.approveCourse(courseId)) {
+                // Обновляем таблицу
+                loadCourseRequests();
+                
+                // Показываем сообщение
+                alert('Курс одобрен!');
+            } else {
+                alert('Ошибка при одобрении курса');
+            }
+        }
+
+        // Функция отклонения курса
+        function rejectCourseRequest(courseId) {
+            const notes = prompt('Укажите причину отклонения (необязательно):', '');
+            
+            if (window.rejectCourse && window.rejectCourse(courseId, notes)) {
+                // Обновляем таблицу
+                loadCourseRequests();
+                
+                // Показываем сообщение
+                alert('Курс отклонен!');
+            } else {
+                alert('Ошибка при отклонении курса');
+            }
+        }
+
+        // Функция одобрения оплаты
+        function approvePaymentRequest(paymentId) {
+            if (window.approvePayment && window.approvePayment(paymentId)) {
+                // Обновляем таблицу
+                loadPaymentRequests();
+                
+                // Показываем сообщение
+                alert('Оплата одобрена!');
+            } else {
+                alert('Ошибка при одобрении оплаты');
+            }
+        }
+
+        // Функция отклонения оплаты
+        function rejectPaymentRequest(paymentId) {
+            if (window.rejectPayment && window.rejectPayment(paymentId)) {
+                // Обновляем таблицу
+                loadPaymentRequests();
+                
+                // Показываем сообщение
+                alert('Оплата отклонена!');
+            } else {
+                alert('Ошибка при отклонении оплаты');
+            }
+        }
+
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', () => {
+            // Загружаем данные для активной вкладки
+            loadCourseRequests();
+            
+            // Обновляем данные каждые 3 секунды
+            setInterval(() => {
+                if (document.getElementById('coursesTab').classList.contains('active')) {
+                    loadCourseRequests();
+                } else if (document.getElementById('paymentsTab').classList.contains('active')) {
+                    loadPaymentRequests();
+                }
+            }, 3000);
+        });
+
+        // Если глобальные функции не определены, создаем заглушки для демо
+        if (typeof window.getPendingCourses === 'undefined') {
+            window.getPendingCourses = function() {
+                try {
+                    const allCourses = JSON.parse(localStorage.getItem('teacher_courses')) || [];
+                    return allCourses.filter(course => course.status === 'pending');
+                } catch (e) {
+                    return [];
+                }
+            };
+        }
+
+        if (typeof window.approveCourse === 'undefined') {
+            window.approveCourse = function(courseId) {
+                try {
+                    const allCourses = JSON.parse(localStorage.getItem('teacher_courses')) || [];
+                    const courseIndex = allCourses.findIndex(course => course.id === courseId);
+                    
+                    if (courseIndex !== -1) {
+                        allCourses[courseIndex].status = 'approved';
+                        allCourses[courseIndex].approvedAt = new Date().toISOString();
+                        localStorage.setItem('teacher_courses', JSON.stringify(allCourses));
+                        return true;
+                    }
+                } catch (e) {
+                    console.error('Error approving course:', e);
+                }
+                return false;
+            };
+        }
+
+        if (typeof window.rejectCourse === 'undefined') {
+            window.rejectCourse = function(courseId, notes = '') {
+                try {
+                    const allCourses = JSON.parse(localStorage.getItem('teacher_courses')) || [];
+                    const courseIndex = allCourses.findIndex(course => course.id === courseId);
+                    
+                    if (courseIndex !== -1) {
+                        allCourses[courseIndex].status = 'rejected';
+                        allCourses[courseIndex].adminNotes = notes;
+                        allCourses[courseIndex].rejectedAt = new Date().toISOString();
+                        localStorage.setItem('teacher_courses', JSON.stringify(allCourses));
+                        return true;
+                    }
+                } catch (e) {
+                    console.error('Error rejecting course:', e);
+                }
+                return false;
+            };
+        }
+
+        // Заглушки для функций оплат
+        if (typeof window.getPendingPayments === 'undefined') {
+            window.getPendingPayments = function() {
+                try {
+                    return JSON.parse(localStorage.getItem('admin_payment_requests')) || [];
+                } catch (e) {
+                    return [];
+                }
+            };
+        }
+
+        if (typeof window.approvePayment === 'undefined') {
+            window.approvePayment = function(paymentId) {
+                try {
+                    const payments = JSON.parse(localStorage.getItem('admin_payment_requests')) || [];
+                    const paymentIndex = payments.findIndex(p => p.id === paymentId);
+                    
+                    if (paymentIndex !== -1) {
+                        payments[paymentIndex].status = 'approved';
+                        payments[paymentIndex].approvedAt = new Date().toISOString();
+                        localStorage.setItem('admin_payment_requests', JSON.stringify(payments));
+                        return true;
+                    }
+                } catch (e) {
+                    console.error('Error approving payment:', e);
+                }
+                return false;
+            };
+        }
+
+        if (typeof window.rejectPayment === 'undefined') {
+            window.rejectPayment = function(paymentId) {
+                try {
+                    const payments = JSON.parse(localStorage.getItem('admin_payment_requests')) || [];
+                    const paymentIndex = payments.findIndex(p => p.id === paymentId);
+                    
+                    if (paymentIndex !== -1) {
+                        payments[paymentIndex].status = 'rejected';
+                        payments[paymentIndex].rejectedAt = new Date().toISOString();
+                        localStorage.setItem('admin_payment_requests', JSON.stringify(payments));
+                        return true;
+                    }
+                } catch (e) {
+                    console.error('Error rejecting payment:', e);
+                }
+                return false;
+            };
+        }
+    </script>
+</body>
+</html>
