@@ -15,6 +15,7 @@
             --label-text: #fff;
             --value-text: #f0b8c0;
             --shadow: rgba(0, 0, 0, 0.1);
+            --modal-bg: rgba(0, 0, 0, 0.7);
         }
 
         .dark {
@@ -26,6 +27,7 @@
             --label-text: #fff;
             --value-text: #e0a0a8;
             --shadow: rgba(0, 0, 0, 0.3);
+            --modal-bg: rgba(0, 0, 0, 0.8);
         }
 
         * {
@@ -77,6 +79,7 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             width: fit-content;
             margin-bottom: 20px;
+            text-decoration: none;
         }
 
         .back-btn:hover {
@@ -112,6 +115,7 @@
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            background-color: #f0f0f0;
         }
 
         .avatar-container img {
@@ -166,6 +170,7 @@
             color: var(--value-text);
             font-size: 18px;
             flex: 1;
+            word-break: break-word;
         }
 
         .edit-btn {
@@ -187,6 +192,124 @@
         .edit-btn svg {
             width: 20px;
             height: 20px;
+        }
+
+        /* Модальные окна */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--modal-bg);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background-color: var(--panel-bg);
+            border-radius: 30px;
+            padding: 35px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-title {
+            color: var(--label-text);
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--label-text);
+            font-size: 28px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--label-text);
+            font-size: 16px;
+            font-family: 'Comfortaa', cursive;
+            margin-bottom: 20px;
+        }
+
+        .modal-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 25px;
+        }
+
+        .modal-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 20px;
+            font-family: 'Comfortaa', cursive;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .modal-btn.save {
+            background-color: var(--button-bg);
+            color: var(--button-text);
+        }
+
+        .modal-btn.cancel {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--label-text);
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .photo-preview {
+            width: 150px;
+            height: 150px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px auto;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .photo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         @media (max-width: 600px) {
@@ -237,71 +360,268 @@
                 font-size: 14px;
                 padding: 12px 22px;
             }
+
+            .modal-content {
+                padding: 25px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <button class="back-btn">
-            <span class="back-arrow">←</span>
-            личный кабинет
-        </button>
+<div class="container">
+    <a href="лк.html" class="back-btn">
+        <span class="back-arrow">←</span>
+        личный кабинет
+    </a>
 
-        <div class="settings-card">
-            <div class="photo-section">
-                <div class="avatar-container">
-                    <!-- Замените src на путь к вашему фото -->
-                    <img src="обезьянка.jpg" alt="Аватар">
-                </div>
-                <button class="change-photo-btn">изменить фото</button>
+    <div class="settings-card">
+        <div class="photo-section">
+            <div class="avatar-container">
+                <img id="userAvatar" alt="Аватар">
+            </div>
+            <button class="change-photo-btn" onclick="openPhotoModal()">изменить фото</button>
+        </div>
+
+        <div class="info-section">
+            <div class="info-row">
+                <span class="info-label">имя :</span>
+                <span class="info-value" id="userName">текущее имя</span>
+                <button class="edit-btn" onclick="openEditModal('name')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+                    </svg>
+                </button>
             </div>
 
-            <div class="info-section">
-                <div class="info-row">
-                    <span class="info-label">имя :</span>
-                    <span class="info-value">текущее имя</span>
-                    <button class="edit-btn" aria-label="Редактировать имя">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
-                        </svg>
-                    </button>
-                </div>
+            <div class="info-row">
+                <span class="info-label">почта:</span>
+                <span class="info-value" id="userEmail">текущая почта</span>
+                <button class="edit-btn" onclick="openEditModal('email')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+                    </svg>
+                </button>
+            </div>
 
-                <div class="info-row">
-                    <span class="info-label">почта:</span>
-                    <span class="info-value">текущая почта</span>
-                    <button class="edit-btn" aria-label="Редактировать почту">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
-                        </svg>
-                    </button>
-                </div>
-
-                <div class="info-row">
-                    <span class="info-label">пароль:</span>
-                    <span class="info-value">текущий пароль</span>
-                    <button class="edit-btn" aria-label="Редактировать пароль">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
-                        </svg>
-                    </button>
-                </div>
+            <div class="info-row">
+                <span class="info-label">пароль:</span>
+                <span class="info-value">••••••••</span>
+                <button class="edit-btn" onclick="openEditModal('password')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+                    </svg>
+                </button>
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        // Dark mode detection
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.documentElement.classList.add('dark');
+<!-- Модальное окно для редактирования -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modalTitle">Редактировать</h3>
+            <button class="close-btn" onclick="closeEditModal()">&times;</button>
+        </div>
+        <input type="text" id="editInput" class="modal-input">
+        <div class="modal-buttons">
+            <button class="modal-btn cancel" onclick="closeEditModal()">Отмена</button>
+            <button class="modal-btn save" onclick="saveChanges()">Сохранить</button>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно для фото -->
+<div id="photoModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Изменить фото</h3>
+            <button class="close-btn" onclick="closePhotoModal()">&times;</button>
+        </div>
+        <div class="photo-preview">
+            <img id="photoPreview" alt="Предпросмотр">
+        </div>
+        <input type="file" id="photoUpload" class="file-input" accept="image/*" onchange="previewPhoto(event)">
+        <div class="modal-buttons">
+            <button class="modal-btn cancel" onclick="closePhotoModal()">Отмена</button>
+            <button class="modal-btn save" onclick="document.getElementById('photoUpload').click()">Выбрать</button>
+            <button class="modal-btn save" onclick="uploadPhoto()" id="uploadBtn" disabled>Загрузить</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const API_URL = 'http://127.0.0.1:4000/api/auth';
+    let currentField = '';
+    let selectedPhoto = null;
+
+    // Загрузить данные пользователя
+    async function loadUserData() {
+        const userId = localStorage.getItem('userId');
+        const token = localStorage.getItem('authToken');
+        
+        if (!userId || !token) {
+            window.location.href = 'avtorandreg.html';
+            return;
         }
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-            if (event.matches) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
+
+        try {
+            const response = await fetch(`${API_URL}/user/${userId}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (!response.ok) throw new Error('Ошибка загрузки');
+            
+            const userData = await response.json();
+            
+            document.getElementById('userName').textContent = userData.name;
+            document.getElementById('userEmail').textContent = userData.email;
+            
+            if (userData.image) {
+                document.getElementById('userAvatar').src = userData.image;
+                document.getElementById('photoPreview').src = userData.image;
             }
-        });
-    </script>
+        } catch (error) {
+            console.error('Ошибка:', error);
+        }
+    }
+
+    // Модальные окна
+    function openEditModal(field) {
+        currentField = field;
+        const modal = document.getElementById('editModal');
+        const title = document.getElementById('modalTitle');
+        const input = document.getElementById('editInput');
+        
+        const labels = { 'name': 'Имя', 'email': 'Email', 'password': 'Пароль' };
+        title.textContent = `Редактировать ${labels[field]}`;
+        
+        if (field === 'password') {
+            input.type = 'password';
+            input.value = '';
+            input.placeholder = 'Новый пароль';
+        } else {
+            input.type = 'text';
+            input.value = document.getElementById(`user${field.charAt(0).toUpperCase() + field.slice(1)}`).textContent;
+        }
+        
+        modal.style.display = 'flex';
+        input.focus();
+    }
+
+    function closeEditModal() {
+        document.getElementById('editModal').style.display = 'none';
+    }
+
+    function openPhotoModal() {
+        document.getElementById('photoModal').style.display = 'flex';
+    }
+
+    function closePhotoModal() {
+        document.getElementById('photoModal').style.display = 'none';
+        selectedPhoto = null;
+        document.getElementById('uploadBtn').disabled = true;
+    }
+
+    // Сохранить изменения
+    async function saveChanges() {
+        const newValue = document.getElementById('editInput').value.trim();
+        const userId = localStorage.getItem('userId');
+        const token = localStorage.getItem('authToken');
+        
+        if (!newValue) return;
+        
+        const data = { [currentField]: newValue };
+        
+        try {
+            const response = await fetch(`${API_URL}/update/${userId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (!response.ok) throw new Error('Ошибка обновления');
+            
+            if (currentField === 'name') {
+                document.getElementById('userName').textContent = newValue;
+                localStorage.setItem('userName', newValue);
+            } else if (currentField === 'email') {
+                document.getElementById('userEmail').textContent = newValue;
+            }
+            
+            closeEditModal();
+            alert('Данные обновлены!');
+        } catch (error) {
+            console.error('Ошибка:', error);
+            alert('Ошибка обновления');
+        }
+    }
+
+    // Фото
+    function previewPhoto(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        
+        if (!file.type.match('image.*')) {
+            alert('Выберите изображение');
+            return;
+        }
+        
+        selectedPhoto = file;
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('photoPreview').src = e.target.result;
+            document.getElementById('uploadBtn').disabled = false;
+        };
+        reader.readAsDataURL(file);
+    }
+
+    async function uploadPhoto() {
+        if (!selectedPhoto) return;
+        
+        const userId = localStorage.getItem('userId');
+        const token = localStorage.getItem('authToken');
+        const formData = new FormData();
+        formData.append('image', selectedPhoto);
+        formData.append('userId', userId);
+        
+        try {
+            const response = await fetch(`${API_URL}/upload-avatar`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                body: formData
+            });
+
+            if (!response.ok) throw new Error('Ошибка загрузки');
+            
+            const result = await response.json();
+            document.getElementById('userAvatar').src = result.imageUrl;
+            closePhotoModal();
+            alert('Фото обновлено!');
+        } catch (error) {
+            console.error('Ошибка:', error);
+            alert('Ошибка загрузки фото');
+        }
+    }
+
+    // Закрыть модальные окна
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal')) {
+            closeEditModal();
+            closePhotoModal();
+        }
+    }
+
+    // Загрузить данные при старте
+    window.addEventListener('load', loadUserData);
+</script>
 </body>
 </html>

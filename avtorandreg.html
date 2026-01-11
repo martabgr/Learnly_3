@@ -184,6 +184,15 @@
     });
   }
 
+  // Функция для редиректа в зависимости от роли
+  function redirectByRole(role) {
+    if (role === 'teacher') {
+      window.location.href = 'лк.html';
+    } else {
+      window.location.href = 'лк_ученик.html';
+    }
+  }
+
   // РЕГИСТРАЦИЯ
   document.getElementById('registerForm').addEventListener('submit', function(event) {
     event.preventDefault();
@@ -195,7 +204,7 @@
     const password2 = document.getElementById('registerPassword2').value;
     
     if (password !== password2) {
-      alert('Пароли не совпадают!');
+      showNotification('Пароли не совпадают!', 'error');
       return;
     }
     
@@ -230,12 +239,14 @@
       return autoLogin(email, password, role);
     })
     .then(loginData => {
-      alert('Регистрация прошла успешно! Добро пожаловать, ' + loginData.name + '!');
-      window.location.href = 'лк.html';
+      showNotification('Регистрация прошла успешно! Добро пожаловать, ' + loginData.name + '!', 'success');
+      setTimeout(() => {
+        redirectByRole(loginData.role);
+      }, 1500);
     })
     .catch(error => {
       console.error('Ошибка:', error);
-      alert('Произошла ошибка: ' + error.message);
+      showNotification('Произошла ошибка: ' + error.message, 'error');
     });
   });
 
@@ -281,12 +292,14 @@
         localStorage.setItem('userId', data.id);
       }
       
-      alert('Добро пожаловать, ' + data.name + '!');
-      window.location.href = 'лк.html';
+      showNotification('Добро пожаловать, ' + data.name + '!', 'success');
+      setTimeout(() => {
+        redirectByRole(data.role);
+      }, 1500);
     })
     .catch(error => {
       console.error('Ошибка:', error);
-      alert('Ошибка при входе: ' + error.message);
+      showNotification('Ошибка при входе: ' + error.message, 'error');
     });
   });
 
@@ -294,6 +307,76 @@
     const field = document.getElementById(fieldId);
     field.type = field.type === 'password' ? 'text' : 'password';
   }
-</script>
+
+  // Функция для показа уведомлений (замена alert)
+  function showNotification(message, type = 'info') {
+    // Удаляем предыдущее уведомление, если есть
+    const existingNotification = document.querySelector('.notification');
+    if (existingNotification) {
+      existingNotification.remove();
+    }
+
+    const notification = document.createElement('div');
+    notification.className = 'notification notification-' + type;
+    notification.innerHTML = `
+      <span>${message}</span>
+      <button onclick="this.parentElement.remove()">&times;</button>
+    `;
+    
+    // Стили для уведомления
+    notification.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 20px;
+      border-radius: 10px;
+      background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3'};
+      color: white;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      z-index: 10000;
+      animation: slideIn 0.3s ease;
+    `;
+
+    notification.querySelector('button').style.cssText = `
+      background: none;
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+    `;
+
+    document.body.appendChild(notification);
+
+    // Автоматически скрыть через 5 секунд
+    setTimeout(() => {
+      if (notification.parentElement) {
+        notification.remove();
+      }
+    }, 5000);
+  }
+
+  // Добавляем стили анимации
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+  </script>
 </body>
 </html>

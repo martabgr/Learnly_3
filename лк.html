@@ -200,26 +200,23 @@
 <body>
     <div class="container">
         <div class="profile-section">
-            <h1 class="greeting">привет, name!</h1>
+            <h1 class="greeting">привет, <span id="greetingName">загрузка...</span>!</h1>
 
             <div class="avatar-container">
-                <!-- Замените src на путь к вашему фото -->
                 <img src="обезьянка.jpg" alt="Аватар">
-                <!-- Или используйте placeholder: -->
-                <!-- <div class="avatar-placeholder">Ваше фото</div> -->
             </div>
 
             <div class="user-info">
-                <p class="user-name">name</p>
-                <p class="user-role">role</p>
+                <p class="user-name" id="userName">загрузка...</p>
+                <p class="user-role" id="userRole">загрузка...</p>
             </div>
         </div>
 
         <div class="nav-panel">
             <div class="nav-buttons">
-                <button class="nav-btn">настройки профиля</button>
-                <button class="nav-btn">мои уроки</button>
-                <button class="nav-btn">настройки уроков</button>
+                <a href="преподаватель-настройки.html"><button class="nav-btn">настройки профиля</button></a>
+                 <a href="преподаватель-моиуроки.html"></a><button class="nav-btn">мои уроки</button></a>
+                 <a href="настройки-уроки-преподаватель.html"></a><button class="nav-btn">настройки уроков</button></a>
             </div>
         </div>
     </div>
@@ -236,6 +233,63 @@
                 document.documentElement.classList.remove('dark');
             }
         });
+
+        // ========== ПРОВЕРКА АВТОРИЗАЦИИ И ЗАГРУЗКА ДАННЫХ ==========
+        
+        // Функция проверки валидности JWT токена
+        function isTokenValid() {
+            const token = localStorage.getItem('authToken');
+            if (!token) return false;
+            
+            try {
+                const payload = JSON.parse(atob(token.split('.')[1]));
+                const currentTime = Math.floor(Date.now() / 1000);
+                return payload.exp && payload.exp > currentTime;
+            } catch (e) {
+                console.error('Ошибка при проверке токена:', e);
+                return false;
+            }
+        }
+
+        // Функция очистки данных авторизации
+        function clearAuthData() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userName');
+            localStorage.removeItem('userRole');
+            localStorage.removeItem('userId');
+        }
+
+        // Функция перевода роли на русский
+        function translateRole(role) {
+            const roles = {
+                'teacher': 'Преподаватель',
+                'student': 'Студент',
+                'admin': 'Администратор'
+            };
+            return roles[role] || role;
+        }
+
+        // Загрузка данных пользователя при открытии страницы
+        function loadUserData() {
+            // Проверяем авторизацию
+            if (!isTokenValid()) {
+                clearAuthData();
+                window.location.href = 'avtorandreg.html';
+                return;
+            }
+
+            // Получаем данные из localStorage
+            const userName = localStorage.getItem('userName') || 'Пользователь';
+            const userRole = localStorage.getItem('userRole') || 'student';
+
+            // Обновляем элементы на странице
+            document.getElementById('greetingName').textContent = userName;
+            document.getElementById('userName').textContent = userName;
+            document.getElementById('userRole').textContent = translateRole(userRole);
+        }
+
+        // Запускаем загрузку данных при загрузке страницы
+        window.addEventListener('load', loadUserData);
     </script>
 </body>
 </html>
